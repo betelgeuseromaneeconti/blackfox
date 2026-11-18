@@ -10,8 +10,8 @@
 # app/pubspec.yaml.
 #
 # Updates must be signed (Ed25519): with a signing key
-# (ARMAN_VPN_SIGNING_KEY, CI's secret, or the file named by
-# ARMAN_VPN_SIGNING_KEY_FILE), the core installs only releases whose
+# (BLACKFOX_SIGNING_KEY, CI's secret, or the file named by
+# BLACKFOX_SIGNING_KEY_FILE), the core installs only releases whose
 # SHA256SUMS.txt is signed with it, an installed TUN service accepts updates
 # signed with it, and Contents/Resources/arman-vpn-tun.sig holds the
 # bundled one's. Without one the app's updates are downloaded by hand, and
@@ -22,6 +22,15 @@
 # needs to run it at all; macOS asks once before opening a downloaded copy.
 # Needs Flutter, Xcode, and Go.
 set -euo pipefail
+
+# Prefer BLACKFOX key names; keep the Go signer’s legacy environment contract
+# internally so existing local keys continue to work.
+if [ -n "${BLACKFOX_SIGNING_KEY:-}" ]; then
+  export ARMAN_VPN_SIGNING_KEY="$BLACKFOX_SIGNING_KEY"
+fi
+if [ -n "${BLACKFOX_SIGNING_KEY_FILE:-}" ]; then
+  export ARMAN_VPN_SIGNING_KEY_FILE="$BLACKFOX_SIGNING_KEY_FILE"
+fi
 
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 version="$(sed -n 's/^version:[[:space:]]*\([0-9]*\.[0-9]*\.[0-9]*\).*/\1/p' "$root/app/pubspec.yaml")"
