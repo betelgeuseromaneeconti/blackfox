@@ -152,7 +152,7 @@ jobs:
           # The key updates are signed with (scripts/signing-key.ps1): the
           # core and the TUN service take only updates it signed; without
           # it they take none.
-          ARMAN_VPN_SIGNING_KEY: ${{ secrets.FIREFOX_VPN_SIGNING_KEY }}
+          BLACKFOX_SIGNING_KEY: ${{ secrets.FIREFOX_VPN_SIGNING_KEY }}
           # The key the build profile is built with, when there is one.
           ARMAN_PROFILE_KEY: ${{ secrets.PROFILE_RELAY_KEY }}
         run: ./scripts/build-windows.ps1
@@ -374,7 +374,7 @@ jobs:
         env:
           # The key updates are signed with: the core and the TUN service
           # take only updates it signed; without it they take none.
-          ARMAN_VPN_SIGNING_KEY: ${{ secrets.FIREFOX_VPN_SIGNING_KEY }}
+          BLACKFOX_SIGNING_KEY: ${{ secrets.FIREFOX_VPN_SIGNING_KEY }}
           # The key the build profile is built with, when there is one.
           ARMAN_PROFILE_KEY: ${{ secrets.PROFILE_RELAY_KEY }}
         run: bash scripts/build-linux.sh
@@ -455,7 +455,7 @@ jobs:
         env:
           # The key updates are signed with: the core and the TUN service
           # take only updates it signed; without it they take none.
-          ARMAN_VPN_SIGNING_KEY: ${{ secrets.FIREFOX_VPN_SIGNING_KEY }}
+          BLACKFOX_SIGNING_KEY: ${{ secrets.FIREFOX_VPN_SIGNING_KEY }}
           # The key the build profile is built with, when there is one.
           ARMAN_PROFILE_KEY: ${{ secrets.PROFILE_RELAY_KEY }}
         run: bash scripts/build-macos.sh
@@ -536,7 +536,7 @@ jobs:
       - name: Sign the checksums
         working-directory: core
         env:
-          ARMAN_VPN_SIGNING_KEY: ${{ secrets.FIREFOX_VPN_SIGNING_KEY }}
+          BLACKFOX_SIGNING_KEY: ${{ secrets.FIREFOX_VPN_SIGNING_KEY }}
         run: |
           if [ -z "$ARMAN_VPN_SIGNING_KEY" ]; then
             echo "::error::no release key (the secret ARMAN_VPN_SIGNING_KEY): the apps could not install this release"
