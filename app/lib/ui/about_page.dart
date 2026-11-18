@@ -182,6 +182,12 @@ class _AboutPageState extends State<AboutPage> {
                             ),
                             const SizedBox(height: 2),
                             Text('GNU General Public License v3.0', style: muted),
+                            const SizedBox(height: 4),
+                            Text(
+                              github,
+                              style: muted?.copyWith(fontSize: 11),
+                              textDirection: TextDirection.ltr,
+                            ),
                           ],
                         ),
                       ),
