@@ -5,10 +5,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/netcheck"
-	"github.com/armanlife/arman-vpn-client/core/internal/netstate"
-	"github.com/armanlife/arman-vpn-client/core/internal/proxy"
-	"github.com/armanlife/arman-vpn-client/core/internal/resolver"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/netcheck"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/netstate"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/proxy"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/resolver"
 )
 
 // failureCode is proxy.FailureCode for err, made sure for failures that may

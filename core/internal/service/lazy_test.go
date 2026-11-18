@@ -18,8 +18,8 @@ import (
 
 	xproxy "golang.org/x/net/proxy"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/controlplane"
-	"github.com/armanlife/arman-vpn-client/core/internal/proxy"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/controlplane"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/proxy"
 )
 
 // Local fixtures for the lazy start: a stand-in for Mozilla's CONNECT proxy

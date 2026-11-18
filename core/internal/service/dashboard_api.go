@@ -12,14 +12,14 @@ import (
 	"strings"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/accounts"
-	"github.com/armanlife/arman-vpn-client/core/internal/config"
-	"github.com/armanlife/arman-vpn-client/core/internal/logx"
-	"github.com/armanlife/arman-vpn-client/core/internal/netstate"
-	"github.com/armanlife/arman-vpn-client/core/internal/proxy"
-	"github.com/armanlife/arman-vpn-client/core/internal/serverlist"
-	"github.com/armanlife/arman-vpn-client/core/internal/update"
-	"github.com/armanlife/arman-vpn-client/core/internal/version"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/accounts"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/config"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/netstate"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/proxy"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/serverlist"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/update"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/version"
 )
 
 type proxyView struct {
