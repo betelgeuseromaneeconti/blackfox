@@ -15,12 +15,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/accounts"
-	"github.com/armanlife/arman-vpn-client/core/internal/config"
-	"github.com/armanlife/arman-vpn-client/core/internal/fxa"
-	"github.com/armanlife/arman-vpn-client/core/internal/guardian"
-	"github.com/armanlife/arman-vpn-client/core/internal/logx"
-	"github.com/armanlife/arman-vpn-client/core/internal/proxy"
+	"github.com/betelgeuseromaneeconti/BLACKFOX-vpn-client/core/internal/accounts"
+	"github.com/betelgeuseromaneeconti/BLACKFOX-vpn-client/core/internal/config"
+	"github.com/betelgeuseromaneeconti/BLACKFOX-vpn-client/core/internal/fxa"
+	"github.com/betelgeuseromaneeconti/BLACKFOX-vpn-client/core/internal/guardian"
+	"github.com/betelgeuseromaneeconti/BLACKFOX-vpn-client/core/internal/logx"
+	"github.com/betelgeuseromaneeconti/BLACKFOX-vpn-client/core/internal/proxy"
 )
 
 // All credentials in this file are local fixtures; the control plane
@@ -202,7 +202,7 @@ func TestDashboardLoginProtectsAPI(t *testing.T) {
 	if rec := c.do(http.MethodGet, "/api/status", nil); rec.Code != http.StatusUnauthorized {
 		t.Fatalf("expected a login to be required, got %d", rec.Code)
 	}
-	if rec := c.do(http.MethodGet, "/app/", nil); rec.Code != http.StatusOK || !strings.Contains(rec.Body.String(), "Arman VPN") {
+	if rec := c.do(http.MethodGet, "/app/", nil); rec.Code != http.StatusOK || !strings.Contains(rec.Body.String(), "BLACKFOX VPN") {
 		t.Fatalf("expected the page itself to load without a login, got %d", rec.Code)
 	}
 	if rec := c.do(http.MethodGet, "/app", nil); rec.Code/100 != 3 || rec.Header().Get("Location") != "/app/" {
