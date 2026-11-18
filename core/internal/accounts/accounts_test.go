@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/fxa"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/fxa"
 )
 
 const gib = int64(1) << 30
