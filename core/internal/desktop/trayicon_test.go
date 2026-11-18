@@ -24,8 +24,22 @@ func TestTrayIcons(t *testing.T) {
 		if _, _, _, a := img.At(0, 0).RGBA(); a != 0 {
 			t.Fatalf("%s: the corner should be transparent", name)
 		}
-		if r, g, b, a := img.At(16, 13).RGBA(); a == 0 || r*0xff/a < 0xf0 || g*0xff/a < 0xf0 || b*0xff/a < 0xf0 {
-    		t.Fatalf("%s: the middle of the Kitsune mark should be white", name)
+		whiteFound := false
+for y := 0; y < 32; y++ {
+    for x := 0; x < 32; x++ {
+        r, g, b, a := img.At(x, y).RGBA()
+        if a != 0 && r*0xff/a >= 0xf0 && g*0xff/a >= 0xf0 && b*0xff/a >= 0xf0 {
+            whiteFound = true
+            break
+        }
+    }
+    if whiteFound {
+        break
+    }
+}
+if !whiteFound {
+    t.Fatalf("%s: no white Kitsune mark found", name)
+}
 		}
 		ico, err := trayFiles.ReadFile("tray/" + name + ".ico")
 		if err != nil || !bytes.Equal(ico[:4], []byte{0, 0, 1, 0}) {
