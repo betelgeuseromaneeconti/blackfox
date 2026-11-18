@@ -14,6 +14,9 @@ if (-not ($env:BLACKFOX_SIGNING_KEY -or $env:BLACKFOX_SIGNING_KEY_FILE -or $env:
     Write-Warning 'No signing key (BLACKFOX_SIGNING_KEY or BLACKFOX_SIGNING_KEY_FILE): this build takes no updates'
     return ''
 }
+# The Go signing helper still accepts the legacy environment variable names.
+if ($env:BLACKFOX_SIGNING_KEY) { $env:ARMAN_VPN_SIGNING_KEY = $env:BLACKFOX_SIGNING_KEY }
+if ($env:BLACKFOX_SIGNING_KEY_FILE) { $env:ARMAN_VPN_SIGNING_KEY_FILE = $env:BLACKFOX_SIGNING_KEY_FILE }
 Push-Location (Join-Path (Split-Path -Parent $PSScriptRoot) 'core')
 try {
     $public = (go run ./tools/sign -public).Trim()
