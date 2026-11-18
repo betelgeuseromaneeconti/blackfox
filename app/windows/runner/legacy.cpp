@@ -5,6 +5,7 @@
 #include <shobjidl.h>
 #include <wrl/client.h>
 
+#include <initializer_list>
 #include <thread>
 #include <vector>
 
@@ -13,9 +14,22 @@ namespace legacy {
 namespace {
 
 constexpr wchar_t kOldExe[] = L"firefox-vpn.exe";
-constexpr wchar_t kNewExe[] = L"arman-vpn.exe";
+constexpr wchar_t kArmanExe[] = L"arman-vpn.exe";
+constexpr wchar_t kNewExe[] = L"BLACKFOX.exe";
 constexpr wchar_t kOldShortcut[] = L"Firefox VPN.lnk";
-constexpr wchar_t kNewShortcut[] = L"Arman VPN.lnk";
+constexpr wchar_t kArmanShortcut[] = L"Arman VPN.lnk";
+constexpr wchar_t kNewShortcut[] = L"BLACKFOX.lnk";
+
+bool IsOneOf(const std::wstring& value,
+             std::initializer_list<const wchar_t*> names) {
+  for (const auto* name : names) {
+    if (::CompareStringOrdinal(value.c_str(), -1, name, -1, TRUE) ==
+        CSTR_EQUAL) {
+      return true;
+    }
+  }
+  return false;
+}
 
 // This executable's path, and its folder with a trailing backslash.
 std::wstring SelfPath() {
@@ -53,9 +67,7 @@ std::wstring KnownFolder(REFKNOWNFOLDERID id) {
   return result;
 }
 
-// Points the shortcut at file (in folder) that starts old_exe at new_exe
-// instead, and saves it as save_as (in folder); the old file goes when the
-// name differs.
+// Retarget a shortcut only when it still points at the expected old binary.
 void Retarget(const std::wstring& folder, const wchar_t* file,
               const wchar_t* save_as, const std::wstring& old_exe,
               const std::wstring& new_exe) {
@@ -89,14 +101,24 @@ void Retarget(const std::wstring& folder, const wchar_t* file,
   }
 }
 
+void RetargetFolder(const std::wstring& folder,
+                    const std::wstring& old_exe,
+                    const std::wstring& self,
+                    bool keepShortcutNames) {
+  if (folder.empty()) return;
+  const wchar_t* names[] = {kOldShortcut, kArmanShortcut, kNewShortcut};
+  for (const auto* name : names) {
+    const wchar_t* destination =
+        keepShortcutNames ? name : kNewShortcut;
+    Retarget(folder, name, destination, old_exe, self);
+  }
+}
+
 }  // namespace
 
 bool HandOff(const std::wstring& command_line) {
   const std::wstring self = SelfPath();
-  if (::CompareStringOrdinal(NameOf(self).c_str(), -1, kOldExe, -1, TRUE) !=
-      CSTR_EQUAL) {
-    return false;
-  }
+  if (!IsOneOf(NameOf(self), {kOldExe, kArmanExe})) return false;
   const std::wstring folder = FolderOf(self);
   const std::wstring next = folder + kNewExe;
   if (!Exists(next)) return false;
@@ -108,7 +130,6 @@ bool HandOff(const std::wstring& command_line) {
                         0, nullptr, folder.c_str(), &startup, &process)) {
     return false;
   }
-  // The new copy may bring its window to the front.
   ::AllowSetForegroundWindow(process.dwProcessId);
   ::CloseHandle(process.hThread);
   ::CloseHandle(process.hProcess);
@@ -117,35 +138,29 @@ bool HandOff(const std::wstring& command_line) {
 
 void Migrate() {
   const std::wstring self = SelfPath();
-  if (::CompareStringOrdinal(NameOf(self).c_str(), -1, kNewExe, -1, TRUE) !=
-      CSTR_EQUAL) {
-    return;
-  }
-  const std::wstring old_exe = FolderOf(self) + kOldExe;
-  if (!Exists(old_exe)) return;
-  // Setup's shortcuts, under the new name: stage 1 of the rename (1.0.9)
-  // renamed some of them already.
-  for (const KNOWNFOLDERID* id : {&FOLDERID_Programs, &FOLDERID_Desktop}) {
-    const std::wstring folder = KnownFolder(*id);
-    if (folder.empty()) continue;
-    Retarget(folder, kOldShortcut, kNewShortcut, old_exe, self);
-    Retarget(folder, kNewShortcut, kNewShortcut, old_exe, self);
-  }
-  // A shortcut pinned to the taskbar keeps its file name, or it would be
-  // unpinned.
-  const std::wstring pinned = KnownFolder(FOLDERID_UserPinned);
-  if (!pinned.empty()) {
-    const std::wstring taskbar = pinned + L"\\TaskBar";
-    Retarget(taskbar, kOldShortcut, kOldShortcut, old_exe, self);
-    Retarget(taskbar, kNewShortcut, kNewShortcut, old_exe, self);
-  }
-  // The copy that handed off to this one may still be exiting.
-  std::thread([old_exe] {
-    for (int i = 0; i < 50 && Exists(old_exe); ++i) {
-      if (::DeleteFileW(old_exe.c_str())) return;
-      ::Sleep(200);
+  if (!IsOneOf(NameOf(self), {kNewExe})) return;
+  const std::wstring folder = FolderOf(self);
+
+  // Upgrade both historical executable names and their Start-menu/Desktop
+  // shortcuts to BLACKFOX. Taskbar shortcut filenames are retained so pins
+  // are not lost.
+  for (const auto* old_name : {kOldExe, kArmanExe}) {
+    const std::wstring old_exe = folder + old_name;
+    if (!Exists(old_exe)) continue;
+    for (const KNOWNFOLDERID* id : {&FOLDERID_Programs, &FOLDERID_Desktop}) {
+      RetargetFolder(KnownFolder(*id), old_exe, self, false);
     }
-  }).detach();
+    const std::wstring pinned = KnownFolder(FOLDERID_UserPinned);
+    if (!pinned.empty()) {
+      RetargetFolder(pinned + L"\\TaskBar", old_exe, self, true);
+    }
+    std::thread([old_exe] {
+      for (int i = 0; i < 50 && Exists(old_exe); ++i) {
+        if (::DeleteFileW(old_exe.c_str())) return;
+        ::Sleep(200);
+      }
+    }).detach();
+  }
 }
 
 }  // namespace legacy
