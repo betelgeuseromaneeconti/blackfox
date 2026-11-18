@@ -63,7 +63,7 @@ android {
                 // REV_ID: its version, which it would ask Git for.
                 arguments += listOf("REV_ID=2.19.3", "APP_SUPPORT_FLEXIBLE_PAGE_SIZES=true")
                 // The class its native methods bind to.
-                cFlags += listOf("-O3", "-DPKGNAME=com/arman/firefoxvpn", "-DCLSNAME=Tun2Socks")
+                cFlags += listOf("-O3", "-DPKGNAME=com/betelgeuseromaneeconti/blackfox", "-DCLSNAME=Tun2Socks")
             }
         }
     }

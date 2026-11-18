@@ -42,20 +42,20 @@ try {
 
 New-Item -ItemType Directory -Force $portableOut | Out-Null
 Copy-Item "$root\app\build\windows\x64\runner\Release\*" $portableOut -Recurse -Force
-if (Test-Path "$portableOut\arman-vpn.exe") {
-    Copy-Item "$portableOut\arman-vpn.exe" "$portableOut\BLACKFOX.exe" -Force
+if (Test-Path "$portableOut\blackfox.exe") {
+    Copy-Item "$portableOut\blackfox.exe" "$portableOut\BLACKFOX.exe" -Force
 }
 
 $public = & "$PSScriptRoot\signing-key.ps1"
 Push-Location "$root\core"
 try {
     $env:APP_VERSION = $version
-    go generate ./cmd/arman-vpn-core
+    go generate ./cmd/blackfox-core
     if ($LASTEXITCODE -ne 0) { throw 'go generate failed' }
-    $ldflags = "-s -w -X github.com/armanlife/arman-vpn-client/core/internal/version.Current=$version"
-    if ($public) { $ldflags += " -X github.com/armanlife/arman-vpn-client/core/internal/signing.Key=$public" }
+    $ldflags = "-s -w -X github.com/betelgeuseromaneeconti/blackfox/core/internal/version.Current=$version"
+    if ($public) { $ldflags += " -X github.com/betelgeuseromaneeconti/blackfox/core/internal/signing.Key=$public" }
     New-Item -ItemType Directory -Force "$portableOut\core" | Out-Null
-    go build -trimpath -ldflags $ldflags -o "$portableOut\core\arman-vpn-core.exe" ./cmd/arman-vpn-core
+    go build -trimpath -ldflags $ldflags -o "$portableOut\core\blackfox-vpn-core.exe" ./cmd/blackfox-core
     if ($LASTEXITCODE -ne 0) { throw 'go build failed' }
     & "$PSScriptRoot\build-windows-tun.ps1" -Version $version -Out "$portableOut\core" -PublicKey $public
 } finally { Pop-Location }
@@ -83,10 +83,10 @@ Copy-Item $installer (Join-Path $relWin 'BLACKFOX-Setup.exe') -Force
 # Release names step. Keep the portable archive and installer together.
 $dist = Join-Path $root 'dist'
 New-Item -ItemType Directory -Force $dist | Out-Null
-$portableArchive = Join-Path $dist "Arman-VPN-$version-Windows-x64.zip"
+$portableArchive = Join-Path $dist "BLACKFOX-VPN-$version-Windows-x64.zip"
 Compress-Archive -Path (Join-Path $portableOut '*') -DestinationPath $portableArchive -CompressionLevel Optimal -Force
-Copy-Item $installer (Join-Path $dist "Arman-VPN-$version-Windows-Setup-x64.exe") -Force
+Copy-Item $installer (Join-Path $dist "BLACKFOX-VPN-$version-Windows-Setup-x64.exe") -Force
 
 Write-Host "Built Windows x64 Portable in $portableOut"
 Write-Host "Created $portableArchive"
-Write-Host "Created $(Join-Path $dist "Arman-VPN-$version-Windows-Setup-x64.exe")"
+Write-Host "Created $(Join-Path $dist "BLACKFOX-VPN-$version-Windows-Setup-x64.exe")"
