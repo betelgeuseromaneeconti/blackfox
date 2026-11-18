@@ -4,9 +4,9 @@ import (
 	"net/http"
 	"sync"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/controlplane"
-	"github.com/armanlife/arman-vpn-client/core/internal/logx"
-	"github.com/armanlife/arman-vpn-client/core/internal/signinproxy"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/controlplane"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/signinproxy"
 )
 
 // signInProxy holds the browser sign-in's proxy (package signinproxy):

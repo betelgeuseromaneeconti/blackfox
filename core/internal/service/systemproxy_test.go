@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/config"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/config"
 )
 
 func waitPhase(t *testing.T, d *Daemon, want string) {
