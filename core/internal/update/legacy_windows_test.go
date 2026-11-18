@@ -18,7 +18,7 @@ func TestMigrateRenamesSetupsEntryAndRemovesThePlaceholder(t *testing.T) {
 	random := make([]byte, 6)
 	rand.Read(random)
 	old := uninstallKey
-	uninstallKey = `Software\ArmanVPNUpdateTest-` + hex.EncodeToString(random)
+	uninstallKey = `Software\BLACKFOXVPNUpdateTest-` + hex.EncodeToString(random)
 	t.Cleanup(func() {
 		registry.DeleteKey(registry.CURRENT_USER, uninstallKey)
 		uninstallKey = old
@@ -56,14 +56,14 @@ func TestMigrateRenamesSetupsEntryAndRemovesThePlaceholder(t *testing.T) {
 	if err := Migrate(app); err != nil {
 		t.Fatal(err)
 	}
-	if value("DisplayName") != "Arman VPN" || value("DisplayIcon") != filepath.Join(app, "arman-vpn.exe") {
+	if value("DisplayName") != "BLACKFOX VPN" || value("DisplayIcon") != filepath.Join(app, "blackfox-vpn.exe") {
 		t.Fatalf("entry: %q, %q", value("DisplayName"), value("DisplayIcon"))
 	}
 	if _, err := os.Stat(placeholder); err != nil {
 		t.Fatalf("a real file went: %v", err)
 	}
 	// Once more: nothing changes.
-	if err := Migrate(app); err != nil || value("DisplayName") != "Arman VPN" {
+	if err := Migrate(app); err != nil || value("DisplayName") != "BLACKFOX VPN" {
 		t.Fatalf("again: %v, %q", err, value("DisplayName"))
 	}
 }
