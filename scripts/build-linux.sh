@@ -75,9 +75,6 @@ fi
   -ldflags "$goflags" -o "$app/core/blackfox-vpn-tun" ./cmd/blackfox-tun)
 [ -z "$public" ] || (cd "$root/core" && go run ./tools/sign "$app/core/blackfox-vpn-tun")
 install -m 0644 "$root/LICENSE" "$app/LICENSE"
-# Links under the app's and the core's names before 1.0.9, which the update
-# of those versions checks for and starts; the app removes them
-# (core/internal/update/legacy_linux.go).
 
 mkdir -p "$root/dist"
 out="$root/dist/BLACKFOX-VPN-$version-Linux-$arch.tar.gz"

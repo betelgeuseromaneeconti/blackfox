@@ -43,7 +43,7 @@ try {
 New-Item -ItemType Directory -Force $portableOut | Out-Null
 Copy-Item "$root\app\build\windows\x64\runner\Release\*" $portableOut -Recurse -Force
 if (Test-Path "$portableOut\blackfox.exe") {
-    Copy-Item "$portableOut\blackfox.exe" "$portableOut\blackfox-vpn.exe" -Force
+    Move-Item "$portableOut\blackfox.exe" "$portableOut\blackfox-vpn.exe" -Force
 }
 
 $public = & "$PSScriptRoot\signing-key.ps1"
