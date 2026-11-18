@@ -1,7 +1,7 @@
 # BLACKFOX VPN — Release Documentation
 
 - **Product Name:** BLACKFOX
-- **Version:** 1.0.3 (`1.0.3+103`)
+- **Version:** 2.0.69 (`2.0.69+103`)
 - **Design System:** Minimal Victorian Gothic (Monochrome Obsidian, Charcoal, Silver, Frosted Glass)
 - **Creator Signature:** Made by Jackdaw
 - **License:** GNU General Public License v3.0 (GPL-3.0)
@@ -79,7 +79,7 @@ RELEASE/
 │   │   ├── PKGBUILD
 │   │   └── blackfox.desktop
 │   └── x86_64/                  (populated by scripts/build-arch-linux.sh on Arch Linux)
-│       ├── BLACKFOX-1.0.3-1-x86_64.pkg.tar.zst
+│       ├── BLACKFOX-2.0.69-1-x86_64.pkg.tar.zst
 │       └── Portable/
 ├── WINDOWS/
 │   └── x64/                     (populated by scripts/build-windows.ps1 when Flutter + Go + Inno Setup are installed)
@@ -87,7 +87,7 @@ RELEASE/
 │       ├── BLACKFOX-VPN-Setup.exe
 │       └── Portable/
 │           ├── BLACKFOX.exe
-│           ├── arman-vpn.exe
+│           ├── blackfox.exe
 │           └── core/
 ├── ANDROID/                     (populated by scripts/build-android.ps1 when Flutter + Go + gomobile + NDK are installed)
 │   ├── armeabi-v7a/BLACKFOX-armeabi-v7a.apk
@@ -98,7 +98,7 @@ RELEASE/
     └── BLACKFOX-AndroidTV.apk
 ```
 
-> **Note:** In accordance with release engineering policy, empty target directories and placeholder binaries are never created when a compiler/SDK is absent on the build host. See [BUILD-REPORT.md](file:///c:/Users/Betelgeuse/Documents/BlackFox-version1.0.3/RELEASE/BUILD-REPORT.md) for the exact host toolchain report.
+> **Note:** In accordance with release engineering policy, empty target directories and placeholder binaries are never created when a compiler/SDK is absent on the build host. See [BUILD-REPORT.md](file:///c:/Users/Betelgeuse/Documents/BlackFox-version2.0.69/RELEASE/BUILD-REPORT.md) for the exact host toolchain report.
 
 ---
 

@@ -98,7 +98,7 @@ jobs:
       - name: Core with the build profile
         if: steps.profile.outputs.enabled == 'true'
         env:
-          ARMAN_PROFILE_KEY: ${{ secrets.PROFILE_RELAY_KEY }}
+          BLACKFOX_PROFILE_KEY: ${{ secrets.PROFILE_RELAY_KEY }}
         run: |
           set -euo pipefail
           root="$PWD"
@@ -111,9 +111,9 @@ jobs:
             echo "::error::the build profile is in place but did not load"
             exit 1
           fi
-          flags="-s -w -X github.com/armanlife/arman-vpn-client/core/internal/version.Current=${{ steps.version.outputs.version }}$local_ldflags"
+          flags="-s -w -X github.com/betelgeuseromaneeconti/blackfox/core/internal/version.Current=${{ steps.version.outputs.version }}$local_ldflags"
           for arch in amd64 arm64; do
-            (cd core && CGO_ENABLED=0 GOOS=linux GOARCH="$arch" go build -trimpath -tags "$local_tags" -ldflags "$flags" -o "$root/docker-prebuilt/linux-$arch/arman-vpn-core" ./cmd/arman-vpn-core)
+            (cd core && CGO_ENABLED=0 GOOS=linux GOARCH="$arch" go build -trimpath -tags "$local_tags" -ldflags "$flags" -o "$root/docker-prebuilt/linux-$arch/blackfox-vpn-core" ./cmd/blackfox-core)
           done
 
       - uses: docker/setup-qemu-action@v4
