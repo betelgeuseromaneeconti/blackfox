@@ -1,8 +1,8 @@
-name: arman_vpn
-description: "Cross-platform shell for the Go VPN core"
+name: blackfox
+description: "BLACKFOX VPN client"
 publish_to: 'none'
 
-version: 1.0.3+103
+version: 2.0.69+2069
 
 environment:
   sdk: ^3.13.5
@@ -30,7 +30,7 @@ flutter:
   generate: true
 
   assets:
-    # The fox shield beside the app's name (tool/app_icons.py).
+    # The BLACKFOX Kitsune mask beside the app's name (tool/app_icons.py).
     - assets/logo.png
     - assets/tray/
     # Country flags from flag-icons (MIT, assets/flags/LICENSE), the same
