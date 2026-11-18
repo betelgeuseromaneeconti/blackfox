@@ -27,24 +27,24 @@ ThemeData _theme(Brightness brightness, Locale locale) {
   final dark = brightness == Brightness.dark;
   final scheme = dark
       ? const ColorScheme.dark(
-          primary: Color(0xFFFFFFFF),
+          primary: Color(0xFFF3F0E8),
           onPrimary: Color(0xFF070709),
           primaryContainer: Color(0xFF23232C),
           onPrimaryContainer: Color(0xFFF4F4F8),
-          secondary: Color(0xFFD4D4DC),
+          secondary: Color(0xFFC8C5C0),
           onSecondary: Color(0xFF0A0A0E),
           secondaryContainer: Color(0xFF1F1F27),
           onSecondaryContainer: Color(0xFFF2F2F6),
-          tertiary: Color(0xFFB0B0BC),
+          tertiary: Color(0xFFAAA6A0),
           onTertiary: Color(0xFF09090C),
-          surface: Color(0xFF08080B),
+          surface: Color(0xFF070708),
           onSurface: Color(0xFFF2F2F6),
           onSurfaceVariant: Color(0xFF9696A4),
-          surfaceContainerLowest: Color(0xFF050507),
-          surfaceContainerLow: Color(0xFF0C0C10),
-          surfaceContainer: Color(0xFF111116),
-          surfaceContainerHigh: Color(0xFF17171E),
-          surfaceContainerHighest: Color(0xFF21212B),
+          surfaceContainerLowest: Color(0xFF030304),
+          surfaceContainerLow: Color(0xFF09090C),
+          surfaceContainer: Color(0xFF101014),
+          surfaceContainerHigh: Color(0xFF17171B),
+          surfaceContainerHighest: Color(0xFF202024),
           outline: Color(0x42FFFFFF),
           outlineVariant: Color(0x22FFFFFF),
           error: Color(0xFFD8D8E0),
@@ -92,9 +92,9 @@ ThemeData _theme(Brightness brightness, Locale locale) {
     ),
     cardTheme: CardThemeData(
       elevation: 0,
-      color: dark ? const Color(0xD8121218) : Colors.white,
+      color: dark ? const Color(0xB81A1A20) : Colors.white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(18),
         side: BorderSide(
           color: dark
               ? Colors.white.withValues(alpha: 0.14)
@@ -104,9 +104,9 @@ ThemeData _theme(Brightness brightness, Locale locale) {
       ),
     ),
     dialogTheme: DialogThemeData(
-      backgroundColor: dark ? const Color(0xFF111117) : Colors.white,
+      backgroundColor: dark ? const Color(0xE6101014) : Colors.white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(18),
         side: BorderSide(
           color: dark
               ? Colors.white.withValues(alpha: 0.18)
