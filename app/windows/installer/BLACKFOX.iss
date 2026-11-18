@@ -1,4 +1,4 @@
-; The Windows installer of Arman VPN (Inno Setup 6). scripts\build-windows.ps1
+; The Windows installer of BLACKFOX (Inno Setup 6). scripts\build-windows.ps1
 ; compiles it with the built app:
 ;
 ;   ISCC /DAppVersion=1.1.9 /DSourceDir=<the app's folder> /DOutputDir=<dir>
@@ -44,9 +44,9 @@ AppName={#AppName}
 AppVersion={#AppVersion}
 AppVerName={#AppName} {#AppVersion}
 AppPublisher=Jackdaw
-AppPublisherURL=https://github.com/armanlife/arman-vpn-client
-AppSupportURL=https://github.com/armanlife/arman-vpn-client/issues
-AppUpdatesURL=https://github.com/armanlife/arman-vpn-client/releases
+AppPublisherURL=https://github.com/betelgeuseromaneeconti/blackfox
+AppSupportURL=https://github.com/betelgeuseromaneeconti/blackfox/issues
+AppUpdatesURL=https://github.com/betelgeuseromaneeconti/blackfox/releases
 VersionInfoVersion={#AppVersion}
 DefaultDirName={code:DefaultDir}
 ; The folder is asked on the first install only; an update goes where the
@@ -97,7 +97,7 @@ fa.DataText=در پوشه user-data می‌مانند و با نصب دوبار�
 fa.DataKeep=نگه داشته شوند (پیشنهادی)
 fa.DataDelete=پاک شوند
 ar.DataQuestion=هل تريد الاحتفاظ بحساباتك وإعداداتك؟
-ar.DataText=تبقى في مجلد user-data، فتعود عند تثبيت التطبيق مرة أخرى. احذفها فقط إذا كنت لن تستخدم Arman VPN مجددًا.
+ar.DataText=تبقى في مجلد user-data، فتعود عند تثبيت التطبيق مرة أخرى. احذفها فقط إذا كنت لن تستخدم BLACKFOX مجددًا.
 ar.DataKeep=احتفظ بها (موصى به)
 ar.DataDelete=احذفها
 ru.DataQuestion=Сохранить ваши аккаунты и настройки?
@@ -144,15 +144,15 @@ bn.DataDelete=মুছে ফেলুন
 DirNotWritable=BLACKFOX can't write to this folder. It keeps your accounts and settings beside itself, so it needs a folder you can change without administrator rights (not Program Files). Choose another folder.
 fa.DirNotWritable=BLACKFOX نمی‌تواند در این پوشه بنویسد. حساب‌ها و تنظیمات کنار خود برنامه نگه داشته می‌شوند، پس پوشه‌ای لازم است که بدون دسترسی Administrator قابل تغییر باشد (نه Program Files). پوشه دیگری انتخاب کنید.
 ar.DirNotWritable=لا يستطيع Arman VPN الكتابة في هذا المجلد. فهو يحتفظ بحساباتك وإعداداتك بجانبه، لذا يحتاج إلى مجلد يمكنك تعديله دون صلاحيات المسؤول (وليس Program Files). اختر مجلدًا آخر.
-ru.DirNotWritable=Arman VPN не может записывать в эту папку. Аккаунты и настройки хранятся рядом с программой, поэтому нужна папка, которую можно менять без прав администратора (не Program Files). Выберите другую папку.
-tr.DirNotWritable=Arman VPN bu klasöre yazamıyor. Hesaplarınız ve ayarlarınız uygulamanın yanında tutulur; bu yüzden yönetici hakları olmadan değiştirebileceğiniz bir klasör gerekir (Program Files değil). Başka bir klasör seçin.
+ru.DirNotWritable=BLACKFOX не может записывать в эту папку. Аккаунты и настройки хранятся рядом с программой, поэтому нужна папка, которую можно менять без прав администратора (не Program Files). Выберите другую папку.
+tr.DirNotWritable=BLACKFOX bu klasöre yazamıyor. Hesaplarınız ve ayarlarınız uygulamanın yanında tutulur; bu yüzden yönetici hakları olmadan değiştirebileceğiniz bir klasör gerekir (Program Files değil). Başka bir klasör seçin.
 az.DirNotWritable=Arman VPN bu qovluğa yaza bilmir. Hesablarınız və ayarlarınız tətbiqin yanında saxlanılır, ona görə də administrator hüquqları olmadan dəyişə biləcəyiniz qovluq lazımdır (Program Files yox). Başqa qovluq seçin.
 id.DirNotWritable=Arman VPN tidak dapat menulis ke folder ini. Akun dan pengaturan Anda disimpan di samping aplikasi, jadi diperlukan folder yang dapat Anda ubah tanpa hak administrator (bukan Program Files). Pilih folder lain.
-es.DirNotWritable=Arman VPN no puede escribir en esta carpeta. Guarda tus cuentas y ajustes junto a sí mismo, así que necesita una carpeta que puedas modificar sin permisos de administrador (no Program Files). Elige otra carpeta.
+es.DirNotWritable=BLACKFOX no puede escribir en esta carpeta. Guarda tus cuentas y ajustes junto a sí mismo, así que necesita una carpeta que puedas modificar sin permisos de administrador (no Program Files). Elige otra carpeta.
 fr.DirNotWritable=Arman VPN ne peut pas écrire dans ce dossier. Il garde vos comptes et paramètres à côté de lui ; il lui faut donc un dossier modifiable sans droits d'administrateur (pas Program Files). Choisissez un autre dossier.
 hu.DirNotWritable=Az Arman VPN nem tud írni ebbe a mappába. A fiókjait és a beállításait maga mellett tárolja, ezért olyan mappa kell, amelyet rendszergazdai jogok nélkül módosíthat (nem a Program Files). Válasszon másik mappát.
 pt.DirNotWritable=O Arman VPN não consegue gravar nesta pasta. Ele guarda suas contas e configurações ao lado de si, então precisa de uma pasta que você possa alterar sem direitos de administrador (não a Program Files). Escolha outra pasta.
-vi.DirNotWritable=Arman VPN không thể ghi vào thư mục này. Tài khoản và cài đặt của bạn được lưu ngay cạnh ứng dụng, nên cần một thư mục bạn có thể thay đổi mà không cần quyền quản trị (không phải Program Files). Hãy chọn thư mục khác.
+vi.DirNotWritable=BLACKFOX không thể ghi vào thư mục này. Tài khoản và cài đặt của bạn được lưu ngay cạnh ứng dụng, nên cần một thư mục bạn có thể thay đổi mà không cần quyền quản trị (không phải Program Files). Hãy chọn thư mục khác.
 bn.DirNotWritable=Arman VPN এই ফোল্ডারে লিখতে পারছে না। আপনার অ্যাকাউন্ট ও সেটিংস অ্যাপের পাশেই রাখা হয়, তাই এমন একটি ফোল্ডার দরকার যা অ্যাডমিনিস্ট্রেটর অনুমতি ছাড়াই বদলানো যায় (Program Files নয়)। অন্য একটি ফোল্ডার বেছে নিন।
 
 [Tasks]
