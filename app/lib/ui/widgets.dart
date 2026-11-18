@@ -1,0 +1,1081 @@
+import 'package:material_ui/material_ui.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import '../app_info.dart';
+import '../core/android_core.dart';
+import '../core/core_api.dart';
+import '../core/models.dart';
+import '../core/ports.dart';
+import '../core/remote_flags.dart';
+import '../core/updates.dart';
+import '../l10n/app_localizations.dart';
+import '../platform.dart';
+import 'country_names.dart';
+import 'format.dart';
+import 'local_country_names.dart';
+
+/// Where a Firefox Account is made: Mozilla's site.
+const firefoxAccountSignUpUrl = 'https://accounts.firefox.com/';
+
+/// Where an account made with Google or Apple sign-in gets a password.
+const firefoxAccountSetPasswordUrl =
+    'https://accounts.firefox.com/reset_password/';
+
+/// Strictly monochrome Victorian Gothic palette for BLACKFOX.
+abstract final class GothicPalette {
+  static const obsidian = Color(0xFF060608);
+  static const night = Color(0xFF0A0A0E);
+  static const charcoal = Color(0xFF121217);
+  static const glass = Color(0xD815151C);
+  static const surface = Color(0xFF181820);
+  static const elevated = Color(0xFF22222C);
+  static const border = Color(0x26FFFFFF);
+  static const borderStrong = Color(0x48FFFFFF);
+  static const ivory = Color(0xFFF6F6F9);
+  static const silver = Color(0xFFD4D4DC);
+  static const ash = Color(0xFF9696A2);
+  static const slate = Color(0xFF646470);
+}
+
+/// The BLACKFOX monochrome Kitsune logo (`assets/logo.png`), with a vector
+/// Kitsune mask fallback when running in headless tests.
+class AppLogo extends StatelessWidget {
+  const AppLogo({super.key, required this.size});
+
+  final double size;
+
+  @override
+  Widget build(BuildContext context) => Image.asset(
+    'assets/logo.png',
+    width: size,
+    height: size,
+    filterQuality: FilterQuality.high,
+    excludeFromSemantics: true,
+    errorBuilder: (_, _, _) => CustomPaint(
+      size: Size.square(size),
+      painter: const _KitsuneLogoPainter(),
+    ),
+  );
+}
+
+class _KitsuneLogoPainter extends CustomPainter {
+  const _KitsuneLogoPainter();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final s = size.width / 100.0;
+    final center = Offset(size.width / 2, size.height / 2);
+    canvas.drawCircle(
+      center,
+      46 * s,
+      Paint()..color = const Color(0xFF08080A),
+    );
+    canvas.drawCircle(
+      center,
+      46 * s,
+      Paint()
+        ..color = const Color(0xCCFFFFFF)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.6 * s,
+    );
+    final mask = Path()
+      ..moveTo(50 * s, 21 * s)
+      ..lineTo(39 * s, 24 * s)
+      ..lineTo(25 * s, 12 * s)
+      ..lineTo(29 * s, 34 * s)
+      ..lineTo(27 * s, 47 * s)
+      ..lineTo(34 * s, 59 * s)
+      ..lineTo(50 * s, 72 * s)
+      ..lineTo(66 * s, 59 * s)
+      ..lineTo(73 * s, 47 * s)
+      ..lineTo(71 * s, 34 * s)
+      ..lineTo(75 * s, 12 * s)
+      ..lineTo(61 * s, 24 * s)
+      ..close();
+    canvas.drawPath(mask, Paint()..color = const Color(0xFFF4F4F6));
+    final eyeL = Path()
+      ..moveTo(33 * s, 42 * s)
+      ..lineTo(45 * s, 45 * s)
+      ..lineTo(37 * s, 46 * s)
+      ..close();
+    final eyeR = Path()
+      ..moveTo(67 * s, 42 * s)
+      ..lineTo(55 * s, 45 * s)
+      ..lineTo(63 * s, 46 * s)
+      ..close();
+    final mark = Path()
+      ..moveTo(50 * s, 26 * s)
+      ..lineTo(52.5 * s, 32 * s)
+      ..lineTo(50 * s, 38 * s)
+      ..lineTo(47.5 * s, 32 * s)
+      ..close();
+    final dark = Paint()..color = const Color(0xFF0A0A0E);
+    canvas.drawPath(eyeL, dark);
+    canvas.drawPath(eyeR, dark);
+    canvas.drawPath(mark, dark);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+/// Strictly monochrome status colors that read in both dark and light themes.
+/// No green, amber, red, blue, or purple accents are used.
+abstract final class StatusColors {
+  static const good = Color(0xFFEAEAF0);
+  static const busy = Color(0xFFB4B4C0);
+  static const bad = Color(0xFF828290);
+  static const idle = Color(0xFF62626E);
+}
+
+/// How the app presents the engine state.
+class PhaseLook {
+  const PhaseLook(this.label, this.color, this.hint);
+
+  final String label;
+  final Color color;
+
+  /// What the state means for states that need it, in the user's words
+  /// where the core gives a code ([stateText]); empty otherwise.
+  final String hint;
+
+  static PhaseLook of(AppLocalizations l, CoreStatus s) {
+    if (s.connectPending) {
+      return PhaseLook(l.stateConnecting, StatusColors.busy, '');
+    }
+    if (s.connectFailure.isNotEmpty) {
+      return PhaseLook(l.stateOff, StatusColors.idle, '');
+    }
+    final message = stateText(l, s.state);
+    return switch (s.state.phase) {
+      Phase.running => PhaseLook(l.stateConnected, StatusColors.good, ''),
+      Phase.starting => PhaseLook(l.stateConnecting, StatusColors.busy, ''),
+      Phase.waiting when s.totalAccounts == 0 => PhaseLook(
+        l.stateWaiting,
+        StatusColors.busy,
+        l.waitingForAccount,
+      ),
+      Phase.waiting when s.state.code == StateCode.noAccounts => PhaseLook(
+        l.stateWaiting,
+        StatusColors.busy,
+        l.waitingForEnabledAccount,
+      ),
+      Phase.waiting => PhaseLook(l.stateWaiting, StatusColors.busy, message),
+      Phase.error when s.state.proxyPortInUse => PhaseLook(
+        l.stateError,
+        StatusColors.bad,
+        l.proxyPortInUse('${portOf(s.state.address) ?? s.state.address}'),
+      ),
+      Phase.error => PhaseLook(l.stateError, StatusColors.bad, message),
+      Phase.off => PhaseLook(l.stateOff, StatusColors.idle, ''),
+      _ => PhaseLook(l.stateUnknown, StatusColors.idle, message),
+    };
+  }
+}
+
+/// The engine state in the user's words, by its code; the core's own
+/// English for a state without one, or with a code this app does not know.
+String stateText(AppLocalizations l, EngineState s) => switch (s.code) {
+  StateCode.waitingForNetwork => l.waitingForNetwork,
+  StateCode.noAccounts => l.waitingForAccount,
+  StateCode.noUsableAccount => l.failNoAccount,
+  StateCode.startFailed when portOf(s.address) != null => l.proxyStartFailed(
+    '${portOf(s.address)}',
+  ),
+  _ => s.message,
+};
+
+/// Words a [CoreUnavailable] for people.
+String describeProblem(AppLocalizations l, CoreUnavailable e) =>
+    switch (e.problem) {
+      CoreProblem.starting => l.startingCore,
+      CoreProblem.notAnswering => l.errNotAnswering,
+      CoreProblem.refused => l.errRefused,
+      CoreProblem.portInUse => l.errPortInUse(
+        '${portOf(e.detail) ?? e.detail}',
+      ),
+      CoreProblem.noCore => l.errNoCore(e.detail),
+      CoreProblem.exited => l.errCoreExited(e.detail),
+    };
+
+/// Monochrome shading of a real delay: bright silver/white when quick,
+/// mid silver when moderate, muted slate when slow.
+Color delayColor(int ms) => ms < delayGoodMs
+    ? StatusColors.good
+    : ms < 1000
+    ? StatusColors.busy
+    : StatusColors.bad;
+
+/// Mozilla lists its recommended location as a country of its own, code
+/// REC (named "Recomended Location").
+bool isRecommendedPlace(String code) => code.toUpperCase() == 'REC';
+
+/// A location's name for people: the recommended location in the user's
+/// language, otherwise the country's name ([countryName]).
+String locationName(AppLocalizations l, String code, String name) =>
+    isRecommendedPlace(code)
+    ? l.recommendedLocation
+    : countryName(l, code, name);
+
+/// The phone home's monochrome Victorian Gothic colors.
+abstract final class Midnight {
+  static const top = Color(0xFF121217);
+  static const bottom = Color(0xFF060608);
+  static const connected = Color(0xFFFFFFFF);
+  static const busy = Color(0xFFC4C4CE);
+  static const error = Color(0xFF90909C);
+  static const idle = Color(0xFF747480);
+  static const muted = Color(0xFF9A9AA6);
+}
+
+/// A monochrome Victorian Gothic dark theme for the phone's home and
+/// navigation bar, preserving the app's resolved font family.
+ThemeData midnightTheme(ThemeData base) {
+  const scheme = ColorScheme.dark(
+    primary: Colors.white,
+    onPrimary: Color(0xFF060608),
+    primaryContainer: Color(0xFF22222A),
+    onPrimaryContainer: Colors.white,
+    secondary: Color(0xFFD4D4DC),
+    onSecondary: Color(0xFF0A0A0E),
+    secondaryContainer: Color(0x1FFFFFFF),
+    onSecondaryContainer: Colors.white,
+    surface: Midnight.bottom,
+    onSurface: Colors.white,
+    onSurfaceVariant: Midnight.muted,
+    surfaceContainerLowest: Color(0xFF040406),
+    surfaceContainerLow: Color(0xFF0B0B0F),
+    surfaceContainer: Color(0xFF101015),
+    surfaceContainerHigh: Color(0xFF17171E),
+    surfaceContainerHighest: Color(0xFF22222B),
+    outline: Color(0x44FFFFFF),
+    outlineVariant: Color(0x24FFFFFF),
+    error: Color(0xFFD4D4DC),
+    onError: Color(0xFF08080A),
+  );
+  return ThemeData(
+    useMaterial3: true,
+    brightness: Brightness.dark,
+    colorScheme: scheme,
+    scaffoldBackgroundColor: Midnight.bottom,
+    fontFamily: base.textTheme.bodyMedium?.fontFamily,
+    navigationBarTheme: base.navigationBarTheme.copyWith(
+      backgroundColor: Midnight.bottom,
+      surfaceTintColor: Colors.transparent,
+      indicatorColor: Colors.white.withValues(alpha: 0.12),
+    ),
+  );
+}
+
+/// A country's name in the app's language; in English (and for a country
+/// without a translation) the server list's name [name], else the English
+/// name of its code, else the code.
+String countryName(AppLocalizations l, String code, [String name = '']) {
+  final upper = code.toUpperCase();
+  final local = localCountryNames[l.localeName]?[upper];
+  if (local != null) return local;
+  final named = name.isNotEmpty && name.toUpperCase() != upper;
+  return named ? name : countryNames[upper] ?? code;
+}
+
+/// A key that sorts names the way people of [language] expect.
+String nameSortKey(String language, String name) {
+  final lower = name.toLowerCase();
+  final out = StringBuffer();
+  for (final rune in lower.runes) {
+    final ch = String.fromCharCode(rune);
+    final i = switch (language) {
+      'fa' => _persianOrder.indexOf(ch),
+      'ar' => _arabicOrder.indexWhere((letter) => letter.contains(ch)),
+      _ => -1,
+    };
+    out.write(i >= 0 ? String.fromCharCode(0x0E00 + i) : _latinBase[ch] ?? ch);
+  }
+  return out.toString();
+}
+
+const _persianOrder = 'آاأإبپتثجچحخدذرزژسشصضطظعغفقکكگلمنوؤهةیيئ';
+
+const _arabicOrder = [
+  'اأإآ', 'ب', 'ت', 'ث', 'ج', 'ح', 'خ', 'د', 'ذ', 'ر', 'ز', 'س', 'ش', 'ص', //
+  'ض', 'ط', 'ظ', 'ع', 'غ', 'ف', 'ق', 'ك', 'ل', 'م', 'ن', 'هة', 'وؤ', 'يىئ',
+];
+
+const _latinBase = {
+  'à': 'a', 'á': 'a', 'â': 'a', 'ã': 'a', 'ä': 'a', 'å': 'a', 'ă': 'a', //
+  'ạ': 'a', 'ả': 'a', 'ấ': 'a', 'ầ': 'a', 'ẩ': 'a', 'ẫ': 'a', 'ậ': 'a', //
+  'ắ': 'a', 'ằ': 'a', 'ẳ': 'a', 'ẵ': 'a', 'ặ': 'a', 'ç': 'c', 'đ': 'd', //
+  'è': 'e', 'é': 'e', 'ê': 'e', 'ë': 'e', 'ẹ': 'e', 'ẻ': 'e', 'ẽ': 'e', //
+  'ế': 'e', 'ề': 'e', 'ể': 'e', 'ễ': 'e', 'ệ': 'e', 'ə': 'e', 'ğ': 'g', //
+  '̇': '',
+  'ì': 'i', 'í': 'i', 'î': 'i', 'ï': 'i', 'ı': 'i', 'ỉ': 'i', //
+  'ĩ': 'i', 'ị': 'i', 'ñ': 'n', 'ò': 'o', 'ó': 'o', 'ô': 'o', 'õ': 'o', //
+  'ö': 'o', 'ő': 'o', 'ø': 'o', 'ơ': 'o', 'ọ': 'o', 'ỏ': 'o', 'ố': 'o', //
+  'ồ': 'o', 'ổ': 'o', 'ỗ': 'o', 'ộ': 'o', 'ớ': 'o', 'ờ': 'o', 'ở': 'o', //
+  'ỡ': 'o', 'ợ': 'o', 'ş': 's', 'š': 's', 'ù': 'u', 'ú': 'u', 'û': 'u', //
+  'ü': 'u', 'ű': 'u', 'ư': 'u', 'ụ': 'u', 'ủ': 'u', 'ũ': 'u', 'ứ': 'u', //
+  'ừ': 'u', 'ử': 'u', 'ữ': 'u', 'ự': 'u', 'ý': 'y', 'ỳ': 'y', 'ỷ': 'y', //
+  'ỹ': 'y', 'ỵ': 'y', 'ž': 'z',
+};
+
+/// Why connecting fails, in the user's words, and the core's own text for
+/// the details.
+({String text, String detail, String code}) failureText(
+  AppLocalizations l,
+  ProxyInfo? proxy,
+  ConnectionTest? test,
+) {
+  final failed = test != null && !test.ok ? test : null;
+  var code = '';
+  var detail = '';
+  if (proxy != null &&
+      proxy.wakeError.isNotEmpty &&
+      (failed?.at == null ||
+          (proxy.wakeFailedAt?.isAfter(failed!.at!) ?? false))) {
+    (code, detail) = (proxy.wakeErrorCode, proxy.wakeError);
+  } else if (failed != null) {
+    (code, detail) = (failed.errorCode, failed.error);
+  }
+  return (text: failureCodeText(l, code), detail: detail, code: code);
+}
+
+/// What a [Failure] code means, in the user's words.
+String failureCodeText(AppLocalizations l, String code) {
+  return switch (code) {
+    Failure.noNetwork => l.failNoInternet,
+    Failure.unreachable => l.failUnreachable,
+    Failure.upstreamProxy => l.failUpstreamProxy,
+    Failure.insideVpn => l.failInsideVpn,
+    Failure.refused => l.failRefused,
+    Failure.locationRefused => l.failLocationRefused,
+    Failure.signIn => l.failSignIn,
+    Failure.quota => l.failQuota,
+    Failure.notEntitled => l.failNotEntitled,
+    Failure.region => l.failRegion,
+    Failure.server => l.failServer,
+    Failure.noAccount => l.failNoAccount,
+    Failure.testSite => l.failTestSite,
+    Failure.other => l.failOther,
+    _ => l.connectRetrying,
+  };
+}
+
+/// The soft warning when the public IP is in another country than the
+/// chosen one.
+String? exitMismatchText(AppLocalizations l, CoreStatus status) {
+  final m = status.exitMismatch;
+  final selection = status.selection.trim().toLowerCase();
+  if (m == null ||
+      selection.isEmpty ||
+      selection == 'fastest' ||
+      isRecommendedPlace(selection)) {
+    return null;
+  }
+  return l.exitMismatch(
+    countryName(l, m.exitCountryCode, m.exitCountryName),
+    countryName(l, m.chosenCountryCode, m.chosenCountryName),
+  );
+}
+
+/// Whether [code] says Mozilla refused the location the user chose.
+bool isLocationRefused(String code) => code == Failure.locationRefused;
+
+/// Where the phone's traffic goes, for its home page.
+class HomePlace {
+  const HomePlace(this.flag, this.name, this.caption, {this.auto = false});
+
+  final String flag;
+  final String name;
+  final String caption;
+  final bool auto;
+}
+
+/// The phone home's location.
+HomePlace homeLocation(
+  AppLocalizations l,
+  CoreStatus status, {
+  required bool connected,
+}) {
+  final proxy = status.proxy;
+  final exit = status.exit;
+  final selection = status.selection.toLowerCase();
+  final auto = switch (selection) {
+    '' => l.recommendedLocation,
+    'fastest' => l.modeFastest,
+    _ => null,
+  };
+  if (connected && proxy != null) {
+    final (code, name) = !isRecommendedPlace(proxy.countryCode)
+        ? (proxy.countryCode, proxy.countryName)
+        : exit != null && exit.countryCode.length == 2
+        ? (exit.countryCode, exit.countryName)
+        : ('', '');
+    if (code.isNotEmpty) {
+      return HomePlace(
+        code,
+        countryName(l, code, name),
+        auto ?? l.connectedTo,
+        auto: auto != null,
+      );
+    }
+  }
+  if (auto != null) return HomePlace('REC', auto, l.homeLocation);
+  return HomePlace(
+    status.selection.toUpperCase(),
+    countryName(l, status.selection, status.selectionName),
+    l.homeLocation,
+  );
+}
+
+/// The notes the home pages show: not the ports Mozilla refuses.
+List<Notice> homeNotices(List<Notice> notices) => [
+  for (final n in notices)
+    if (n.kind != 'port') n,
+];
+
+/// Luminance-preserving grayscale matrix so all country flags render in
+/// BLACKFOX's monochrome visual language without colorful accents.
+const _monochromeFlagMatrix = <double>[
+  0.299, 0.587, 0.114, 0, 0, //
+  0.299, 0.587, 0.114, 0, 0, //
+  0.299, 0.587, 0.114, 0, 0, //
+  0, 0, 0, 1, 0,
+];
+
+/// A country's flag rendered in BLACKFOX monochrome grayscale, 4:3 with
+/// crisp thin border; a monochrome emblem for the recommended location, and
+/// the ISO code in a monochrome badge when there is no SVG flag for it.
+class CountryFlag extends StatelessWidget {
+  const CountryFlag({super.key, required this.code, this.width = 28});
+
+  final String code;
+  final double width;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final height = width * 3 / 4;
+    final fallback = Container(
+      width: width,
+      height: height,
+      alignment: Alignment.center,
+      color: scheme.secondaryContainer,
+      child: Text(
+        code.toUpperCase(),
+        style: TextStyle(
+          fontSize: height * 0.45,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0.4,
+          color: scheme.onSecondaryContainer,
+        ),
+      ),
+    );
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(3),
+        border: Border.all(
+          color: scheme.outline.withValues(alpha: 0.55),
+          width: 0.75,
+        ),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: isRecommendedPlace(code)
+          ? Container(
+              width: width,
+              height: height,
+              alignment: Alignment.center,
+              color: scheme.primaryContainer,
+              child: Icon(
+                Icons.auto_awesome_rounded,
+                size: height * 0.68,
+                color: scheme.onPrimaryContainer,
+              ),
+            )
+          : code.length != 2
+          ? fallback
+          : bundledFlags.contains(code.toLowerCase())
+          ? ColorFiltered(
+              colorFilter: const ColorFilter.matrix(_monochromeFlagMatrix),
+              child: SvgPicture.asset(
+                'assets/flags/${code.toLowerCase()}.svg',
+                width: width,
+                height: height,
+                fit: BoxFit.cover,
+                errorBuilder: (_, _, _) => fallback,
+              ),
+            )
+          : FutureBuilder(
+              future: RemoteFlags.load(code.toLowerCase()),
+              builder: (context, snapshot) => switch (snapshot.data) {
+                final svg? => ColorFiltered(
+                  colorFilter: const ColorFilter.matrix(_monochromeFlagMatrix),
+                  child: SvgPicture.memory(
+                    svg,
+                    width: width,
+                    height: height,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, _, _) => fallback,
+                  ),
+                ),
+                null => fallback,
+              },
+            ),
+    );
+  }
+}
+
+/// The name of a routing region (`routing.region`) in the UI language.
+String regionName(AppLocalizations l, String code) => switch (code) {
+  'ir' => l.regionIr,
+  'cn' => l.regionCn,
+  'ru' => l.regionRu,
+  'af' => l.regionAf,
+  'tr' => l.regionTr,
+  'id' => l.regionId,
+  'br' => l.regionBr,
+  _ => l.regionNone,
+};
+
+/// The languages, each in its own words.
+const languageNames = {
+  'en': 'English',
+  'fa': 'فارسی',
+  'ar': 'العربية',
+  'zh': '简体中文',
+  'zh_Hant': '繁體中文',
+  'ru': 'Русский',
+  'es': 'Español',
+  'pt': 'Português (Brasil)',
+  'tr': 'Türkçe',
+  'fr': 'Français',
+  'hu': 'Magyar',
+  'id': 'Bahasa Indonesia',
+  'az': 'Azərbaycan dili',
+  'vi': 'Tiếng Việt',
+  'bn': 'বাংলা',
+};
+
+/// Bundled UI fonts for English and the Arabic script; other languages
+/// keep the platform typography and its script-specific fallbacks.
+String? languageFont(String code) => switch (code) {
+  'en' => 'Inter',
+  'fa' || 'ar' => 'Vazirmatn',
+  _ => null,
+};
+
+/// A title or label in its own language's font.
+TextStyle? languageStyle(String code) => switch (languageFont(code)) {
+  final font? => TextStyle(fontFamily: font),
+  null => null,
+};
+
+/// The margin around a page: narrower on a phone.
+EdgeInsets pagePadding(BuildContext context) =>
+    MediaQuery.sizeOf(context).width < 600
+    ? const EdgeInsets.fromLTRB(16, 16, 16, 20)
+    : const EdgeInsets.fromLTRB(28, 24, 28, 28);
+
+/// Marks a page opened with its own top bar (Android), which names it.
+class OwnTopBar extends InheritedWidget {
+  const OwnTopBar({super.key, required super.child});
+
+  static bool of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<OwnTopBar>() != null;
+
+  @override
+  bool updateShouldNotify(OwnTopBar oldWidget) => false;
+}
+
+/// A page's title with restrained Victorian Gothic typography and a subtle
+/// ornamental underline; nothing when the page has its own top bar.
+class PageTitle extends StatelessWidget {
+  const PageTitle(this.text, {super.key});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    if (OwnTopBar.of(context)) return const SizedBox.shrink();
+    final theme = Theme.of(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          text,
+          style: theme.textTheme.headlineSmall?.copyWith(
+            fontWeight: FontWeight.w600,
+            letterSpacing: 0.3,
+          ),
+        ),
+        const SizedBox(height: 6),
+        const GothicDivider(width: 96),
+      ],
+    );
+  }
+}
+
+/// Restrained Victorian Gothic ornamental separator: a thin monochrome line
+/// with a subtle central diamond accent.
+class GothicDivider extends StatelessWidget {
+  const GothicDivider({super.key, this.width, this.centered = false});
+
+  final double? width;
+  final bool centered;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme.outline.withValues(alpha: 0.45);
+    return SizedBox(
+      width: width ?? double.infinity,
+      height: 7,
+      child: CustomPaint(
+        painter: _GothicDividerPainter(color: color, centered: centered),
+      ),
+    );
+  }
+}
+
+class _GothicDividerPainter extends CustomPainter {
+  const _GothicDividerPainter({required this.color, required this.centered});
+
+  final Color color;
+  final bool centered;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final cy = size.height / 2;
+    final linePaint = Paint()
+      ..color = color
+      ..strokeWidth = 0.8;
+    final diamondPaint = Paint()
+      ..color = color.withValues(alpha: (color.a * 1.4).clamp(0.0, 1.0));
+
+    if (centered) {
+      final mid = size.width / 2;
+      if (mid > 8) {
+        canvas.drawLine(Offset(0, cy), Offset(mid - 6, cy), linePaint);
+        canvas.drawLine(Offset(mid + 6, cy), Offset(size.width, cy), linePaint);
+      }
+      final d = Path()
+        ..moveTo(mid, cy - 3)
+        ..lineTo(mid + 3.5, cy)
+        ..lineTo(mid, cy + 3)
+        ..lineTo(mid - 3.5, cy)
+        ..close();
+      canvas.drawPath(d, diamondPaint);
+    } else {
+      final d = Path()
+        ..moveTo(3.5, cy - 2.8)
+        ..lineTo(7, cy)
+        ..lineTo(3.5, cy + 2.8)
+        ..lineTo(0, cy)
+        ..close();
+      canvas.drawPath(d, diamondPaint);
+      if (size.width > 10) {
+        canvas.drawLine(Offset(10, cy), Offset(size.width, cy), linePaint);
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _GothicDividerPainter old) =>
+      old.color != color || old.centered != centered;
+}
+
+/// A titled Victorian Gothic glass card section.
+class Panel extends StatelessWidget {
+  const Panel({
+    super.key,
+    required this.child,
+    this.title,
+    this.icon,
+    this.trailing,
+    this.padding = const EdgeInsets.all(20),
+  });
+
+  final String? title;
+  final IconData? icon;
+  final Widget? trailing;
+  final Widget child;
+  final EdgeInsets padding;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    return Card(
+      margin: EdgeInsets.zero,
+      child: CustomPaint(
+        foregroundPainter: _GothicCornerPainter(
+          color: theme.colorScheme.outline.withValues(
+            alpha: isDark ? 0.28 : 0.18,
+          ),
+        ),
+        child: Padding(
+          padding: padding,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (title != null) ...[
+                Row(
+                  children: [
+                    if (icon != null) ...[
+                      Icon(
+                        icon,
+                        size: 18,
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                      const SizedBox(width: 8),
+                    ],
+                    Expanded(
+                      child: Text(
+                        title!,
+                        style: theme.textTheme.labelLarge?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                          letterSpacing: 0.6,
+                        ),
+                      ),
+                    ),
+                    ?trailing,
+                  ],
+                ),
+                const SizedBox(height: 14),
+              ],
+              child,
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _GothicCornerPainter extends CustomPainter {
+  const _GothicCornerPainter({required this.color});
+
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (size.width < 48 || size.height < 48) return;
+    final paint = Paint()
+      ..color = color
+      ..strokeWidth = 1.0
+      ..style = PaintingStyle.stroke;
+    const inset = 6.0;
+    const arm = 7.0;
+    // Top-left & bottom-right subtle Victorian corner ticks
+    canvas.drawLine(
+      const Offset(inset, inset + arm),
+      const Offset(inset, inset),
+      paint,
+    );
+    canvas.drawLine(
+      const Offset(inset, inset),
+      const Offset(inset + arm, inset),
+      paint,
+    );
+    canvas.drawLine(
+      Offset(size.width - inset, size.height - inset - arm),
+      Offset(size.width - inset, size.height - inset),
+      paint,
+    );
+    canvas.drawLine(
+      Offset(size.width - inset, size.height - inset),
+      Offset(size.width - inset - arm, size.height - inset),
+      paint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant _GothicCornerPainter old) => old.color != color;
+}
+
+/// Monochrome shading of a quota by the share used: bright white/platinum
+/// below the warning zone, silver 10 points before the switch threshold,
+/// and slate at or above the threshold.
+Color quotaColor(double usedPercent, double thresholdPercent) {
+  final threshold = thresholdPercent > 0 ? thresholdPercent : 95.0;
+  return usedPercent >= threshold
+      ? StatusColors.bad
+      : usedPercent >= threshold - 10
+      ? StatusColors.busy
+      : StatusColors.good;
+}
+
+/// A usage bar with the account-switch threshold marked.
+class QuotaBar extends StatelessWidget {
+  const QuotaBar({
+    super.key,
+    required this.percent,
+    this.threshold = 0,
+    this.unlimited = false,
+  });
+
+  final double percent;
+  final double threshold;
+  final bool unlimited;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final value = unlimited ? 1.0 : (percent / 100).clamp(0.0, 1.0);
+    final color = unlimited ? scheme.primary : quotaColor(percent, threshold);
+    return SizedBox(
+      height: 8,
+      child: LayoutBuilder(
+        builder: (context, box) => Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Positioned.fill(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(4),
+                child: LinearProgressIndicator(
+                  value: value,
+                  color: color,
+                  backgroundColor: scheme.surfaceContainerHighest,
+                ),
+              ),
+            ),
+            if (!unlimited && threshold > 0 && threshold < 100)
+              PositionedDirectional(
+                start: box.maxWidth * threshold / 100 - 1,
+                top: -3,
+                bottom: -3,
+                child: Tooltip(
+                  message: AppLocalizations.of(context)
+                      .switchAt(threshold.round()),
+                  child: Container(width: 2, color: scheme.onSurfaceVariant),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// A small monochrome glass pill label.
+class Pill extends StatelessWidget {
+  const Pill(this.text, {super.key, this.color, this.icon});
+
+  final String text;
+  final Color? color;
+  final IconData? icon;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final c = color ?? scheme.onSurfaceVariant;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      decoration: BoxDecoration(
+        color: c.withValues(alpha: 0.10),
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: c.withValues(alpha: 0.28), width: 0.75),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (icon != null) ...[
+            Icon(icon, size: 14, color: c),
+            const SizedBox(width: 5),
+          ],
+          Text(
+            text,
+            style: Theme.of(context).textTheme.labelMedium?.copyWith(color: c),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Runs [action] and shows its error, if any, in a snack bar.
+Future<bool> runShowingErrors(
+  BuildContext context,
+  Future<void> Function() action,
+) async {
+  try {
+    await action();
+    return true;
+  } on CoreApiException catch (e) {
+    if (context.mounted) showError(context, e.message);
+  } on CoreUnavailable catch (e) {
+    if (context.mounted) {
+      showError(context, describeProblem(AppLocalizations.of(context), e));
+    }
+  } on VpnNotAllowed {
+    if (context.mounted) {
+      showError(context, AppLocalizations.of(context).vpnNotAllowed);
+    }
+  }
+  return false;
+}
+
+void showError(BuildContext context, String message) {
+  ScaffoldMessenger.of(context)
+    ..hideCurrentSnackBar()
+    ..showSnackBar(
+      SnackBar(
+        content: Text(message),
+        behavior: SnackBarBehavior.floating,
+        width: 520,
+      ),
+    );
+}
+
+/// An on/off choice in a "⋮" menu, as narrow as its name.
+PopupMenuItem<void> checkMenuItem({
+  required String label,
+  required bool checked,
+  required VoidCallback onTap,
+}) => PopupMenuItem<void>(
+  onTap: onTap,
+  child: Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Icon(
+        checked
+            ? Icons.check_box_rounded
+            : Icons.check_box_outline_blank_rounded,
+        size: 22,
+      ),
+      const SizedBox(width: 12),
+      Flexible(child: Text(label)),
+    ],
+  ),
+);
+
+/// A small on/off switch with its name beside it, for a page's toolbar.
+class LabeledSwitch extends StatelessWidget {
+  const LabeledSwitch({
+    super.key,
+    required this.label,
+    required this.value,
+    required this.onChanged,
+  });
+
+  final String label;
+  final bool value;
+  final ValueChanged<bool> onChanged;
+
+  @override
+  Widget build(BuildContext context) => InkWell(
+    borderRadius: BorderRadius.circular(8),
+    onTap: () => onChanged(!value),
+    child: Padding(
+      padding: const EdgeInsetsDirectional.only(start: 8, end: 2),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Flexible(child: Text(label, overflow: TextOverflow.ellipsis)),
+          const SizedBox(width: 4),
+          Transform.scale(
+            scale: 0.75,
+            child: Switch(value: value, onChanged: onChanged),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+/// Opens the web page [url]; on a device without a browser (a TV), says
+/// to open it on a phone or a computer, with the address to read.
+Future<void> openLink(BuildContext context, String url) async {
+  if (await openUrl(url) || !context.mounted) return;
+  await showLink(context, url);
+}
+
+/// Shows a readable address when no system handler can open it.
+Future<void> showLink(BuildContext context, String url) async {
+  final l = AppLocalizations.of(context);
+  final theme = Theme.of(context);
+  await showDialog<void>(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: Text(l.noBrowserTitle),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(l.noBrowserText),
+          const SizedBox(height: 12),
+          SelectableText(
+            ltr(url),
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          autofocus: true,
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(l.close),
+        ),
+      ],
+    ),
+  );
+}
+
+/// The Download button, where the app does not install updates itself.
+Future<void> openDownload(BuildContext context, Release release) async {
+  final url = await downloadUrl(release);
+  if (context.mounted) await openLink(context, url);
+}
+
+/// No account yet: a large notice, with Add account where the page has no
+/// such button of its own ([onAdd]).
+class NoAccountsPanel extends StatelessWidget {
+  const NoAccountsPanel({super.key, this.onAdd});
+
+  final VoidCallback? onAdd;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    return Panel(
+      child: SizedBox(
+        width: double.infinity,
+        child: Column(
+          children: [
+            const SizedBox(height: 12),
+            Icon(
+              Icons.group_add_outlined,
+              size: 40,
+              color: theme.colorScheme.primary,
+            ),
+            const SizedBox(height: 12),
+            Text(
+              l.noAccounts,
+              textAlign: TextAlign.center,
+              style: theme.textTheme.titleMedium,
+            ),
+            const SizedBox(height: 4),
+            Text(
+              l.noAccountsHint,
+              textAlign: TextAlign.center,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+            if (onAdd != null) ...[
+              const SizedBox(height: 16),
+              FilledButton.icon(
+                onPressed: onAdd,
+                icon: const Icon(Icons.add_rounded),
+                label: Text(l.addAccount),
+              ),
+            ],
+            const SizedBox(height: 12),
+          ],
+        ),
+      ),
+    );
+  }
+}

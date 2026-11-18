@@ -1,0 +1,43 @@
+# Maintainer: Jackdaw <https://github.com/armanlife/arman-vpn-client>
+pkgname=blackfox
+pkgver=1.0.3
+pkgrel=1
+pkgdesc="BLACKFOX VPN Client (Minimal Victorian Gothic Edition) for Firefox Account edge tunnels"
+arch=('x86_64' 'aarch64')
+url="https://github.com/armanlife/arman-vpn-client"
+license=('GPL-3.0-or-later')
+depends=('gtk3' 'glib2' 'libayatana-appindicator')
+makedepends=('go' 'flutter' 'cmake' 'ninja' 'pkgconf' 'clang')
+source=()
+sha256sums=()
+
+build() {
+  local root_dir
+  root_dir="$(cd "$startdir/../../.." && pwd)"
+
+  cd "$root_dir/app"
+  flutter pub get --offline || flutter pub get
+  flutter build linux --release --no-pub --dart-define=APP_VERSION="$pkgver"
+
+  cd "$root_dir/core"
+  local ldflags="-s -w -X github.com/armanlife/arman-vpn-client/core/internal/version.Current=$pkgver"
+  go build -trimpath -ldflags "$ldflags" -o "$srcdir/arman-vpn-core" ./cmd/arman-vpn-core
+  go build -trimpath -ldflags "$ldflags" -o "$srcdir/arman-vpn-tun" ./cmd/arman-vpn-tun
+}
+
+package() {
+  local root_dir
+  root_dir="$(cd "$startdir/../../.." && pwd)"
+
+  install -dm755 "$pkgdir/opt/blackfox/core"
+  cp -a "$root_dir/app/build/linux/x64/release/bundle/." "$pkgdir/opt/blackfox/"
+  install -Dm755 "$srcdir/arman-vpn-core" "$pkgdir/opt/blackfox/core/arman-vpn-core"
+  install -Dm755 "$srcdir/arman-vpn-tun" "$pkgdir/opt/blackfox/core/arman-vpn-tun"
+
+  install -dm755 "$pkgdir/usr/bin"
+  ln -s /opt/blackfox/arman-vpn "$pkgdir/usr/bin/blackfox"
+
+  install -Dm644 "$root_dir/app/linux/runner/resources/app_icon.png" "$pkgdir/usr/share/pixmaps/blackfox.png"
+  install -Dm644 "$startdir/blackfox.desktop" "$pkgdir/usr/share/applications/blackfox.desktop"
+  install -Dm644 "$root_dir/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}

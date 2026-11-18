@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The home-screen widget's button, connecting: a monochrome Victorian Gothic
+  medallion with three silver/white dots indicating connection in progress.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="96"
+    android:viewportHeight="96">
+    <path
+        android:fillColor="#2EFFFFFF"
+        android:pathData="M48,1a47,47 0,1 1,0 94a47,47 0,1 1,0 -94z" />
+    <path android:pathData="M48,4a44,44 0,1 1,0 88a44,44 0,1 1,0 -88z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="linear"
+                android:startX="17"
+                android:startY="8"
+                android:endX="79"
+                android:endY="88"
+                android:startColor="#FF22222A"
+                android:endColor="#FF0B0B0F" />
+        </aapt:attr>
+    </path>
+    <path
+        android:strokeColor="#AAFFFFFF"
+        android:strokeWidth="1.8"
+        android:pathData="M48,6a42,42 0,1 1,0 84a42,42 0,1 1,0 -84z" />
+    <path
+        android:fillColor="#CCFFFFFF"
+        android:fillType="evenOdd"
+        android:pathData="M26,20 L39,31 L48,28.5 L57,31 L70,20 L67.5,47 L60,62 L48,77 L36,62 L28.5,47 Z M48,34 L45,40.5 L48,47 L51,40.5 Z M33,46.5 L44,50 L36,52.8 Z M63,46.5 L52,50 L60,52.8 Z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M38,83m-2.5,0a2.5,2.5 0,1 1,5 0a2.5,2.5 0,1 1,-5 0M48,83m-2.5,0a2.5,2.5 0,1 1,5 0a2.5,2.5 0,1 1,-5 0M58,83m-2.5,0a2.5,2.5 0,1 1,5 0a2.5,2.5 0,1 1,-5 0" />
+</vector>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The home-screen widget's button, disconnected: a monochrome Victorian Gothic
+  medallion in deep charcoal/ash with a muted silver Kitsune mask.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="96"
+    android:viewportHeight="96">
+    <!-- Subtle outer shadow ring -->
+    <path
+        android:fillColor="#22FFFFFF"
+        android:pathData="M48,2a46,46 0,1 1,0 92a46,46 0,1 1,0 -92z" />
+    <!-- Deep charcoal disc -->
+    <path android:pathData="M48,4a44,44 0,1 1,0 88a44,44 0,1 1,0 -88z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="linear"
+                android:startX="17"
+                android:startY="8"
+                android:endX="79"
+                android:endY="88"
+                android:startColor="#FF1A1A20"
+                android:endColor="#FF08080B" />
+        </aapt:attr>
+    </path>
+    <!-- Muted silver inner ring -->
+    <path
+        android:strokeColor="#55FFFFFF"
+        android:strokeWidth="1.5"
+        android:pathData="M48,6a42,42 0,1 1,0 84a42,42 0,1 1,0 -84z" />
+    <!-- Muted silver Kitsune mask -->
+    <path
+        android:fillColor="#99D4D4DC"
+        android:fillType="evenOdd"
+        android:pathData="M26,20 L39,31 L48,28.5 L57,31 L70,20 L67.5,47 L60,62 L48,77 L36,62 L28.5,47 Z M48,34 L45,40.5 L48,47 L51,40.5 Z M33,46.5 L44,50 L36,52.8 Z M63,46.5 L52,50 L60,52.8 Z" />
+</vector>
