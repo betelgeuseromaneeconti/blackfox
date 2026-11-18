@@ -93,7 +93,7 @@ type appPackage struct {
 // windowsPackage is the Windows app's zip.
 var windowsPackage = appPackage{
 	name:   func(v string) string { return "BLACKFOX-VPN-" + v + "-Windows-x64.zip" },
-	app:    "BLACKFOX.exe",
+	app:    "blackfox-vpn.exe",
 	core:   "core/blackfox-vpn-core.exe",
 	unpack: unzip,
 }

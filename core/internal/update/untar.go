@@ -14,21 +14,20 @@ import (
 )
 
 // linuxPackage is the Linux app's tar.gz for this processor
-// (scripts/build-linux.sh): an blackfox-vpn folder with the app, its lib/ and
+// (scripts/build-linux.sh): a blackfox folder with the app, its lib/ and
 // data/, and core/.
 var linuxPackage = appPackage{
 	name:   func(v string) string { return "BLACKFOX-VPN-" + v + "-Linux-" + runtime.GOARCH + ".tar.gz" },
-	app:    "blackfox-vpn",
+	app:    "blackfox",
 	core:   "core/blackfox-vpn-core",
 	unpack: untar,
 }
 
-// macPackage is the macOS app's tar.gz (scripts/build-macos.sh): Firefox
-// VPN.app, for Apple silicon and Intel, as the disk image holds it. The
+// macPackage is the macOS app's tar.gz (scripts/build-macos.sh): BLACKFOX.app, for Apple silicon and Intel, as the disk image holds it. The
 // app's folder is the bundle, so an update replaces its Contents.
 var macPackage = appPackage{
 	name:   func(v string) string { return "BLACKFOX-VPN-" + v + "-macOS.tar.gz" },
-	app:    "Contents/MacOS/BLACKFOX VPN",
+	app:    "Contents/MacOS/BLACKFOX",
 	core:   "Contents/MacOS/blackfox-vpn-core",
 	unpack: untar,
 }

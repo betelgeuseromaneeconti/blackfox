@@ -21,7 +21,7 @@
 ; again.
 
 #define AppName "BLACKFOX"
-#define AppExe "BLACKFOX.exe"
+#define AppExe "blackfox-vpn.exe"
 #define AppDir "BLACKFOX"
 #ifndef AppVersion
   #define AppVersion "2.0.69"
