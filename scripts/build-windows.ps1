@@ -60,12 +60,33 @@ try {
     & "$PSScriptRoot\build-windows-tun.ps1" -Version $version -Out "$portableOut\core" -PublicKey $public
 } finally { Pop-Location }
 
-if ($iscc) {
-    & $iscc /Q "/DAppVersion=$version" "/DSourceDir=$portableOut" "/DOutputDir=$relWin" "/DOutputName=BLACKFOX-VPN-Setup" "$root\app\windows\installer\arman-vpn.iss"
-    if ($LASTEXITCODE -ne 0) { throw 'BLACKFOX-VPN-Setup.exe failed to build' }
-    Copy-Item "$relWin\BLACKFOX-VPN-Setup.exe" "$relWin\BLACKFOX-Setup.exe" -Force
-} else {
-    Write-Warning 'Inno Setup 6 (ISCC.exe) not found; Portable bundle built, installer skipped.'
+if (-not $iscc) {
+    throw 'Inno Setup 6 (ISCC.exe) is required to build the Windows installer.'
 }
 
+$installerScript = Join-Path $root 'app\windows\installer\BLACKFOX.iss'
+if (-not (Test-Path -LiteralPath $installerScript)) {
+    throw "Inno Setup script not found: $installerScript"
+}
+
+# Compile the installer from the script that is actually present in the repo.
+& $iscc /Q "/DAppVersion=$version" "/DSourceDir=$portableOut" "/DOutputDir=$relWin" "/DOutputName=BLACKFOX-VPN-Setup" $installerScript
+if ($LASTEXITCODE -ne 0) { throw 'BLACKFOX-VPN-Setup.exe failed to build' }
+
+$installer = Join-Path $relWin 'BLACKFOX-VPN-Setup.exe'
+if (-not (Test-Path -LiteralPath $installer)) {
+    throw "Inno Setup reported success but did not create: $installer"
+}
+Copy-Item $installer (Join-Path $relWin 'BLACKFOX-Setup.exe') -Force
+
+# The GitHub Actions workflow consumes these exact versioned paths in its
+# Release names step. Keep the portable archive and installer together.
+$dist = Join-Path $root 'dist'
+New-Item -ItemType Directory -Force $dist | Out-Null
+$portableArchive = Join-Path $dist "Arman-VPN-$version-Windows-x64.zip"
+Compress-Archive -Path (Join-Path $portableOut '*') -DestinationPath $portableArchive -CompressionLevel Optimal -Force
+Copy-Item $installer (Join-Path $dist "Arman-VPN-$version-Windows-Setup-x64.exe") -Force
+
 Write-Host "Built Windows x64 Portable in $portableOut"
+Write-Host "Created $portableArchive"
+Write-Host "Created $(Join-Path $dist "Arman-VPN-$version-Windows-Setup-x64.exe")"
