@@ -7,8 +7,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/service"
-	"github.com/armanlife/arman-vpn-client/core/internal/tunapi"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/service"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunapi"
 )
 
 // The running programs include this test, once each by name, in order of

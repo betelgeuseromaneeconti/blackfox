@@ -5,7 +5,7 @@ import (
 
 	"golang.org/x/sys/windows"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/tunapi"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunapi"
 )
 
 // listsPrograms: runningPrograms works here.
