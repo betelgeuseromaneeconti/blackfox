@@ -6,7 +6,7 @@ import (
 
 	"github.com/sagernet/sing/common/winiphlpapi"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/tunapi"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunapi"
 )
 
 // ownerPath is the executable of the program whose socket has source as
