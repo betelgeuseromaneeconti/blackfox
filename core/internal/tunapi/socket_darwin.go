@@ -13,7 +13,7 @@ import (
 const SocketPath = "/var/run/blackfox-vpn-tun.sock"
 
 // LaunchdLabel is the service's launchd job.
-const LaunchdLabel = "com.blackfox.firefoxvpn.tun"
+const LaunchdLabel = "com.betelgeuseromaneeconti.blackfox.tun"
 
 // ServiceFile is the service's launchd job file.
 const ServiceFile = "/Library/LaunchDaemons/" + LaunchdLabel + ".plist"

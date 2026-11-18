@@ -31,7 +31,7 @@ case "$(uname -m)" in
   aarch64 | arm64) flutter_arch=arm64 arch=arm64 ;;
   *) echo "no Flutter build for $(uname -m)" >&2; exit 1 ;;
 esac
-module=github.com/armanlife/blackfox-client/core
+module=github.com/betelgeuseromaneeconti/blackfox/core
 
 public=""
 if [ -n "${BLACKFOX_VPN_SIGNING_KEY:-}${BLACKFOX_VPN_SIGNING_KEY_FILE:-}" ]; then
@@ -69,17 +69,15 @@ if [ -n "${CORE:-}" ]; then
   install -D -m 0755 "$CORE" "$app/core/blackfox-vpn-core"
 else
   (cd "$root/core" && CGO_ENABLED=0 GOOS=linux GOARCH="$arch" go build -trimpath \
-    $core_tags -ldflags "$core_goflags" -o "$app/core/blackfox-vpn-core" ./cmd/blackfox-vpn-core)
+    $core_tags -ldflags "$core_goflags" -o "$app/core/blackfox-vpn-core" ./cmd/blackfox-core)
 fi
 (cd "$root/core" && CGO_ENABLED=0 GOOS=linux GOARCH="$arch" go build -tags with_gvisor -trimpath \
-  -ldflags "$goflags" -o "$app/core/blackfox-vpn-tun" ./cmd/blackfox-vpn-tun)
+  -ldflags "$goflags" -o "$app/core/blackfox-vpn-tun" ./cmd/blackfox-tun)
 [ -z "$public" ] || (cd "$root/core" && go run ./tools/sign "$app/core/blackfox-vpn-tun")
 install -m 0644 "$root/LICENSE" "$app/LICENSE"
 # Links under the app's and the core's names before 1.0.9, which the update
 # of those versions checks for and starts; the app removes them
 # (core/internal/update/legacy_linux.go).
-ln -s blackfox "$app/firefox-vpn"
-ln -s blackfox-vpn-core "$app/core/firefox-vpn-core"
 
 mkdir -p "$root/dist"
 out="$root/dist/BLACKFOX-VPN-$version-Linux-$arch.tar.gz"

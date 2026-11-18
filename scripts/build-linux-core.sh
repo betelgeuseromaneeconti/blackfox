@@ -36,7 +36,7 @@ for arch in amd64 arm64 armv7; do
   mkdir "$stage/$name"
   (cd "$root/core" && CGO_ENABLED=0 GOOS=linux GOARCH="${arch/armv7/arm}" GOARM=7 go build -trimpath \
     $core_tags -ldflags "$core_goflags" \
-    -o "$stage/$name/blackfox-vpn-core" ./cmd/blackfox-vpn-core)
+    -o "$stage/$name/blackfox-vpn-core" ./cmd/blackfox-core)
   install -m 0755 "$root/core/scripts/install-systemd.sh" "$stage/$name/install-systemd.sh"
   install -m 0644 "$root/LICENSE" "$stage/$name/LICENSE"
   tar -czf "$root/dist/$name.tar.gz" -C "$stage" --owner=0 --group=0 "$name"

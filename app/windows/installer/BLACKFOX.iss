@@ -2,7 +2,7 @@
 ; compiles it with the built app:
 ;
 ;   ISCC /DAppVersion=1.1.9 /DSourceDir=<the app's folder> /DOutputDir=<dir>
-;        /DOutputName=<file name without .exe> arman-vpn.iss
+;        /DOutputName=<file name without .exe> BLACKFOX.iss
 ;
 ; It installs for the current user only, without administrator rights, by
 ; default into %LOCALAPPDATA%\Programs\BLACKFOX (apart from
@@ -160,16 +160,9 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 ; Versions before 1.1.2 kept the core beside the app; it is in core\ now.
 [InstallDelete]
-Type: files; Name: "{app}\firefox-vpn-core.exe"
 ; The files and shortcuts under the program's name before 1.0.9 (Firefox
 ; VPN); the app's own update may have left the copies the zip carries
 ; under the old names (core\internal\update\legacy.go).
-Type: files; Name: "{app}\firefox-vpn.exe"
-Type: files; Name: "{app}\core\firefox-vpn-core.exe"
-Type: files; Name: "{app}\core\firefox-vpn-tun.exe"
-Type: files; Name: "{app}\core\firefox-vpn-tun.exe.sig"
-Type: files; Name: "{autoprograms}\Firefox VPN.lnk"
-Type: files; Name: "{autodesktop}\Firefox VPN.lnk"
 
 [Files]
 ; Never an existing data folder, if one was in the source.
@@ -201,7 +194,6 @@ Type: filesandordirs; Name: "{app}\core"
 Type: filesandordirs; Name: "{app}\data"
 Type: files; Name: "{app}\*.dll"
 Type: files; Name: "{app}\{#AppExe}"
-Type: files; Name: "{app}\firefox-vpn.exe"
 Type: files; Name: "{app}\native_assets.json"
 
 [Code]
@@ -211,18 +203,14 @@ const
   // Where an uninstall that kept the data notes the folder it is in; the
   // uninstall of a version before 1.0.9 noted it under the old name.
   KeptKey = 'Software\{#AppName}';
-  ArmanKeptKey = 'Software\BLACKFOX';
-  LegacyKeptKey = 'Software\Firefox VPN';
   KeptValue = 'KeptDataIn';
 
 // The folder a first install offers: the one an uninstalled copy left its
 // data in, so installing again brings the data back; else the usual one.
 function DefaultDir(Param: String): String;
 begin
-  if (RegQueryStringValue(HKCU, KeptKey, KeptValue, Result) and
-      DirExists(AddBackslash(Result) + 'user-data')) or
-     (RegQueryStringValue(HKCU, LegacyKeptKey, KeptValue, Result) and
-      DirExists(AddBackslash(Result) + 'user-data')) then
+  if RegQueryStringValue(HKCU, KeptKey, KeptValue, Result) and
+     DirExists(AddBackslash(Result) + 'user-data') then
     Exit;
   Result := ExpandConstant('{localappdata}\Programs\{#AppDir}');
 end;
@@ -304,7 +292,6 @@ begin
   if CurUninstallStep = usUninstall then
   begin
     RegDeleteValue(HKCU, RunKey, '{#AppName}');
-    RegDeleteValue(HKCU, RunKey, 'Firefox VPN');
     if RegQueryDWordValue(HKCU, InternetKey, 'ProxyEnable', Enabled) and (Enabled = 1) and
        RegQueryStringValue(HKCU, InternetKey, 'ProxyServer', Server) and
        (Pos('127.0.0.1:', Server) = 1) then

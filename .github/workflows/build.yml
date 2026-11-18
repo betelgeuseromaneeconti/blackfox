@@ -354,14 +354,14 @@ jobs:
       - name: TUN service with systemd
         working-directory: core
         run: |
-          go build -tags with_gvisor -o "$RUNNER_TEMP/arman-vpn-tun" ./cmd/arman-vpn-tun
-          sudo "$RUNNER_TEMP/arman-vpn-tun" install
-          systemctl is-active arman-vpn-tun
-          "$RUNNER_TEMP/arman-vpn-tun" uninstall
-          for i in $(seq 20); do systemctl is-active --quiet arman-vpn-tun || break; sleep 0.5; done
-          if systemctl is-active --quiet arman-vpn-tun; then echo "the service still runs"; exit 1; fi
-          test ! -e /etc/systemd/system/arman-vpn-tun.service
-          test ! -e /opt/arman-vpn-tun
+          go build -tags with_gvisor -o "$RUNNER_TEMP/blackfox-vpn-tun" ./cmd/arman-vpn-tun
+          sudo "$RUNNER_TEMP/blackfox-vpn-tun" install
+          systemctl is-active blackfox-vpn-tun
+          "$RUNNER_TEMP/blackfox-vpn-tun" uninstall
+          for i in $(seq 20); do systemctl is-active --quiet blackfox-vpn-tun || break; sleep 0.5; done
+          if systemctl is-active --quiet blackfox-vpn-tun; then echo "the service still runs"; exit 1; fi
+          test ! -e /etc/systemd/system/blackfox-vpn-tun.service
+          test ! -e /opt/blackfox-vpn-tun
       # The optional build profile, when this repository has the secrets for
       # one; without them this does nothing and the ordinary client is built.
       - name: Build profile
@@ -435,14 +435,14 @@ jobs:
         continue-on-error: true
         working-directory: core
         run: |
-          go build -tags with_gvisor -o "$RUNNER_TEMP/arman-vpn-tun" ./cmd/arman-vpn-tun
-          sudo "$RUNNER_TEMP/arman-vpn-tun" install
-          sudo launchctl print system/com.arman.firefoxvpn.tun | head -20
-          "$RUNNER_TEMP/arman-vpn-tun" uninstall
-          for i in $(seq 20); do sudo launchctl print system/com.arman.firefoxvpn.tun >/dev/null 2>&1 || break; sleep 0.5; done
-          if sudo launchctl print system/com.arman.firefoxvpn.tun >/dev/null 2>&1; then echo "the job is still loaded"; exit 1; fi
-          test ! -e /Library/LaunchDaemons/com.arman.firefoxvpn.tun.plist
-          test ! -e "/Library/Application Support/Arman VPN TUN"
+          go build -tags with_gvisor -o "$RUNNER_TEMP/blackfox-vpn-tun" ./cmd/arman-vpn-tun
+          sudo "$RUNNER_TEMP/blackfox-vpn-tun" install
+          sudo launchctl print system/com.betelgeuseromaneeconti.blackfox.tun | head -20
+          "$RUNNER_TEMP/blackfox-vpn-tun" uninstall
+          for i in $(seq 20); do sudo launchctl print system/com.betelgeuseromaneeconti.blackfox.tun >/dev/null 2>&1 || break; sleep 0.5; done
+          if sudo launchctl print system/com.betelgeuseromaneeconti.blackfox.tun >/dev/null 2>&1; then echo "the job is still loaded"; exit 1; fi
+          test ! -e /Library/LaunchDaemons/com.betelgeuseromaneeconti.blackfox.tun.plist
+          test ! -e "/Library/Application Support/BLACKFOX VPN TUN"
       # The optional build profile, when this repository has the secrets for
       # one; without them this does nothing and the ordinary client is built.
       - name: Build profile
@@ -519,8 +519,6 @@ jobs:
               BLACKFOX-VPN-*)
                 rest="${f#BLACKFOX-VPN-}"
                 cp "$f" "BLACKFOX-VPN-$v-$rest"
-                cp "$f" "Firefox-VPN-$rest"
-                cp "$f" "Firefox-VPN-$v-$rest" ;;
               blackfox-vpn-core-*) cp "$f" "blackfox-vpn-core-$v-${f#blackfox-vpn-core-}" ;;
             esac
           done
@@ -529,7 +527,7 @@ jobs:
         working-directory: release
         run: |
           sha256sum * > SHA256SUMS.txt
-          printf '# Arman VPN version: %s\n' "${GITHUB_REF_NAME#v}" >> SHA256SUMS.txt
+          printf '# BLACKFOX VPN version: %s\n' "${GITHUB_REF_NAME#v}" >> SHA256SUMS.txt
           cat SHA256SUMS.txt
       # The Windows app installs a new version only when the release key
       # signed this list (core/internal/update): SHA256SUMS.txt.sig.
@@ -552,5 +550,5 @@ jobs:
           bash scripts/release-notes.sh "$GITHUB_REF_NAME" > notes.md
           gh release create "$GITHUB_REF_NAME" release/* \
             --repo "$GITHUB_REPOSITORY" \
-            --title "Arman VPN ${{ needs.test.outputs.version }}" \
+            --title "BLACKFOX VPN ${{ needs.test.outputs.version }}" \
             --notes-file notes.md

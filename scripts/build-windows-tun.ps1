@@ -1,4 +1,4 @@
-# Builds the TUN service (core\cmd\blackfox-vpn-tun) into -Out as
+# Builds the TUN service (core\cmd\blackfox-tun) into -Out as
 # blackfox-vpn-tun.exe, beside the core, from where the app installs it.
 # scripts\build-windows.ps1 and scripts\update-installed-windows.ps1 run it.
 #
@@ -20,14 +20,14 @@ $public = if ($PSBoundParameters.ContainsKey('PublicKey')) { $PublicKey } else {
 Push-Location "$root\core"
 try {
     $env:APP_VERSION = $Version
-    go generate ./cmd/blackfox-vpn-tun
+    go generate ./cmd/blackfox-tun
     if ($LASTEXITCODE -ne 0) { throw 'go generate failed (blackfox-vpn-tun)' }
 
     # windowsgui: no console window when the app or Setup starts it.
     $ldflags = "-s -w -H windowsgui -X github.com/betelgeuseromaneeconti/blackfox/core/internal/version.Current=$Version"
     if ($public) { $ldflags += " -X github.com/betelgeuseromaneeconti/blackfox/core/internal/signing.Key=$public" }
     $exe = Join-Path $Out 'blackfox-vpn-tun.exe'
-    go build -tags with_gvisor -trimpath -ldflags $ldflags -o $exe ./cmd/blackfox-vpn-tun
+    go build -tags with_gvisor -trimpath -ldflags $ldflags -o $exe ./cmd/blackfox-tun
     if ($LASTEXITCODE -ne 0) { throw 'go build failed (blackfox-vpn-tun)' }
     if ($public) {
         go run ./tools/sign $exe
