@@ -154,7 +154,15 @@ ThemeData _theme(Brightness brightness, Locale locale) {
       ),
     ),
     navigationRailTheme: NavigationRailThemeData(
-      backgroundColor: dark ? const Color(0xFF0C0C10) : const Color(0xFFEAEAEF),
+      backgroundColor: Colors.transparent,
+      indicatorShape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(13),
+        side: BorderSide(
+          color: dark
+              ? Colors.white.withValues(alpha: 0.12)
+              : Colors.black.withValues(alpha: 0.08),
+        ),
+      ),
       indicatorColor: dark
           ? Colors.white.withValues(alpha: 0.12)
           : Colors.black.withValues(alpha: 0.10),
@@ -428,15 +436,34 @@ class _ShellState extends State<Shell> {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  border: BorderDirectional(
-                    end: BorderSide(color: scheme.outlineVariant, width: 1),
+                  gradient: const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color(0xFF111116),
+                      Color(0xFF09090D),
+                      Color(0xFF050506),
+                    ],
                   ),
+                  border: BorderDirectional(
+                    end: BorderSide(
+                      color: Colors.white.withValues(alpha: 0.10),
+                      width: 1,
+                    ),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.32),
+                      blurRadius: 28,
+                      offset: const Offset(8, 0),
+                    ),
+                  ],
                 ),
                 child: NavigationRail(
                   selectedIndex: pages.indexOf(page),
                   onDestinationSelected: select,
                   extended: true,
-                  minExtendedWidth: 200,
+                  minExtendedWidth: 236,
                   leading: Padding(
                     padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
                     child: Column(
