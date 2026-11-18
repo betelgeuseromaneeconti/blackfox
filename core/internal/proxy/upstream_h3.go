@@ -18,9 +18,9 @@ import (
 	"github.com/quic-go/quic-go"
 	"github.com/quic-go/quic-go/http3"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/controlplane"
-	"github.com/armanlife/arman-vpn-client/core/internal/egress"
-	"github.com/armanlife/arman-vpn-client/core/internal/logx"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/controlplane"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/egress"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
 )
 
 var errProxyHTTP3Unavailable = errors.New("proxy did not negotiate HTTP/3")
