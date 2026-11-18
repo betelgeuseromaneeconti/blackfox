@@ -308,6 +308,9 @@ class CoreController extends ChangeNotifier {
   /// A fresh sign-in link to the web dashboard.
   Future<Uri> dashboardLink() => _require().loginLink();
 
+  /// Refreshes the core status and account list on demand.
+  Future<void> reload() => refresh(accountsToo: true);
+
   /// Tries the core again at once, also one that stopped right after
   /// starting.
   Future<void> retry() async {

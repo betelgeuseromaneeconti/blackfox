@@ -374,8 +374,8 @@ class _SettingsListState extends State<_SettingsList> {
         ),
         row(
           Icons.help_outline_rounded,
-          l.help,
-          () => push(l.help, () => HelpPage(core: core)),
+          'Help',
+          () => push('Help', () => HelpPage(core: core)),
         ),
         row(
           Icons.info_outline_rounded,

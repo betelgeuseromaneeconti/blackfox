@@ -309,7 +309,7 @@ class _ShellState extends State<Shell> {
             _Page.help => (
               const Icon(Icons.help_outline_rounded),
               const Icon(Icons.help_rounded),
-              l.help,
+              'Help',
             ),
             _Page.about => (
               const Icon(Icons.info_outline_rounded),

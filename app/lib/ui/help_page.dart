@@ -12,7 +12,7 @@ import 'widgets.dart';
 /// Explains how to connect applications, copy SOCKS5/HTTP proxy addresses and
 /// v2ray/NekoBox URIs, TCP/UDP port limitations, routing, TUN mode, DNS,
 /// multi-account rotation, and connection troubleshooting.
-class HelpPage extends StatelessWidget {
+class HelpPage extends StatefulWidget {
   const HelpPage({
     super.key,
     required this.core,
@@ -28,20 +28,53 @@ class HelpPage extends StatelessWidget {
   final VoidCallback? onOpenAccounts;
   final VoidCallback? onOpenSettings;
 
-  String _listenAddress() {
-    final s = core.status?.proxy?.listen ?? '';
-    if (s.isNotEmpty) return s;
-    final cfg = core.config?['proxy'];
-    if (cfg is Map && cfg['listen'] is String && (cfg['listen'] as String).isNotEmpty) {
-      return cfg['listen'] as String;
+  @override
+  State<HelpPage> createState() => _HelpPageState();
+}
+
+class _HelpPageState extends State<HelpPage> {
+  CoreController get core => widget.core;
+  VoidCallback? get onOpenLogs => widget.onOpenLogs;
+  VoidCallback? get onOpenServers => widget.onOpenServers;
+  VoidCallback? get onOpenAccounts => widget.onOpenAccounts;
+  VoidCallback? get onOpenSettings => widget.onOpenSettings;
+
+  late Future<Map<String, Object?>?> _config;
+
+  @override
+  void initState() {
+    super.initState();
+    _config = _readConfig();
+  }
+
+  Future<Map<String, Object?>?> _readConfig() async {
+    try {
+      return await core.settings();
+    } catch (_) {
+      // Help remains available while the core is starting or offline.
+      return null;
+    }
+  }
+
+  String _listenAddress([Map<String, Object?>? config]) {
+    final current = core.status?.proxy?.listen ?? '';
+    if (current.isNotEmpty) return current;
+    final proxy = config?['proxy'];
+    if (proxy is Map) {
+      final listen = proxy['listen'];
+      if (listen is String && listen.isNotEmpty) return listen;
     }
     return '127.0.0.1:10810';
   }
 
-  String _socksUri(String listen) {
-    final cfg = core.config?['proxy'];
-    final user = cfg is Map && cfg['username'] is String ? cfg['username'] as String : '';
-    final pass = cfg is Map && cfg['password'] is String ? cfg['password'] as String : '';
+  String _socksUri(String listen, [Map<String, Object?>? config]) {
+    final proxy = config?['proxy'];
+    final user = proxy is Map && proxy['username'] is String
+        ? proxy['username'] as String
+        : '';
+    final pass = proxy is Map && proxy['password'] is String
+        ? proxy['password'] as String
+        : '';
     if (user.isNotEmpty && pass.isNotEmpty) {
       final auth = base64Url.encode(utf8.encode('$user:$pass')).replaceAll('=', '');
       return 'socks://$auth@$listen#BLACKFOX';
@@ -49,14 +82,14 @@ class HelpPage extends StatelessWidget {
     return 'socks://$listen#BLACKFOX';
   }
 
-  Future<void> _copy(BuildContext context, String text, String label) async {
+  Future<void> _copy(BuildContext context, String text) async {
     await Clipboard.setData(ClipboardData(text: text));
     if (!context.mounted) return;
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(
         SnackBar(
-          content: Text('$label: $text'),
+          content: Text(AppLocalizations.of(context).copied(text)),
           behavior: SnackBarBehavior.floating,
           width: 420,
         ),
@@ -80,7 +113,7 @@ class HelpPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              PageTitle(l.help),
+              PageTitle('Help'),
               if (!OwnTopBar.of(context)) const SizedBox(height: 20),
 
               // 1. Connecting Applications & Local Proxy Endpoints
@@ -97,27 +130,35 @@ class HelpPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    Wrap(
-                      spacing: 12,
-                      runSpacing: 12,
-                      children: [
-                        _EndpointBox(
-                          label: 'SOCKS5 / HTTP Proxy Address',
-                          value: ltr(listen),
-                          buttonLabel: l.copy,
-                          onCopy: () => _copy(context, listen, l.copied),
-                        ),
-                        _EndpointBox(
-                          label: 'Proxy URI (v2rayN / v2rayNG / NekoBox)',
-                          value: ltr(socksUri),
-                          buttonLabel: 'Copy URI',
-                          onCopy: () => _copy(context, socksUri, l.copied),
-                        ),
-                      ],
+                    FutureBuilder<Map<String, Object?>?>(
+                      future: _config,
+                      builder: (context, snapshot) {
+                        final config = snapshot.data;
+                        final listen = _listenAddress(config);
+                        final socksUri = _socksUri(listen, config);
+                        return Wrap(
+                          spacing: 12,
+                          runSpacing: 12,
+                          children: [
+                            _EndpointBox(
+                              label: 'SOCKS5 / HTTP Proxy Address',
+                              value: ltr(listen),
+                              buttonLabel: l.copyAll,
+                              onCopy: () => _copy(context, listen),
+                            ),
+                            _EndpointBox(
+                              label: 'Proxy URI (v2rayN / v2rayNG / NekoBox)',
+                              value: ltr(socksUri),
+                              buttonLabel: 'Copy URI',
+                              onCopy: () => _copy(context, socksUri),
+                            ),
+                          ],
+                        );
+                      },
                     ),
                     const SizedBox(height: 14),
                     Text(
-                      '• Browsers (Firefox, Chrome, Brave) and desktop apps (Telegram, Discord) can either use System Proxy mode, TUN mode, or point directly to $listen.',
+                      '• Browsers (Firefox, Chrome, Brave) and desktop apps (Telegram, Discord) can either use System Proxy mode, TUN mode, or point directly to the local proxy address shown above.',
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: scheme.onSurfaceVariant,
                       ),

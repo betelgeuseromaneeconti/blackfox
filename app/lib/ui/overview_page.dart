@@ -3288,7 +3288,7 @@ Future<void> _showDiagnosticsDialog(
         final s = core.status ?? initialStatus;
         final proxy = s.proxy;
         final test = core.lastTest;
-        final exit = test?.exit ?? s.exit;
+        final exit = s.exit;
         final active = s.activeAccount;
         final t = s.traffic;
 
@@ -3340,17 +3340,17 @@ Future<void> _showDiagnosticsDialog(
                   ),
                   const SizedBox(height: 6),
                   row(
-                    l.stageTunnel,
+                    'Tunnel',
                     test != null && test.tunnelMs > 0
                         ? '${test.tunnelMs} ms'
                         : '—',
                   ),
                   row(
-                    l.stageTls,
+                    'TLS',
                     test != null && test.tlsMs > 0 ? '${test.tlsMs} ms' : '—',
                   ),
                   row(
-                    l.stageHttp,
+                    'HTTP',
                     test != null && test.responseMs > 0
                         ? '${test.responseMs} ms (HTTP ${test.httpStatus})'
                         : '—',
@@ -3361,8 +3361,18 @@ Future<void> _showDiagnosticsDialog(
                         ? '${test.totalMs} ms'
                         : '—',
                   ),
-                  row('Public IPv4', exit?.ipv4 ?? '—'),
-                  row('Public IPv6', exit?.ipv6 ?? '—'),
+                  row(
+                    'Public IPv4',
+                    test != null && test.exitIpv4.isNotEmpty
+                        ? test.exitIpv4
+                        : exit?.ipv4 ?? '—',
+                  ),
+                  row(
+                    'Public IPv6',
+                    test != null && test.exitIpv6.isNotEmpty
+                        ? test.exitIpv6
+                        : exit?.ipv6 ?? '—',
+                  ),
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 10),
                     child: GothicDivider(),
@@ -3375,7 +3385,7 @@ Future<void> _showDiagnosticsDialog(
                     ),
                   ),
                   const SizedBox(height: 6),
-                  row('Server host', proxy?.serverHost ?? '—'),
+                  row('Server host', proxy?.upstream ?? '—'),
                   row(
                     'Country / City',
                     [
@@ -3385,22 +3395,20 @@ Future<void> _showDiagnosticsDialog(
                     ].join(' · '),
                   ),
                   row('Transport', proxy?.transport ?? '—'),
-                  row('Active account', active?.displayName ?? '—'),
+                  row('Active account', (active == null ? '—' : (active.name.isNotEmpty ? active.name : active.email))),
                   row(
                     'Ready accounts',
                     '${s.readyAccounts} / ${s.totalAccounts}',
                   ),
                   row(
-                    'ProxyPass renewed',
-                    proxy?.renewedAt != null
-                        ? formatDateTime(l, proxy!.renewedAt!)
+                    'ProxyPass expires',
+                    s.pass?.expiresAt != null
+                        ? formatDateTime(l, s.pass!.expiresAt!)
                         : '—',
                   ),
                   row(
-                    'Next renewal',
-                    proxy?.nextRenewalAt != null
-                        ? formatDateTime(l, proxy!.nextRenewalAt!)
-                        : '—',
+                    'ProxyPass seconds remaining',
+                    s.pass?.secondsUntilExpiry.toString() ?? '—',
                   ),
                   row(
                     'Session traffic',
@@ -3414,7 +3422,7 @@ Future<void> _showDiagnosticsDialog(
             OutlinedButton.icon(
               onPressed: () => runShowingErrors(context, core.reload),
               icon: const Icon(Icons.restart_alt_rounded, size: 16),
-              label: Text(l.reload),
+              label: const Text('Reload'),
             ),
             OutlinedButton.icon(
               onPressed: core.testing
