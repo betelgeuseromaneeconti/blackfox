@@ -101,8 +101,6 @@ class _HelpPageState extends State<HelpPage> {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
-    final listen = _listenAddress();
-    final socksUri = _socksUri(listen);
     final wide = MediaQuery.sizeOf(context).width >= 760;
 
     return SingleChildScrollView(
