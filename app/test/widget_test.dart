@@ -3022,7 +3022,7 @@ void main() {
   }, variant: TargetPlatformVariant.only(TargetPlatform.windows));
 
   group('updates', () {
-    const page = 'https://github.com/o/r/releases/tag/v9.9.9';
+    const page = 'https://github.com/betelgeuseromaneeconti/blackfox/releases/tag/v9.9.9';
 
     Future<(FakeApi, CoreController, AppSettings)> pumpUpdates(
       WidgetTester tester, {
@@ -3040,9 +3040,16 @@ void main() {
         () async => api,
         pollInterval: const Duration(hours: 1),
       );
-      final settings = AppSettings()..updateVersion = known;
+      final settings = AppSettings();
+      if (known.isNotEmpty) {
+        settings.update(
+          updateVersion: known,
+          updateUrl: page,
+          updateDetails: Release(known, page).toJson(),
+        );
+      }
       Updates.start(core, settings, args: args);
-      Updates.available.value = found;
+      if (found != null) Updates.found(found);
       await tester.pumpWidget(VpnApp(core: core, settings: settings));
       core.start();
       await tester.pump();
@@ -3295,6 +3302,7 @@ void main() {
       final (api, core, _) = await pumpUpdates(
         tester,
         update: {'state': 'ready', 'version': '9.9.9'},
+        known: '9.9.9',
         args: ['--autostart', '--data-dir=elsewhere'],
       );
       // With the app's own arguments (its data folder too, so the new
