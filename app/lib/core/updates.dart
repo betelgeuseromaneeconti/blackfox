@@ -163,6 +163,12 @@ abstract final class Updates {
   /// Starts looking. [args] are the app's own (`--autostart`, `--hidden`,
   /// `--data-dir=`), which a new version installed at the start keeps; an
   /// install from the Update button keeps `--data-dir=`.
+  static String _cachedReleaseUrl(AppSettings settings) {
+    if (settings.updateUrl.isNotEmpty) return settings.updateUrl;
+    final value = settings.updateDetails['release_url'];
+    return value is String ? value : '';
+  }
+
   static bool _isBlackfoxRelease(String value) {
     final uri = Uri.tryParse(value);
     return uri != null &&
@@ -189,11 +195,7 @@ abstract final class Updates {
           a,
     ];
     // A version found earlier, unless this app is already that one.
-    final cachedUrl = settings.updateUrl.isNotEmpty
-        ? settings.updateUrl
-        : settings.updateDetails['release_url'] is String
-        ? settings.updateDetails['release_url']! as String
-        : '';
+    final cachedUrl = _cachedReleaseUrl(settings);
     // Never surface a cached update from the upstream fork. This prevents
     // a cached update from the upstream project from prompting immediately after BLACKFOX starts.
     if (settings.updateVersion.isNotEmpty &&
@@ -253,7 +255,14 @@ abstract final class Updates {
       // would only be replaced at once by a second update. The newer one
       // downloads instead, below, and installs at the next start.
       final superseded = newerVersion(settings.updateVersion, update.version);
+      // The core can retain a downloaded package from a previous app build.
+      // Install it only when the current BLACKFOX manifest still offers that
+      // exact version; otherwise an upstream cached package could be applied.
+      final trustedPendingUpdate =
+          settings.updateVersion == update.version &&
+          _isBlackfoxRelease(_cachedReleaseUrl(settings));
       if (update.ready &&
+          trustedPendingUpdate &&
           !justFailed &&
           !superseded &&
           newerVersion(update.version, appVersion)) {
