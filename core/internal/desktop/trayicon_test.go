@@ -7,7 +7,7 @@ import (
 )
 
 // Every tray state has its icon in both formats: a PNG with a transparent
-// corner and the symbol's white upright bar in the middle, and an ICO.
+// corner and the symbol's white Kitsune mark in the middle, and an ICO.
 func TestTrayIcons(t *testing.T) {
 	for _, name := range []string{iconRunning, iconRunningAsleep, iconSet, iconSetAsleep, iconWaiting, iconError, iconOff} {
 		data, err := trayFiles.ReadFile("tray/" + name + ".png")
@@ -24,8 +24,8 @@ func TestTrayIcons(t *testing.T) {
 		if _, _, _, a := img.At(0, 0).RGBA(); a != 0 {
 			t.Fatalf("%s: the corner should be transparent", name)
 		}
-		if r, g, b, _ := img.At(16, 13).RGBA(); r>>8 < 0xf0 || g>>8 < 0xf0 || b>>8 < 0xf0 {
-			t.Fatalf("%s: the middle should be the white bar", name)
+		if r, g, b, a := img.At(16, 13).RGBA(); a == 0 || r*0xff/a < 0xf0 || g*0xff/a < 0xf0 || b*0xff/a < 0xf0 {
+    		t.Fatalf("%s: the middle of the Kitsune mark should be white", name)
 		}
 		ico, err := trayFiles.ReadFile("tray/" + name + ".ico")
 		if err != nil || !bytes.Equal(ico[:4], []byte{0, 0, 1, 0}) {
