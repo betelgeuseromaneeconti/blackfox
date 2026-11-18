@@ -505,45 +505,54 @@ class _DesktopStatusBar extends StatelessWidget {
           bottom: BorderSide(color: scheme.outlineVariant, width: 0.8),
         ),
       ),
-      child: Row(
-        children: [
-          Icon(
-            Icons.shield_moon_outlined,
-            size: 15,
-            color: scheme.onSurfaceVariant,
-          ),
-          const SizedBox(width: 8),
-          Text(
-            'VICTORIAN GOTHIC EDITION',
-            style: theme.textTheme.labelSmall?.copyWith(
-              color: scheme.onSurfaceVariant,
-              letterSpacing: 1.2,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const Spacer(),
-          if (transport.isNotEmpty) ...[
-            Pill(transport),
-            const SizedBox(width: 8),
-          ],
-          if (listen.isNotEmpty) ...[
-            Pill(ltr(listen), icon: Icons.lan_outlined),
-            const SizedBox(width: 8),
-          ],
-          if (totalCount > 0) ...[
-            Pill(
-              '$readyCount/$totalCount',
-              icon: Icons.verified_user_outlined,
-            ),
-            const SizedBox(width: 4),
-          ],
-          IconButton(
-            visualDensity: VisualDensity.compact,
-            iconSize: 17,
-            onPressed: () => runShowingErrors(context, core.refresh),
-            icon: const Icon(Icons.sync_rounded),
-          ),
-        ],
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          // The desktop navigation can be opened in a narrow window. Keep
+          // the essential status and refresh action without overflowing.
+          final compact = constraints.maxWidth < 680;
+          return Row(
+            children: [
+              Icon(
+                Icons.shield_moon_outlined,
+                size: 15,
+                color: scheme.onSurfaceVariant,
+              ),
+              if (!compact) ...[
+                const SizedBox(width: 8),
+                Text(
+                  'VICTORIAN GOTHIC EDITION',
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: scheme.onSurfaceVariant,
+                    letterSpacing: 1.2,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+              const Spacer(),
+              if (transport.isNotEmpty) ...[
+                Pill(transport),
+                const SizedBox(width: 8),
+              ],
+              if (!compact && listen.isNotEmpty) ...[
+                Pill(ltr(listen), icon: Icons.lan_outlined),
+                const SizedBox(width: 8),
+              ],
+              if (totalCount > 0) ...[
+                Pill(
+                  '$readyCount/$totalCount',
+                  icon: Icons.verified_user_outlined,
+                ),
+                const SizedBox(width: 4),
+              ],
+              IconButton(
+                visualDensity: VisualDensity.compact,
+                iconSize: 17,
+                onPressed: () => runShowingErrors(context, core.refresh),
+                icon: const Icon(Icons.sync_rounded),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
