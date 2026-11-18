@@ -1,4 +1,4 @@
-package com.arman.firefoxvpn
+package com.betelgeuseromaneeconti.blackfox
 
 import android.Manifest
 import android.app.ActivityManager

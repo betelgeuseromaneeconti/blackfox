@@ -1,4 +1,4 @@
-package com.arman.firefoxvpn
+package com.betelgeuseromaneeconti.blackfox
 
 import android.app.PendingIntent
 import android.content.ComponentName
