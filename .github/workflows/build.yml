@@ -532,7 +532,7 @@ jobs:
         working-directory: release
         run: |
           sha256sum * > SHA256SUMS.txt
-          printf '# Arman VPN version: %s\n' "${GITHUB_REF_NAME#v}" >> SHA256SUMS.txt
+          printf '# BLACKFOX version: %s\n' "${GITHUB_REF_NAME#v}" >> SHA256SUMS.txt
           cat SHA256SUMS.txt
       # The Windows app installs a new version only when the release key
       # signed this list (core/internal/update): SHA256SUMS.txt.sig.
@@ -556,5 +556,5 @@ jobs:
           bash scripts/release-notes.sh "$GITHUB_REF_NAME" > notes.md
           gh release create "$GITHUB_REF_NAME" release/* \
             --repo "$GITHUB_REPOSITORY" \
-            --title "Arman VPN ${{ needs.test.outputs.version }}" \
+            --title "BLACKFOX ${{ needs.test.outputs.version }}" \
             --notes-file notes.md
