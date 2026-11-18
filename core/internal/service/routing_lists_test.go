@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/config"
-	"github.com/armanlife/arman-vpn-client/core/internal/routing"
-	"github.com/armanlife/arman-vpn-client/core/internal/securefile"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/config"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/routing"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/securefile"
 )
 
 // writeTestGeoSite writes a geosite.dat holding only the given tags (the

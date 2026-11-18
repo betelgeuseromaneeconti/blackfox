@@ -13,8 +13,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/config"
-	"github.com/armanlife/arman-vpn-client/core/internal/logx"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/config"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
 )
 
 const relayTLSAttemptWait = 3 * time.Second

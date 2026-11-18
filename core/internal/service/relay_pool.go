@@ -13,7 +13,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/evasion"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/evasion"
 )
 
 // Relay kinds. A kind says how to talk to an endpoint, not who runs it.
@@ -248,7 +248,7 @@ const maxRelayEnvelopeBody = 1 << 20
 // responseEnvelope turns a wrapped answer back into the target's response.
 // An empty or unreadable body means the relay refused or failed: a fronted
 // endpoint cannot pass a status code or a header through, so there is
-// nothing else to read it from. X-Arman-Relay is set because the envelope
+// nothing else to read it from. X-BLACKFOX-Relay is set because the envelope
 // itself is the proof of origin, which keeps one check for both shapes.
 func responseEnvelope(resp *http.Response, original *http.Request) (*http.Response, error) {
 	raw, err := io.ReadAll(io.LimitReader(resp.Body, maxRelayEnvelopeBody+1))
@@ -277,7 +277,7 @@ func responseEnvelope(resp *http.Response, original *http.Request) (*http.Respon
 	for name, value := range answer.Headers {
 		head.Set(name, value)
 	}
-	head.Set("X-Arman-Relay", "1")
+	head.Set("X-BLACKFOX-Relay", "1")
 	return &http.Response{
 		Status:        fmt.Sprintf("%d %s", answer.Status, http.StatusText(answer.Status)),
 		StatusCode:    answer.Status,

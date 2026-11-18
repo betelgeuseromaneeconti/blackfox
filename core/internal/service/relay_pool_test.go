@@ -10,7 +10,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/evasion"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/evasion"
 )
 
 func TestParseRelayNodesKeepsOnlyUsableEntries(t *testing.T) {
@@ -126,7 +126,7 @@ func TestEnvelopeNodeCarriesTheTargetThroughAFront(t *testing.T) {
 	}
 	// The envelope itself proves the origin, so the same check serves both
 	// shapes further up.
-	if resp.Header.Get("X-Arman-Relay") != "1" {
+	if resp.Header.Get("X-BLACKFOX-Relay") != "1" {
 		t.Fatal("the unwrapped response was not marked as relayed")
 	}
 	body, _ := io.ReadAll(resp.Body)

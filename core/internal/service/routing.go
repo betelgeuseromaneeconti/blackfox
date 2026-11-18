@@ -15,12 +15,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/config"
-	"github.com/armanlife/arman-vpn-client/core/internal/controlplane"
-	"github.com/armanlife/arman-vpn-client/core/internal/logx"
-	"github.com/armanlife/arman-vpn-client/core/internal/proxy"
-	"github.com/armanlife/arman-vpn-client/core/internal/routing"
-	"github.com/armanlife/arman-vpn-client/core/internal/tun"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/config"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/controlplane"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/proxy"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/routing"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tun"
 )
 
 // listDownloadTimeout bounds downloading both routing lists.
