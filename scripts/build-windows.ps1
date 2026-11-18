@@ -44,6 +44,7 @@ New-Item -ItemType Directory -Force $portableOut | Out-Null
 Copy-Item "$root\app\build\windows\x64\runner\Release\*" $portableOut -Recurse -Force
 if (Test-Path "$portableOut\arman-vpn.exe") {
     Copy-Item "$portableOut\arman-vpn.exe" "$portableOut\BLACKFOX.exe" -Force
+    Remove-Item "$portableOut\arman-vpn.exe" -Force
 }
 
 $public = & "$PSScriptRoot\signing-key.ps1"
@@ -83,10 +84,10 @@ Copy-Item $installer (Join-Path $relWin 'BLACKFOX-Setup.exe') -Force
 # Release names step. Keep the portable archive and installer together.
 $dist = Join-Path $root 'dist'
 New-Item -ItemType Directory -Force $dist | Out-Null
-$portableArchive = Join-Path $dist "Arman-VPN-$version-Windows-x64.zip"
+$portableArchive = Join-Path $dist "BLACKFOX-VPN-$version-Windows-x64.zip"
 Compress-Archive -Path (Join-Path $portableOut '*') -DestinationPath $portableArchive -CompressionLevel Optimal -Force
-Copy-Item $installer (Join-Path $dist "Arman-VPN-$version-Windows-Setup-x64.exe") -Force
+Copy-Item $installer (Join-Path $dist "BLACKFOX-VPN-$version-Windows-Setup-x64.exe") -Force
 
 Write-Host "Built Windows x64 Portable in $portableOut"
 Write-Host "Created $portableArchive"
-Write-Host "Created $(Join-Path $dist "Arman-VPN-$version-Windows-Setup-x64.exe")"
+Write-Host "Created $(Join-Path $dist "BLACKFOX-VPN-$version-Windows-Setup-x64.exe")"
