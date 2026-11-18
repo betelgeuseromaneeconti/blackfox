@@ -20,7 +20,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/signing"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/signing"
 )
 
 // The tests make the Windows zip on every system; untar_test.go tries the
@@ -46,14 +46,14 @@ func newRelease(t *testing.T, v string) *release {
 	t.Cleanup(func() { signing.Key = old })
 	r := &release{version: v, priv: priv, files: map[string][]byte{
 		AssetName(v): appZip(t, map[string]string{
-			"Arman VPN/arman-vpn.exe":              "app " + v,
-			"Arman VPN/flutter_windows.dll":        "flutter " + v,
-			"Arman VPN/data/app.so":                "assets " + v,
-			"Arman VPN/core/arman-vpn-core.exe":    "core " + v,
-			"Arman VPN/core/arman-vpn-tun.exe":     "tun " + v,
-			"Arman VPN/core/arman-vpn-tun.exe.sig": "sig " + v,
+			"BLACKFOX VPN/blackfox-vpn.exe":              "app " + v,
+			"BLACKFOX VPN/flutter_windows.dll":        "flutter " + v,
+			"BLACKFOX VPN/data/app.so":                "assets " + v,
+			"BLACKFOX VPN/core/blackfox-vpn-core.exe":    "core " + v,
+			"BLACKFOX VPN/core/blackfox-vpn-tun.exe":     "tun " + v,
+			"BLACKFOX VPN/core/blackfox-vpn-tun.exe.sig": "sig " + v,
 		}),
-		"Arman-VPN-" + v + "-Windows-Setup-x64.exe": []byte("MZ setup " + v),
+		"BLACKFOX-VPN-" + v + "-Windows-Setup-x64.exe": []byte("MZ setup " + v),
 	}}
 	r.sign()
 	return r
@@ -112,11 +112,11 @@ func appFolder(t *testing.T, v string, installed bool) (appDir, dataDir string) 
 	t.Helper()
 	appDir = t.TempDir()
 	for name, content := range map[string]string{
-		"arman-vpn.exe":           "app " + v,
+		"blackfox-vpn.exe":           "app " + v,
 		"flutter_windows.dll":     "flutter " + v,
 		"data/app.so":             "assets " + v,
 		"data/old-asset.png":      "gone in the new version",
-		"core/arman-vpn-core.exe": "core " + v,
+		"core/blackfox-vpn-core.exe": "core " + v,
 		"user-data/config.json":   "the user's settings",
 		"notes.txt":               "the user's own file",
 	} {
@@ -358,7 +358,7 @@ func TestInstallUnpacksTheZipAndStartsACopyOfTheCore(t *testing.T) {
 		len(p.Wait) != 2 || p.Wait[0] != 4242 || p.Wait[1] != os.Getpid() || len(p.Args) != 1 || p.Args[0] != "--hidden" {
 		t.Fatalf("%+v", p)
 	}
-	if p.Package != filepath.Join(dataDir, "update", "new") || read(t, filepath.Join(p.Package, "core", "arman-vpn-core.exe")) != "core 1.2.3" {
+	if p.Package != filepath.Join(dataDir, "update", "new") || read(t, filepath.Join(p.Package, "core", "blackfox-vpn-core.exe")) != "core 1.2.3" {
 		t.Fatalf("unpacked into %s", p.Package)
 	}
 }
@@ -378,9 +378,9 @@ func TestInstallPassesOnlyTheAppsOwnArguments(t *testing.T) {
 }
 
 func TestUnzipRefusesNamesOutsideTheFolder(t *testing.T) {
-	for _, name := range []string{"../evil.exe", "Arman VPN/../../evil.exe", "/abs.exe", `C:\evil.exe`, "Arman VPN/core/arman-vpn-core.exe:hidden"} {
+	for _, name := range []string{"../evil.exe", "BLACKFOX VPN/../../evil.exe", "/abs.exe", `C:\evil.exe`, "BLACKFOX VPN/core/blackfox-vpn-core.exe:hidden"} {
 		file := filepath.Join(t.TempDir(), "x.zip")
-		os.WriteFile(file, appZip(t, map[string]string{name: "x", "Arman VPN/arman-vpn.exe": "app"}), 0o644)
+		os.WriteFile(file, appZip(t, map[string]string{name: "x", "BLACKFOX VPN/blackfox-vpn.exe": "app"}), 0o644)
 		if err := unzip(file, filepath.Join(t.TempDir(), "out")); err == nil {
 			t.Errorf("%q: unpacked", name)
 		}
@@ -389,12 +389,12 @@ func TestUnzipRefusesNamesOutsideTheFolder(t *testing.T) {
 
 func TestUnzipKeepsAZipWithoutOneTopFolderAsItIs(t *testing.T) {
 	file := filepath.Join(t.TempDir(), "x.zip")
-	os.WriteFile(file, appZip(t, map[string]string{"arman-vpn.exe": "app", "core/arman-vpn-core.exe": "core"}), 0o644)
+	os.WriteFile(file, appZip(t, map[string]string{"blackfox-vpn.exe": "app", "core/blackfox-vpn-core.exe": "core"}), 0o644)
 	out := filepath.Join(t.TempDir(), "out")
 	if err := unzip(file, out); err != nil {
 		t.Fatal(err)
 	}
-	if read(t, filepath.Join(out, "core", "arman-vpn-core.exe")) != "core" {
+	if read(t, filepath.Join(out, "core", "blackfox-vpn-core.exe")) != "core" {
 		t.Fatal("wrong layout")
 	}
 }
@@ -405,11 +405,11 @@ func newVersion(t *testing.T) string {
 	t.Helper()
 	dir := t.TempDir()
 	for name, content := range map[string]string{
-		"arman-vpn.exe":           "app 1.2.3",
+		"blackfox-vpn.exe":           "app 1.2.3",
 		"flutter_windows.dll":     "flutter 1.2.3",
 		"data/app.so":             "assets 1.2.3",
-		"core/arman-vpn-core.exe": "core 1.2.3",
-		"core/arman-vpn-tun.exe":  "tun 1.2.3",
+		"core/blackfox-vpn-core.exe": "core 1.2.3",
+		"core/blackfox-vpn-tun.exe":  "tun 1.2.3",
 	} {
 		write(t, filepath.Join(dir, filepath.FromSlash(name)), content)
 	}
@@ -423,10 +423,10 @@ func TestSwapReplacesTheAppsFilesAndKeepsTheRest(t *testing.T) {
 		t.Fatal(err)
 	}
 	for name, want := range map[string]string{
-		"arman-vpn.exe":           "app 1.2.3",
+		"blackfox-vpn.exe":           "app 1.2.3",
 		"data/app.so":             "assets 1.2.3",
-		"core/arman-vpn-core.exe": "core 1.2.3",
-		"core/arman-vpn-tun.exe":  "tun 1.2.3",
+		"core/blackfox-vpn-core.exe": "core 1.2.3",
+		"core/blackfox-vpn-tun.exe":  "tun 1.2.3",
 		"user-data/config.json":   "the user's settings",
 		"notes.txt":               "the user's own file",
 	} {
@@ -439,7 +439,7 @@ func TestSwapReplacesTheAppsFilesAndKeepsTheRest(t *testing.T) {
 	if _, err := os.Stat(filepath.Join(appDir, "data", "old-asset.png")); !errors.Is(err, os.ErrNotExist) {
 		t.Error("an old asset stayed")
 	}
-	if read(t, filepath.Join(backup, "arman-vpn.exe")) != "app 1.0.0" {
+	if read(t, filepath.Join(backup, "blackfox-vpn.exe")) != "app 1.0.0" {
 		t.Error("the old app is not kept aside")
 	}
 }
@@ -501,7 +501,7 @@ func TestAFailedSwapPutsTheOldVersionBack(t *testing.T) {
 func TestANewStartReadsTheResultAndCleansUp(t *testing.T) {
 	appDir, dataDir := appFolder(t, "1.2.3", false)
 	dir := filepath.Join(dataDir, "update")
-	for _, p := range []string{"new/arman-vpn.exe", "backup/arman-vpn.exe", "updater/arman-vpn-core.exe", "1.2.3/" + SumsFile, "1.0.0/" + SumsFile, "pending.json"} {
+	for _, p := range []string{"new/blackfox-vpn.exe", "backup/blackfox-vpn.exe", "updater/blackfox-vpn-core.exe", "1.2.3/" + SumsFile, "1.0.0/" + SumsFile, "pending.json"} {
 		write(t, filepath.Join(dir, filepath.FromSlash(p)), "x")
 	}
 	data, _ := json.Marshal(Result{From: "1.0.0", To: "1.2.3", OK: true, On: true})

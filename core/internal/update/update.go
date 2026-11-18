@@ -21,7 +21,7 @@
 // its bundle, whose Contents is replaced. For a copy that Setup
 // installed, it also sets the version in Windows' list of installed apps;
 // the uninstaller removes the app's files whichever version put them there
-// ([UninstallDelete] in app/windows/installer/arman-vpn.iss). The new
+// ([UninstallDelete] in app/windows/installer/blackfox-vpn.iss). The new
 // Setup is not run: when it fails, Inno Setup's rollback removes the files
 // it added but does not restore the ones it replaced (tried), which can
 // leave half of each version. The copy writes what happened to result.json
@@ -61,9 +61,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/logx"
-	"github.com/armanlife/arman-vpn-client/core/internal/signing"
-	"github.com/armanlife/arman-vpn-client/core/internal/version"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/signing"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/version"
 )
 
 // The states of Status.
@@ -92,9 +92,9 @@ type appPackage struct {
 
 // windowsPackage is the Windows app's zip.
 var windowsPackage = appPackage{
-	name:   func(v string) string { return "Arman-VPN-" + v + "-Windows-x64.zip" },
-	app:    "arman-vpn.exe",
-	core:   "core/arman-vpn-core.exe",
+	name:   func(v string) string { return "BLACKFOX-VPN-" + v + "-Windows-x64.zip" },
+	app:    "blackfox-vpn.exe",
+	core:   "core/blackfox-vpn-core.exe",
 	unpack: unzip,
 }
 
@@ -115,13 +115,13 @@ func AppDir(exe string) string {
 
 // releasesURL is where GitHub serves a release's files:
 // <releasesURL>v<version>/<file>.
-const releasesURL = "https://github.com/armanlife/arman-vpn-client/releases/download/"
+const releasesURL = "https://github.com/betelgeuseromaneeconti/blackfox/releases/download/"
 
 // ServerEnv names a release server to use instead of GitHub, for trying
 // updates with a local test release: it serves
 // <server>/releases/download/v<version>/<file>. A loopback server is
 // reached directly.
-const ServerEnv = "ARMAN_VPN_UPDATE_SERVER"
+const ServerEnv = "BLACKFOX_VPN_UPDATE_SERVER"
 
 // Size limits of what a download reads.
 const (
