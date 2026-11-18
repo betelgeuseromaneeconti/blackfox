@@ -1220,21 +1220,19 @@ class _PhoneHome extends StatelessWidget {
     final top = MediaQuery.paddingOf(context).top;
     return Stack(
       children: [
-        // Soft lights in the state's color and two others.
-        Positioned(
-          top: -120,
-          left: -100,
-          child: _Glow(color: accent, size: 360, alpha: p.dark ? 0.22 : 0.20),
-        ),
-        Positioned(
-          top: 160,
-          right: -140,
-          child: _Glow(color: p.second, size: 320, alpha: p.dark ? 0.12 : 0.16),
-        ),
-        Positioned(
-          bottom: -80,
-          left: -60,
-          child: _Glow(color: p.third, size: 300, alpha: p.dark ? 0.10 : 0.12),
+        // A quiet graphite surface; connection state is carried by the controls.
+        Positioned.fill(
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: p.dark
+                    ? const [Color(0xFF0B0F15), Color(0xFF080B10), Color(0xFF111722)]
+                    : const [Color(0xFFF2F4F7), Color(0xFFFFFFFF), Color(0xFFE8ECF2)],
+              ),
+            ),
+          ),
         ),
         Padding(
           padding: EdgeInsets.fromLTRB(side, top + 14, side, 20),
@@ -1248,9 +1246,9 @@ class _PhoneHome extends StatelessWidget {
                   Text(
                     l.appTitle,
                     style: theme.textTheme.titleMedium?.copyWith(
-                      fontFamily: 'Georgia',
+                      fontFamily: 'Inter',
                       fontWeight: FontWeight.w700,
-                      letterSpacing: 1.5,
+                      letterSpacing: 0.5,
                       color: p.text,
                     ),
                   ),
@@ -1752,33 +1750,6 @@ class _PhoneHome extends StatelessWidget {
   }
 }
 
-/// A soft round light for the background.
-class _Glow extends StatelessWidget {
-  const _Glow({required this.color, required this.size, required this.alpha});
-
-  final Color color;
-  final double size;
-  final double alpha;
-
-  @override
-  Widget build(BuildContext context) => IgnorePointer(
-    child: AnimatedContainer(
-      duration: const Duration(milliseconds: 600),
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: RadialGradient(
-          colors: [
-            color.withValues(alpha: alpha),
-            color.withValues(alpha: 0),
-          ],
-        ),
-      ),
-    ),
-  );
-}
-
 /// A frosted card on the home background.
 /// The height of the home cards' content: the data card's ring; smaller
 /// on the computer, whose controls above the cards are small.
@@ -1800,12 +1771,12 @@ class _HomeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => DecoratedBox(
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(22),
+      borderRadius: BorderRadius.circular(18),
       boxShadow: palette.dark
           ? null
           : [
               BoxShadow(
-                color: const Color(0xFF2A3375).withValues(alpha: 0.08),
+                color: Colors.black.withValues(alpha: 0.10),
                 blurRadius: 24,
                 offset: const Offset(0, 8),
               ),
@@ -1890,10 +1861,8 @@ class _HomeDelay extends StatelessWidget {
   }
 }
 
-/// The switch: an orb in the state's color with a glow and a thin ring,
-/// over wavy contour lines. It stays still: an endless animation redraws the
-/// window every frame, and kept a CPU core busy even with the window hidden
-/// in the tray.
+/// A compact glass power tile. No decorative orbit or idle animation:
+/// the only motion is the progress arc while a connection is being made.
 class _PowerOrb extends StatelessWidget {
   const _PowerOrb({
     required this.palette,
@@ -1908,16 +1877,11 @@ class _PowerOrb extends StatelessWidget {
   });
 
   final _HomePalette palette;
-
-  /// The size against a phone's: smaller on a low screen (a TV).
   final double scale;
   final bool autofocus;
   final bool on;
   final Color accent;
   final bool busy;
-
-  /// The core is connecting, which can take a while. The ring moves so the
-  /// wait reads as expected progress rather than a stuck button.
   final bool connecting;
   final String tooltip;
   final VoidCallback onPressed;
@@ -1925,110 +1889,75 @@ class _PowerOrb extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final p = palette;
-    final area = 250.0 * scale;
-    final ring = 186.0 * scale;
-    final disc = 148.0 * scale;
-    final reach = 70.0 * scale;
+    final size = 142.0 * scale;
+    final radius = 34.0 * scale;
     return Tooltip(
       message: tooltip,
       child: SizedBox.square(
-        dimension: area,
-        child: Stack(
-          alignment: Alignment.center,
-          clipBehavior: Clip.none,
-          children: [
-            // Contour lines reaching past the button's area. While
-            // connecting they turn, very slowly: see _DriftingContours.
-            Positioned(
-              left: -reach,
-              top: -reach,
-              right: -reach,
-              bottom: -reach,
-              child: IgnorePointer(
-                child: _DriftingContours(
-                  drifting: busy || connecting,
-                  color: accent,
-                  alpha: p.dark ? 0.16 : 0.22,
-                ),
+        dimension: 178.0 * scale,
+        child: Center(
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 280),
+            curve: Curves.easeOutCubic,
+            width: size,
+            height: size,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(radius),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: p.dark
+                    ? const [Color(0xFF252C37), Color(0xFF111720)]
+                    : const [Color(0xFFFFFFFF), Color(0xFFE8ECF2)],
               ),
+              border: Border.all(
+                color: Colors.white.withValues(alpha: p.dark ? 0.18 : 0.72),
+                width: 1.1,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: p.dark ? 0.34 : 0.10),
+                  blurRadius: 28 * scale,
+                  offset: Offset(0, 12 * scale),
+                ),
+                if (on)
+                  BoxShadow(
+                    color: accent.withValues(alpha: 0.12),
+                    blurRadius: 24 * scale,
+                    spreadRadius: 1 * scale,
+                  ),
+              ],
             ),
-            Container(
-              width: area,
-              height: area,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: RadialGradient(
-                  colors: [
-                    accent.withValues(alpha: on ? 0.30 : 0.10),
-                    accent.withValues(alpha: 0),
+            child: Material(
+              type: MaterialType.transparency,
+              borderRadius: BorderRadius.circular(radius),
+              clipBehavior: Clip.antiAlias,
+              child: InkWell(
+                autofocus: autofocus,
+                onTap: busy ? null : onPressed,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Icon(
+                      Icons.power_settings_new_rounded,
+                      size: 54 * scale,
+                      color: p.dark ? Colors.white : const Color(0xFF202733),
+                    ),
+                    if (busy || connecting)
+                      Positioned.fill(
+                        child: Padding(
+                          padding: EdgeInsets.all(7 * scale),
+                          child: _ConnectingRing(
+                            size: size - 14 * scale,
+                            color: accent,
+                          ),
+                        ),
+                      ),
                   ],
                 ),
               ),
             ),
-            Container(
-              width: ring,
-              height: ring,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: accent.withValues(alpha: on ? 0.55 : 0.28),
-                  width: 1.5,
-                ),
-              ),
-            ),
-            // Connecting can take a while when Mozilla is slow to answer,
-            // so the ring keeps moving to show the wait is expected and
-            // something is still happening.
-            if (busy || connecting) _ConnectingRing(size: ring, color: accent),
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 400),
-              width: disc,
-              height: disc,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: on
-                      ? (p.dark
-                            ? const [Color(0xFF2C2C38), Color(0xFF121218)]
-                            : [Color.lerp(accent, Colors.white, 0.28)!, accent])
-                      : p.discOff,
-                ),
-                border: Border.all(
-                  color: on
-                      ? (p.dark
-                            ? Colors.white.withValues(alpha: 0.78)
-                            : Colors.white.withValues(alpha: 0.4))
-                      : p.discOffEdge,
-                  width: on ? 2.0 : 1.5,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: on
-                        ? accent.withValues(alpha: p.dark ? 0.28 : 0.4)
-                        : Colors.black.withValues(alpha: p.dark ? 0.55 : 0.14),
-                    blurRadius: on ? 36 : 26,
-                    offset: const Offset(0, 10),
-                  ),
-                ],
-              ),
-              child: Material(
-                type: MaterialType.transparency,
-                shape: const CircleBorder(),
-                clipBehavior: Clip.antiAlias,
-                child: InkWell(
-                  autofocus: autofocus,
-                  onTap: busy ? null : onPressed,
-                  child: Icon(
-                    Icons.power_settings_new_rounded,
-                    size: 58 * scale,
-                    color: on ? Colors.white : (p.dark ? p.muted : p.idle),
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -2147,119 +2076,6 @@ class _ConnectingArc extends CustomPainter {
   @override
   bool shouldRepaint(_ConnectingArc old) =>
       old.color != color || old.still != still;
-}
-
-/// The contour lines, turning very slowly while the core connects.
-///
-/// Painting them is not cheap: seven closed paths of 120 segments, each
-/// point from three trigonometric calls, which is some 3,400 of them for
-/// one frame. Repainting that sixty times a second to make it move would
-/// cost far more than the whole switch.
-///
-/// So it is never repainted. The lines are drawn once into a
-/// [RepaintBoundary] layer, and [RotationTransition] turns that finished
-/// layer: the work per frame is one matrix on the GPU, with no Dart and no
-/// rasterizing. A turn takes twenty-odd seconds, so a connect shows well
-/// under one: enough to notice if you look, not enough to pull the eye off
-/// the travelling arc, which is what should carry it.
-class _DriftingContours extends StatefulWidget {
-  const _DriftingContours({
-    required this.drifting,
-    required this.color,
-    required this.alpha,
-  });
-
-  final bool drifting;
-  final Color color;
-  final double alpha;
-
-  @override
-  State<_DriftingContours> createState() => _DriftingContoursState();
-}
-
-class _DriftingContoursState extends State<_DriftingContours>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _drift = AnimationController(
-    vsync: this,
-    duration: const Duration(seconds: 22),
-  );
-
-  @override
-  void dispose() {
-    _drift.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // Still with the system's animations off, and whenever the core is not
-    // connecting, so a settled app turns nothing.
-    final run = widget.drifting && !MediaQuery.of(context).disableAnimations;
-    if (run && !_drift.isAnimating) {
-      _drift.repeat();
-    } else if (!run && _drift.isAnimating) {
-      _drift.stop();
-    }
-    // The boundary is inside the rotation: the lines rasterize once and the
-    // transform reuses that layer. The other way round would repaint them.
-    return RotationTransition(
-      turns: _drift,
-      child: RepaintBoundary(
-        child: CustomPaint(
-          painter: _Contours(color: widget.color, alpha: widget.alpha),
-        ),
-      ),
-    );
-  }
-}
-
-/// How many times the contour lines have been painted. Drawing them costs
-/// some 3,400 trigonometric calls, so they must be rasterized once and then
-/// only transformed. A [RepaintBoundary] put on the wrong side of the
-/// rotation in [_DriftingContours] would still look right while making this
-/// climb on every frame, which is what the test watching it catches.
-@visibleForTesting
-int debugContourPaints = 0;
-
-/// Wavy closed lines around the center, like the contours of a map, fading
-/// outwards.
-class _Contours extends CustomPainter {
-  _Contours({required this.color, required this.alpha});
-
-  final Color color;
-  final double alpha;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    debugContourPaints++;
-    final center = size.center(Offset.zero);
-    final paint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.2;
-    const lines = 7;
-    for (var i = 0; i < lines; i++) {
-      final base = 112.0 + i * 22;
-      final amp = 3.0 + i * 1.6;
-      final path = Path();
-      for (var k = 0; k <= 120; k++) {
-        final a = k / 120 * 2 * math.pi;
-        final r =
-            base +
-            amp * math.sin(3 * a + i * 0.8) +
-            amp * 0.5 * math.sin(5 * a - i * 0.5);
-        final point = center + Offset(math.cos(a) * r, math.sin(a) * r);
-        k == 0
-            ? path.moveTo(point.dx, point.dy)
-            : path.lineTo(point.dx, point.dy);
-      }
-      path.close();
-      paint.color = color.withValues(alpha: alpha * (1 - i / lines));
-      canvas.drawPath(path, paint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(_Contours old) => old.color != color || old.alpha != alpha;
 }
 
 /// The data used of the active account: a ring that fills as it is used,
