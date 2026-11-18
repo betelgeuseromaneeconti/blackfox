@@ -15,7 +15,7 @@ val releaseKey = Properties().apply {
 }
 
 android {
-    namespace = "com.arman.firefoxvpn"
+    namespace = "com.betelgeuseromaneeconti.blackfox"
     compileSdk = flutter.compileSdkVersion
     // The NDK installed here (Flutter's default, 28.x, is not).
     ndkVersion = "30.0.16248370"
@@ -45,7 +45,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.arman.firefoxvpn"
+        applicationId = "com.betelgeuseromaneeconti.blackfox"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         // The core's aar is built for API 24 (gomobile bind -androidapi 24).
