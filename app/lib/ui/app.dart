@@ -130,6 +130,29 @@ ThemeData _theme(Brightness brightness, Locale locale) {
     ),
   );
   return theme.copyWith(
+    navigationBarTheme: NavigationBarThemeData(
+      backgroundColor: dark
+          ? const Color(0xE609090C)
+          : const Color(0xFFF8F8FA),
+      indicatorColor: dark
+          ? Colors.white.withValues(alpha: 0.12)
+          : Colors.black.withValues(alpha: 0.08),
+      elevation: 0,
+    ),
+    appBarTheme: AppBarTheme(
+      backgroundColor: dark
+          ? const Color(0xE609090C)
+          : const Color(0xFFF8F8FA),
+      foregroundColor: scheme.onSurface,
+      elevation: 0,
+      centerTitle: false,
+      titleTextStyle: theme.textTheme.titleLarge?.copyWith(
+        fontFamily: 'Georgia',
+        fontWeight: FontWeight.w600,
+        letterSpacing: 0.3,
+        color: scheme.onSurface,
+      ),
+    ),
     navigationRailTheme: NavigationRailThemeData(
       backgroundColor: dark ? const Color(0xFF0C0C10) : const Color(0xFFEAEAEF),
       indicatorColor: dark
