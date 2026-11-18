@@ -15,7 +15,7 @@ val releaseKey = Properties().apply {
 }
 
 android {
-    namespace = "com.arman.firefoxvpn"
+    // Keep the established application ID so existing Android installs update in place.\n    // The legacy namespace is an upgrade-compatibility identifier, not product branding.\n    namespace = "com.arman.firefoxvpn"
     compileSdk = flutter.compileSdkVersion
     // The NDK installed here (Flutter's default, 28.x, is not).
     ndkVersion = "30.0.16248370"
@@ -45,7 +45,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.arman.firefoxvpn"
+        // Do not change without a signed migration plan: changing this ID\n        // would install a second app and strand existing app data.\n        applicationId = "com.arman.firefoxvpn"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         // The core's aar is built for API 24 (gomobile bind -androidapi 24).
