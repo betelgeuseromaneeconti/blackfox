@@ -199,7 +199,7 @@ abstract final class Updates {
     if (settings.updateVersion.isNotEmpty &&
         cachedUrl.isNotEmpty &&
         !_isBlackfoxRelease(cachedUrl)) {
-      settings.copyWith(
+      settings.update(
         updateVersion: '',
         updateUrl: '',
         updateDetails: const {},
