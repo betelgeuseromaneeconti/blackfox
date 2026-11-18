@@ -427,7 +427,6 @@ class _ShellState extends State<Shell> {
           noCore: status == null ? _NoCore(core: core) : null,
         );
       }
-      final scheme = Theme.of(context).colorScheme;
       return Scaffold(
         body: AnnouncementOverlay(
           settings: widget.settings,
