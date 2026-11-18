@@ -4,7 +4,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/config"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/config"
 )
 
 // The phone's proxy never sleeps: the setting is turned off on start,
