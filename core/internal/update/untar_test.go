@@ -79,13 +79,13 @@ func TestUntarUnpacksTheAppFolder(t *testing.T) {
 		tarFolder("blackfox/"),
 		tarExe("blackfox/blackfox", "app"),
 		tarRegular("blackfox/lib/libapp.so", "lib"),
-		tarExe("blackfox/core/blackfox-core", "core"),
+		tarExe("blackfox/core/blackfox-vpn-core", "core"),
 	)
 	out := filepath.Join(t.TempDir(), "out")
 	if err := untar(file, out); err != nil {
 		t.Fatal(err)
 	}
-	if read(t, filepath.Join(out, "blackfox")) != "app" || read(t, filepath.Join(out, "core", "blackfox-core")) != "core" || read(t, filepath.Join(out, "lib", "libapp.so")) != "lib" {
+	if read(t, filepath.Join(out, "blackfox")) != "app" || read(t, filepath.Join(out, "core", "blackfox-vpn-core")) != "core" || read(t, filepath.Join(out, "lib", "libapp.so")) != "lib" {
 		t.Fatal("wrong layout")
 	}
 	if runtime.GOOS != "windows" {
@@ -159,8 +159,8 @@ func TestALinuxReleaseInstalls(t *testing.T) {
 	r.files[AssetName("1.2.3")] = appTar(t,
 		tarFolder("blackfox/"),
 		tarExe("blackfox/blackfox", "app 1.2.3"),
-		tarExe("blackfox/core/blackfox-core", "core 1.2.3"),
-		tarExe("blackfox/core/blackfox-tun", "tun 1.2.3"),
+		tarExe("blackfox/core/blackfox-vpn-core", "core 1.2.3"),
+		tarExe("blackfox/core/blackfox-vpn-tun", "tun 1.2.3"),
 	)
 	r.sign()
 	r.serve(t)
@@ -170,7 +170,7 @@ func TestALinuxReleaseInstalls(t *testing.T) {
 	appDir, dataDir := appFolder(t, "1.0.0", false)
 	write(t, filepath.Join(appDir, "blackfox"), "app 1.0.0")
 	p := installed(t, appDir, dataDir)
-	if read(t, filepath.Join(p.Package, "core", "blackfox-core")) != "core 1.2.3" || read(t, filepath.Join(p.Package, "blackfox")) != "app 1.2.3" {
+	if read(t, filepath.Join(p.Package, "core", "blackfox-vpn-core")) != "core 1.2.3" || read(t, filepath.Join(p.Package, "blackfox")) != "app 1.2.3" {
 		t.Fatalf("unpacked into %s", p.Package)
 	}
 }
@@ -184,8 +184,8 @@ func TestAMacReleaseInstalls(t *testing.T) {
 		tarFolder("BLACKFOX.app/"),
 		tarRegular("BLACKFOX.app/Contents/Info.plist", "plist 1.2.3"),
 		tarExe("BLACKFOX.app/Contents/MacOS/BLACKFOX", "app 1.2.3"),
-		tarExe("BLACKFOX.app/Contents/MacOS/blackfox-core", "core 1.2.3"),
-		tarExe("BLACKFOX.app/Contents/MacOS/blackfox-tun", "tun 1.2.3"),
+		tarExe("BLACKFOX.app/Contents/MacOS/blackfox-vpn-core", "core 1.2.3"),
+		tarExe("BLACKFOX.app/Contents/MacOS/blackfox-vpn-tun", "tun 1.2.3"),
 	}
 	if runtime.GOOS != "windows" {
 		files = append(files, tarSymlink("BLACKFOX.app/Contents/Frameworks/App.framework/App", "Versions/Current/App"))
@@ -199,7 +199,7 @@ func TestAMacReleaseInstalls(t *testing.T) {
 	appDir, dataDir := appFolder(t, "1.0.0", false)
 	p := installed(t, appDir, dataDir)
 	contents := filepath.Join(p.Package, "Contents")
-	if read(t, filepath.Join(contents, "MacOS", "blackfox-core")) != "core 1.2.3" || read(t, filepath.Join(contents, "MacOS", "BLACKFOX")) != "app 1.2.3" {
+	if read(t, filepath.Join(contents, "MacOS", "blackfox-vpn-core")) != "core 1.2.3" || read(t, filepath.Join(contents, "MacOS", "BLACKFOX")) != "app 1.2.3" {
 		t.Fatalf("unpacked into %s", p.Package)
 	}
 	if entries, _ := os.ReadDir(p.Package); len(entries) != 1 {
@@ -215,9 +215,9 @@ func TestAppDirIsTheFolderThatHoldsTheCore(t *testing.T) {
 		pkg       appPackage
 		exe, want string
 	}{
-		{windowsPackage, "/Users/a/BLACKFOX/core/blackfox-core.exe", "/Users/a/BLACKFOX"},
-		{linuxPackage, "/home/a/.local/opt/blackfox/core/blackfox-core", "/home/a/.local/opt/blackfox"},
-		{macPackage, "/Applications/BLACKFOX.app/Contents/MacOS/blackfox-core", "/Applications/BLACKFOX.app"},
+		{windowsPackage, "/Users/a/BLACKFOX/core/blackfox-vpn-core.exe", "/Users/a/BLACKFOX"},
+		{linuxPackage, "/home/a/.local/opt/blackfox/core/blackfox-vpn-core", "/home/a/.local/opt/blackfox"},
+		{macPackage, "/Applications/BLACKFOX.app/Contents/MacOS/blackfox-vpn-core", "/Applications/BLACKFOX.app"},
 	} {
 		thePackage = c.pkg
 		if got := AppDir(filepath.FromSlash(c.exe)); got != filepath.FromSlash(c.want) {
