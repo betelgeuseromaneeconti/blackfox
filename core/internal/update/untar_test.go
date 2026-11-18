@@ -157,6 +157,7 @@ func TestALinuxReleaseInstalls(t *testing.T) {
 	t.Cleanup(func() { thePackage = windowsPackage })
 	r := newRelease(t, "1.2.3")
 	r.files[AssetName("1.2.3")] = appTar(t,
+		tarFolder("blackfox/"),
 		tarExe("blackfox/blackfox", "app 1.2.3"),
 		tarExe("blackfox/core/blackfox-core", "core 1.2.3"),
 		tarExe("blackfox/core/blackfox-tun", "tun 1.2.3"),
@@ -180,6 +181,7 @@ func TestAMacReleaseInstalls(t *testing.T) {
 	t.Cleanup(func() { thePackage = windowsPackage })
 	r := newRelease(t, "1.2.3")
 	files := []tarFile{
+		tarFolder("BLACKFOX.app/"),
 		tarRegular("BLACKFOX.app/Contents/Info.plist", "plist 1.2.3"),
 		tarExe("BLACKFOX.app/Contents/MacOS/BLACKFOX", "app 1.2.3"),
 		tarExe("BLACKFOX.app/Contents/MacOS/blackfox-core", "core 1.2.3"),
