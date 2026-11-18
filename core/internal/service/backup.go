@@ -16,9 +16,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/accounts"
-	"github.com/armanlife/arman-vpn-client/core/internal/logx"
-	"github.com/armanlife/arman-vpn-client/core/internal/version"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/accounts"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/version"
 )
 
 // A backup is the data folder as a zip file, in the same layout, so that it
@@ -81,7 +81,7 @@ type backupContents struct {
 
 // backupFileName is the name a backup is saved under.
 func backupFileName(now time.Time) string {
-	return "Arman-VPN-backup-" + now.Format("2006-01-02_15-04-05") + ".zip"
+	return "BLACKFOX-VPN-backup-" + now.Format("2006-01-02_15-04-05") + ".zip"
 }
 
 // writeBackup writes the data folder to w as a zip file.
@@ -92,7 +92,7 @@ func (d *Daemon) writeBackup(w io.Writer) error {
 	}
 	zw := zip.NewWriter(w)
 	info, _ := json.MarshalIndent(backupInfo{
-		App:      "Arman VPN",
+		App:      "BLACKFOX VPN",
 		Format:   backupFormat,
 		Version:  version.Current,
 		Created:  time.Now().UTC().Truncate(time.Second),

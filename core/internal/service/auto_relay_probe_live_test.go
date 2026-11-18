@@ -11,15 +11,15 @@ import (
 	"testing"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/config"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/config"
 )
 
 // This opt-in smoke test sends only local worker health requests. It never
 // reads account files or sends a Guardian request, even to a healthy relay.
 func TestLiveRelayWorkerHealth(t *testing.T) {
-	path := os.Getenv("ARMAN_RELAY_HEALTH_MANIFEST")
+	path := os.Getenv("BLACKFOX_RELAY_HEALTH_MANIFEST")
 	if path == "" {
-		t.Skip("set ARMAN_RELAY_HEALTH_MANIFEST to an owner-supplied test manifest")
+		t.Skip("set BLACKFOX_RELAY_HEALTH_MANIFEST to an owner-supplied test manifest")
 	}
 	data, err := os.ReadFile(path)
 	if err != nil {

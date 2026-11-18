@@ -12,14 +12,14 @@ import (
 	"testing"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/fxa"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/fxa"
 )
 
 // All credentials in this file are local fixtures.
 func TestBackupNamesIncludeLocalTimeAndDifferWithinADay(t *testing.T) {
 	now := time.Date(2026, 11, 9, 20, 45, 8, 0, time.FixedZone("local", 3*3600+30*60))
 	first := backupFileName(now)
-	if first != "Arman-VPN-backup-2026-11-09_20-45-08.zip" {
+	if first != "BLACKFOX-VPN-backup-2026-11-09_20-45-08.zip" {
 		t.Fatalf("unexpected backup name: %s", first)
 	}
 	if first == backupFileName(now.Add(time.Second)) {
@@ -65,9 +65,9 @@ func TestBackupLeavesOutLargeAndRunFiles(t *testing.T) {
 	dir := d.paths.Dir
 	writeBackupTestFile(t, filepath.Join(dir, "config.json"), "{}")
 	writeBackupTestFile(t, filepath.Join(dir, "app-settings.json"), "{}")
-	writeBackupTestFile(t, filepath.Join(dir, "logs", "arman-vpn-2026-11-06.log"), "log")
+	writeBackupTestFile(t, filepath.Join(dir, "logs", "blackfox-vpn-2026-11-06.log"), "log")
 	writeBackupTestFile(t, filepath.Join(dir, "routing", "geosite.dat"), "lists")
-	writeBackupTestFile(t, filepath.Join(dir, "update", "Arman-VPN.zip"), "update")
+	writeBackupTestFile(t, filepath.Join(dir, "update", "BLACKFOX-VPN.zip"), "update")
 	writeBackupTestFile(t, filepath.Join(dir, localTokenName), "token")
 	writeBackupTestFile(t, filepath.Join(dir, statusFileName), "{}")
 
@@ -237,7 +237,7 @@ func TestBackupAPI(t *testing.T) {
 	c := newDashboardClient(t, from)
 	rec := c.do(http.MethodGet, "/api/backup", nil)
 	if rec.Code != http.StatusOK || rec.Header().Get("Content-Type") != "application/zip" ||
-		!strings.Contains(rec.Header().Get("Content-Disposition"), "Arman-VPN-backup-") {
+		!strings.Contains(rec.Header().Get("Content-Disposition"), "BLACKFOX-VPN-backup-") {
 		t.Fatalf("export: %d %v", rec.Code, rec.Header())
 	}
 	data := rec.Body.Bytes()

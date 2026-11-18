@@ -15,16 +15,16 @@ import (
 	"sync"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/config"
-	"github.com/armanlife/arman-vpn-client/core/internal/controlplane"
-	"github.com/armanlife/arman-vpn-client/core/internal/guardian"
-	"github.com/armanlife/arman-vpn-client/core/internal/logx"
-	"github.com/armanlife/arman-vpn-client/core/internal/update"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/config"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/controlplane"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/guardian"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/update"
 )
 
 const (
-	relayManifestURL    = "https://raw.githubusercontent.com/arman-org/update-manifests/main/arman-vpn-client/updates.json"
-	relayManifestMirror = "https://cdn.jsdelivr.net/gh/arman-org/update-manifests@main/arman-vpn-client/updates.json"
+	relayManifestURL    = "https://raw.githubusercontent.com/blackfox-org/update-manifests/main/blackfox-vpn-client/updates.json"
+	relayManifestMirror = "https://cdn.jsdelivr.net/gh/blackfox-org/update-manifests@main/blackfox-vpn-client/updates.json"
 	autoRelayBudget     = 20 * time.Second
 	relayProbeTimeout   = 4 * time.Second
 	maxRelayManifest    = 512 * 1024
@@ -195,7 +195,7 @@ func (a *automaticRelays) healthy(ctx context.Context, node relayNode, base http
 	}
 	valid := resp.StatusCode == http.StatusOK &&
 		json.NewDecoder(io.LimitReader(resp.Body, 4096)).Decode(&report) == nil &&
-		report.Relay == "arman-vpn" && report.Ready
+		report.Relay == "blackfox-vpn" && report.Ready
 	logx.Info("automatic relay health node=%s http=%d ready=%t", node.id, resp.StatusCode, valid)
 	return valid
 }
@@ -266,7 +266,7 @@ func (a *automaticRelays) recover(req *http.Request) (*http.Response, error) {
 		}
 		resp, err := (&relayPoolTransport{node: node, base: base}).RoundTrip(out)
 		if resp != nil {
-			logx.Info("automatic relay Guardian response node=%s http=%d forwarded=%t", node.id, resp.StatusCode, resp.Header.Get("X-Arman-Relay") == "1")
+			logx.Info("automatic relay Guardian response node=%s http=%d forwarded=%t", node.id, resp.StatusCode, resp.Header.Get("X-BLACKFOX-Relay") == "1")
 		} else if err != nil {
 			logx.Info("automatic relay Guardian request failed node=%s", node.id)
 		}
@@ -293,7 +293,7 @@ func (a *automaticRelays) recover(req *http.Request) (*http.Response, error) {
 }
 
 func usableGuardianRelayResponse(req *http.Request, resp *http.Response) bool {
-	if resp == nil || resp.Header.Get("X-Arman-Relay") != "1" {
+	if resp == nil || resp.Header.Get("X-BLACKFOX-Relay") != "1" {
 		return false
 	}
 	if req.Method == http.MethodHead && resp.StatusCode == http.StatusOK {

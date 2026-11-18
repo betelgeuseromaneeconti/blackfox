@@ -4,9 +4,9 @@ import (
 	"context"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/logx"
-	"github.com/armanlife/arman-vpn-client/core/internal/netstate"
-	"github.com/armanlife/arman-vpn-client/core/internal/proxy"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/netstate"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/proxy"
 )
 
 // An explicit connect owns its first wake and one retry within connectWindow.
