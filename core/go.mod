@@ -1,4 +1,4 @@
-module github.com/armanlife/arman-vpn-client/core
+module github.com/betelgeuseromaneeconti/blackfox/core
 
 go 1.27.2
 
