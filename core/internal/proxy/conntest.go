@@ -106,7 +106,7 @@ func RunConnectionTest(opener tunnelOpener, target string, exitTimeout, timeout 
 		result.Error, result.ErrorCode = err.Error(), FailureOther
 		return result
 	}
-	req.Header.Set("User-Agent", "arman-vpn-connection-test/1")
+	req.Header.Set("User-Agent", "blackfox-vpn-connection-test/1")
 
 	started := time.Now()
 	resp, err := client.Do(req)
@@ -217,7 +217,7 @@ func responseProbe(opener tunnelOpener, target string, timeout time.Duration) (i
 	if err != nil {
 		return 0, false
 	}
-	req.Header.Set("User-Agent", "arman-vpn-connection-test/1")
+	req.Header.Set("User-Agent", "blackfox-vpn-connection-test/1")
 	resp, err := (&http.Client{Transport: transport, Timeout: timeout}).Do(req)
 	if err != nil {
 		return 0, false
