@@ -195,7 +195,7 @@ abstract final class Updates {
         ? settings.updateDetails['release_url']! as String
         : '';
     // Never surface a cached update from the upstream fork. This prevents
-    // an old Arman VPN cache from prompting immediately after BLACKFOX starts.
+    // a cached update from the upstream project from prompting immediately after BLACKFOX starts.
     if (settings.updateVersion.isNotEmpty &&
         cachedUrl.isNotEmpty &&
         !_isBlackfoxRelease(cachedUrl)) {
