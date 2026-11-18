@@ -11,7 +11,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/logx"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
 )
 
 // The handshake is kept short and the request is not: a tunnel that is gone
