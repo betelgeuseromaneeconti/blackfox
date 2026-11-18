@@ -13,13 +13,13 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/config"
-	"github.com/armanlife/arman-vpn-client/core/internal/controlplane"
-	"github.com/armanlife/arman-vpn-client/core/internal/evasion"
-	"github.com/armanlife/arman-vpn-client/core/internal/guardian"
-	"github.com/armanlife/arman-vpn-client/core/internal/hellosplit"
-	"github.com/armanlife/arman-vpn-client/core/internal/logx"
-	"github.com/armanlife/arman-vpn-client/core/internal/resolver"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/config"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/controlplane"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/evasion"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/guardian"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/hellosplit"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/resolver"
 )
 
 const apiRelayDialTimeout = 20 * time.Second

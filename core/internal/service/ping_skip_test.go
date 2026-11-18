@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/proxy"
-	"github.com/armanlife/arman-vpn-client/core/internal/serverlist"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/proxy"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/serverlist"
 )
 
 func pingCountry(code string) serverlist.Country {
