@@ -1,3 +1,5 @@
+import 'dart:ui' show ImageFilter;
+
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -698,46 +700,52 @@ class Panel extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    return Card(
-      margin: EdgeInsets.zero,
-      child: CustomPaint(
-        foregroundPainter: _GothicCornerPainter(
-          color: theme.colorScheme.outline.withValues(
-            alpha: isDark ? 0.28 : 0.18,
-          ),
-        ),
-        child: Padding(
-          padding: padding,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (title != null) ...[
-                Row(
-                  children: [
-                    if (icon != null) ...[
-                      Icon(
-                        icon,
-                        size: 18,
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
-                      const SizedBox(width: 8),
-                    ],
-                    Expanded(
-                      child: Text(
-                        title!,
-                        style: theme.textTheme.labelLarge?.copyWith(
-                          color: theme.colorScheme.onSurfaceVariant,
-                          letterSpacing: 0.6,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(18),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
+        child: Card(
+          margin: EdgeInsets.zero,
+          child: CustomPaint(
+            foregroundPainter: _GothicCornerPainter(
+              color: theme.colorScheme.outline.withValues(
+                alpha: isDark ? 0.28 : 0.18,
+              ),
+            ),
+            child: Padding(
+              padding: padding,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (title != null) ...[
+                    Row(
+                      children: [
+                        if (icon != null) ...[
+                          Icon(
+                            icon,
+                            size: 18,
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
+                          const SizedBox(width: 8),
+                        ],
+                        Expanded(
+                          child: Text(
+                            title!,
+                            style: theme.textTheme.labelLarge?.copyWith(
+                              color: theme.colorScheme.onSurfaceVariant,
+                              letterSpacing: 0.6,
+                            ),
+                          ),
                         ),
-                      ),
+                        ?trailing,
+                      ],
                     ),
-                    ?trailing,
+                    const SizedBox(height: 14),
                   ],
-                ),
-                const SizedBox(height: 14),
-              ],
-              child,
-            ],
+                  child,
+                ],
+              ),
+            ),
           ),
         ),
       ),
