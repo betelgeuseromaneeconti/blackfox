@@ -290,8 +290,10 @@ begin
   begin
     RegDeleteValue(HKCU, KeptKey, KeptValue);
     RegDeleteKeyIfEmpty(HKCU, KeptKey);
-    RegDeleteValue(HKCU, LegacyKeptKey, KeptValue);
-    RegDeleteKeyIfEmpty(HKCU, LegacyKeptKey);
+    RegDeleteValue(HKCU, ArmanKeptKey, KeptValue);
+    RegDeleteKeyIfEmpty(HKCU, ArmanKeptKey);
+    RegDeleteValue(HKCU, FirefoxKeptKey, KeptValue);
+    RegDeleteKeyIfEmpty(HKCU, FirefoxKeptKey);
   end;
 end;
 
