@@ -176,7 +176,32 @@ class _MobileShellState extends State<MobileShell> {
         bottomNavigationBar: _themed(
           context,
           home: Theme.of(context).brightness == Brightness.dark,
-          child: NavigationBar(
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color(0xF018181E),
+                  Color(0xFF09090D),
+                  Color(0xFF050506),
+                ],
+              ),
+              border: Border(
+                top: BorderSide(
+                  color: Colors.white.withValues(alpha: 0.12),
+                  width: 1,
+                ),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.38),
+                  blurRadius: 24,
+                  offset: const Offset(0, -8),
+                ),
+              ],
+            ),
+            child: NavigationBar(
             selectedIndex: currentTab,
             onDestinationSelected: (i) => setState(() => _tab = i),
             destinations: fiveTabs
@@ -219,6 +244,7 @@ class _MobileShellState extends State<MobileShell> {
                       label: l.navSettings,
                     ),
                   ],
+            ),
           ),
         ),
       ),
