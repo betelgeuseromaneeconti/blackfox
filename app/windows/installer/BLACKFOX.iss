@@ -2,7 +2,7 @@
 ; compiles it with the built app:
 ;
 ;   ISCC /DAppVersion=1.1.9 /DSourceDir=<the app's folder> /DOutputDir=<dir>
-;        /DOutputName=<file name without .exe> arman-vpn.iss
+;        /DOutputName=<file name without .exe> BLACKFOX.iss
 ;
 ; It installs for the current user only, without administrator rights, by
 ; default into %LOCALAPPDATA%\Programs\Arman VPN (apart from
@@ -211,7 +211,7 @@ const
   // Where an uninstall that kept the data notes the folder it is in; the
   // uninstall of a version before 1.0.9 noted it under the old name.
   KeptKey = 'Software\{#AppName}';
-  ArmanKeptKey = 'Software\Arman VPN';
+  LegacyKeptKey = 'Software\Arman VPN';
   LegacyKeptKey = 'Software\Firefox VPN';
   KeptValue = 'KeptDataIn';
 
