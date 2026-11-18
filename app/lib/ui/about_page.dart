@@ -104,7 +104,7 @@ class _AboutPageState extends State<AboutPage> {
                   Text(
                     'BLACKFOX',
                     style: theme.textTheme.headlineSmall?.copyWith(
-                      fontFamily: 'Georgia',
+                      fontFamily: 'Inter',
                       fontWeight: FontWeight.w700,
                       letterSpacing: 3.0,
                     ),
@@ -125,7 +125,7 @@ class _AboutPageState extends State<AboutPage> {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 20),
-                  const GothicDivider(centered: true),
+                  const Divider(height: 1),
                   const SizedBox(height: 20),
                   _Line(label: l.appVersionLabel, value: appVersion),
                   const Divider(height: 24),
@@ -256,16 +256,16 @@ class _AboutPageState extends State<AboutPage> {
                     ),
                   ],
                   const SizedBox(height: 24),
-                  const GothicDivider(centered: true),
+                  const Divider(height: 1),
                   const SizedBox(height: 18),
                   Text(
                     'Made by @betelgeuseromaneeconti',
                     textAlign: TextAlign.center,
                     textDirection: TextDirection.ltr,
                     style: theme.textTheme.titleSmall?.copyWith(
-                      fontFamily: 'Georgia',
+                      fontFamily: 'Inter',
                       fontWeight: FontWeight.w600,
-                      letterSpacing: 1.4,
+                      letterSpacing: 0.3,
                       color: scheme.onSurface,
                     ),
                   ),

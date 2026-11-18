@@ -21,7 +21,7 @@ const firefoxAccountSignUpUrl = 'https://accounts.firefox.com/';
 const firefoxAccountSetPasswordUrl =
     'https://accounts.firefox.com/reset_password/';
 
-/// Strictly monochrome Victorian Gothic palette for BLACKFOX.
+/// Minimal monochrome glass palette for BLACKFOX.
 abstract final class GothicPalette {
   static const obsidian = Color(0xFF060608);
   static const night = Color(0xFF0A0A0E);
@@ -217,7 +217,7 @@ String locationName(AppLocalizations l, String code, String name) =>
     ? l.recommendedLocation
     : countryName(l, code, name);
 
-/// The phone home's monochrome Victorian Gothic colors.
+/// The phone home's monochrome glass colors.
 abstract final class Midnight {
   static const top = Color(0xFF121217);
   static const bottom = Color(0xFF060608);
@@ -228,7 +228,7 @@ abstract final class Midnight {
   static const muted = Color(0xFF9A9AA6);
 }
 
-/// A monochrome Victorian Gothic dark theme for the phone's home and
+/// A monochrome glass dark theme for the phone's home and
 /// navigation bar, preserving the app's resolved font family.
 ThemeData midnightTheme(ThemeData base) {
   const scheme = ColorScheme.dark(
@@ -586,8 +586,7 @@ class OwnTopBar extends InheritedWidget {
   bool updateShouldNotify(OwnTopBar oldWidget) => false;
 }
 
-/// A page's title with restrained Victorian Gothic typography and a subtle
-/// ornamental underline; nothing when the page has its own top bar.
+/// A clean page title with compact typography.
 class PageTitle extends StatelessWidget {
   const PageTitle(this.text, {super.key});
 
@@ -597,26 +596,20 @@ class PageTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     if (OwnTopBar.of(context)) return const SizedBox.shrink();
     final theme = Theme.of(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          text,
-          style: theme.textTheme.headlineSmall?.copyWith(
-            fontWeight: FontWeight.w600,
-            letterSpacing: 0.3,
-          ),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 18),
+      child: Text(
+        text,
+        style: theme.textTheme.headlineSmall?.copyWith(
+          fontWeight: FontWeight.w700,
+          letterSpacing: -0.3,
         ),
-        const SizedBox(height: 6),
-        const GothicDivider(width: 96),
-      ],
+      ),
     );
   }
 }
 
-/// Restrained Victorian Gothic ornamental separator: a thin monochrome line
-/// with a subtle central diamond accent.
+/// A minimal hairline separator.
 class GothicDivider extends StatelessWidget {
   const GothicDivider({super.key, this.width, this.centered = false});
 
@@ -624,16 +617,13 @@ class GothicDivider extends StatelessWidget {
   final bool centered;
 
   @override
-  Widget build(BuildContext context) {
-    final color = Theme.of(context).colorScheme.outline.withValues(alpha: 0.45);
-    return SizedBox(
-      width: width ?? double.infinity,
-      height: 7,
-      child: CustomPaint(
-        painter: _GothicDividerPainter(color: color, centered: centered),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => SizedBox(
+    width: width ?? double.infinity,
+    height: 1,
+    child: ColoredBox(
+      color: Theme.of(context).colorScheme.outlineVariant,
+    ),
+  );
 }
 
 class _GothicDividerPainter extends CustomPainter {
@@ -683,7 +673,7 @@ class _GothicDividerPainter extends CustomPainter {
       old.color != color || old.centered != centered;
 }
 
-/// A titled Victorian Gothic glass card section.
+/// A translucent monochrome glass surface.
 class Panel extends StatelessWidget {
   const Panel({
     super.key,
@@ -703,48 +693,62 @@ class Panel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-    return Card(
-      margin: EdgeInsets.zero,
-      child: CustomPaint(
-        foregroundPainter: _GothicCornerPainter(
-          color: theme.colorScheme.outline.withValues(
-            alpha: isDark ? 0.28 : 0.18,
-          ),
+    final dark = theme.brightness == Brightness.dark;
+    final scheme = theme.colorScheme;
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: dark
+              ? const [Color(0xD91B202A), Color(0xB20E121A)]
+              : const [Color(0xF7FFFFFF), Color(0xEAF0F2F6)],
         ),
-        child: Padding(
-          padding: padding,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (title != null) ...[
-                Row(
-                  children: [
-                    if (icon != null) ...[
-                      Icon(
-                        icon,
-                        size: 18,
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
-                      const SizedBox(width: 8),
-                    ],
-                    Expanded(
-                      child: Text(
-                        title!,
-                        style: theme.textTheme.labelLarge?.copyWith(
-                          color: theme.colorScheme.onSurfaceVariant,
-                          letterSpacing: 0.6,
-                        ),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(
+          color: dark
+              ? Colors.white.withValues(alpha: 0.13)
+              : Colors.black.withValues(alpha: 0.09),
+        ),
+        boxShadow: dark
+            ? [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.22),
+                  blurRadius: 22,
+                  offset: const Offset(0, 10),
+                ),
+              ]
+            : const [],
+      ),
+      child: Padding(
+        padding: padding,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (title != null) ...[
+              Row(
+                children: [
+                  if (icon != null) ...[
+                    Icon(icon, size: 18, color: scheme.onSurfaceVariant),
+                    const SizedBox(width: 9),
+                  ],
+                  Expanded(
+                    child: Text(
+                      title!,
+                      style: theme.textTheme.labelLarge?.copyWith(
+                        color: scheme.onSurfaceVariant,
+                        letterSpacing: 0.15,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
-                    ?trailing,
-                  ],
-                ),
-                const SizedBox(height: 14),
-              ],
-              child,
+                  ),
+                  ?trailing,
+                ],
+              ),
+              const SizedBox(height: 14),
             ],
-          ),
+            child,
+          ],
         ),
       ),
     );
@@ -765,7 +769,7 @@ class _GothicCornerPainter extends CustomPainter {
       ..style = PaintingStyle.stroke;
     const inset = 6.0;
     const arm = 7.0;
-    // Top-left & bottom-right subtle Victorian corner ticks
+    // Subtle glass surface detail
     canvas.drawLine(
       const Offset(inset, inset + arm),
       const Offset(inset, inset),

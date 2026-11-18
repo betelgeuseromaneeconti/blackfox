@@ -185,40 +185,40 @@ class _MobileShellState extends State<MobileShell> {
             destinations: fiveTabs
                 ? [
                     NavigationDestination(
-                      icon: const Icon(Icons.home_outlined),
-                      selectedIcon: const Icon(Icons.home_rounded),
+                      icon: const Icon(Icons.space_dashboard_outlined),
+                      selectedIcon: const Icon(Icons.space_dashboard_rounded),
                       label: l.navHome,
                     ),
                     NavigationDestination(
-                      icon: const Icon(Icons.public_outlined),
-                      selectedIcon: const Icon(Icons.public_rounded),
+                      icon: const Icon(Icons.hub_outlined),
+                      selectedIcon: const Icon(Icons.hub_rounded),
                       label: l.navServers,
                     ),
                     NavigationDestination(
-                      icon: const Icon(Icons.people_outline_rounded),
-                      selectedIcon: const Icon(Icons.people_rounded),
+                      icon: const Icon(Icons.manage_accounts_outlined),
+                      selectedIcon: const Icon(Icons.manage_accounts_rounded),
                       label: l.navAccounts,
                     ),
                     NavigationDestination(
-                      icon: const Icon(Icons.receipt_long_outlined),
-                      selectedIcon: const Icon(Icons.receipt_long_rounded),
+                      icon: const Icon(Icons.monitor_heart_outlined),
+                      selectedIcon: const Icon(Icons.monitor_heart_rounded),
                       label: l.navLogs,
                     ),
                     NavigationDestination(
-                      icon: const Icon(Icons.settings_outlined),
-                      selectedIcon: const Icon(Icons.settings_rounded),
+                      icon: const Icon(Icons.tune_outlined),
+                      selectedIcon: const Icon(Icons.tune_rounded),
                       label: l.navSettings,
                     ),
                   ]
                 : [
                     NavigationDestination(
-                      icon: const Icon(Icons.home_outlined),
-                      selectedIcon: const Icon(Icons.home_rounded),
+                      icon: const Icon(Icons.space_dashboard_outlined),
+                      selectedIcon: const Icon(Icons.space_dashboard_rounded),
                       label: l.navHome,
                     ),
                     NavigationDestination(
-                      icon: const Icon(Icons.settings_outlined),
-                      selectedIcon: const Icon(Icons.settings_rounded),
+                      icon: const Icon(Icons.tune_outlined),
+                      selectedIcon: const Icon(Icons.tune_rounded),
                       label: l.navSettings,
                     ),
                   ],
@@ -328,8 +328,8 @@ class _SettingsListState extends State<_SettingsList> {
           Icons.tune_rounded,
           l.sectionGeneral,
         ),
-        row(Icons.public_rounded, l.navServers, onOpenServers),
-        row(Icons.people_outline_rounded, l.navAccounts, onOpenAccounts),
+        row(Icons.hub_rounded, l.navServers, onOpenServers),
+        row(Icons.manage_accounts_outlined, l.navAccounts, onOpenAccounts),
       ]),
       ?group(l.groupNetwork, [
         section(
@@ -365,7 +365,7 @@ class _SettingsListState extends State<_SettingsList> {
             l.sectionAdvanced,
           ),
         row(
-          Icons.receipt_long_outlined,
+          Icons.monitor_heart_outlined,
           l.navLogs,
           () => push(
             l.navLogs,

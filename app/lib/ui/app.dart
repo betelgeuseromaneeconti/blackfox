@@ -37,14 +37,14 @@ ThemeData _theme(Brightness brightness, Locale locale) {
           onSecondaryContainer: Color(0xFFF2F2F6),
           tertiary: Color(0xFFB0B0BC),
           onTertiary: Color(0xFF09090C),
-          surface: Color(0xFF08080B),
+          surface: Color(0xFF090C12),
           onSurface: Color(0xFFF2F2F6),
           onSurfaceVariant: Color(0xFF9696A4),
           surfaceContainerLowest: Color(0xFF050507),
-          surfaceContainerLow: Color(0xFF0C0C10),
-          surfaceContainer: Color(0xFF111116),
-          surfaceContainerHigh: Color(0xFF17171E),
-          surfaceContainerHighest: Color(0xFF21212B),
+          surfaceContainerLow: Color(0xFF0D1118),
+          surfaceContainer: Color(0xFF141923),
+          surfaceContainerHigh: Color(0xFF1B2230),
+          surfaceContainerHighest: Color(0xFF252D3B),
           outline: Color(0x42FFFFFF),
           outlineVariant: Color(0x22FFFFFF),
           error: Color(0xFFD8D8E0),
@@ -84,7 +84,7 @@ ThemeData _theme(Brightness brightness, Locale locale) {
     colorScheme: scheme,
     fontFamily: font,
     scaffoldBackgroundColor: dark
-        ? const Color(0xFF07070A)
+        ? const Color(0xFF080B10)
         : const Color(0xFFF4F4F7),
     dividerTheme: DividerThemeData(
       color: scheme.outlineVariant,
@@ -92,9 +92,9 @@ ThemeData _theme(Brightness brightness, Locale locale) {
     ),
     cardTheme: CardThemeData(
       elevation: 0,
-      color: dark ? const Color(0xD8121218) : Colors.white,
+      color: dark ? const Color(0xC91B202A) : Colors.white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(18),
         side: BorderSide(
           color: dark
               ? Colors.white.withValues(alpha: 0.14)
@@ -106,7 +106,7 @@ ThemeData _theme(Brightness brightness, Locale locale) {
     dialogTheme: DialogThemeData(
       backgroundColor: dark ? const Color(0xFF111117) : Colors.white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(18),
         side: BorderSide(
           color: dark
               ? Colors.white.withValues(alpha: 0.18)
@@ -118,20 +118,20 @@ ThemeData _theme(Brightness brightness, Locale locale) {
       style: FilledButton.styleFrom(
         backgroundColor: scheme.primary,
         foregroundColor: scheme.onPrimary,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         foregroundColor: scheme.onSurface,
         side: BorderSide(color: scheme.outline),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
     ),
   );
   return theme.copyWith(
     navigationRailTheme: NavigationRailThemeData(
-      backgroundColor: dark ? const Color(0xFF0C0C10) : const Color(0xFFEAEAEF),
+      backgroundColor: dark ? const Color(0xFF0D1118) : const Color(0xFFEAEAEF),
       indicatorColor: dark
           ? Colors.white.withValues(alpha: 0.12)
           : Colors.black.withValues(alpha: 0.10),
@@ -282,38 +282,38 @@ class _ShellState extends State<Shell> {
         for (final p in pages)
           switch (p) {
             _Page.overview => (
-              const Icon(Icons.dashboard_outlined),
-              const Icon(Icons.dashboard_rounded),
+              const Icon(Icons.grid_view_outlined),
+              const Icon(Icons.grid_view_rounded),
               l.navOverview,
             ),
             _Page.servers => (
-              const Icon(Icons.public_outlined),
-              const Icon(Icons.public_rounded),
+              const Icon(Icons.hub_outlined),
+              const Icon(Icons.hub_rounded),
               l.navServers,
             ),
             _Page.accounts => (
-              accountsIcon(Icons.people_outline_rounded),
-              accountsIcon(Icons.people_rounded),
+              accountsIcon(Icons.manage_accounts_outlined),
+              accountsIcon(Icons.manage_accounts_rounded),
               l.navAccounts,
             ),
             _Page.logs => (
-              const Icon(Icons.receipt_long_outlined),
-              const Icon(Icons.receipt_long_rounded),
+              const Icon(Icons.monitor_heart_outlined),
+              const Icon(Icons.monitor_heart_rounded),
               l.navLogs,
             ),
             _Page.settings => (
-              const Icon(Icons.settings_outlined),
-              const Icon(Icons.settings_rounded),
+              const Icon(Icons.tune_outlined),
+              const Icon(Icons.tune_rounded),
               l.navSettings,
             ),
             _Page.help => (
-              const Icon(Icons.help_outline_rounded),
-              const Icon(Icons.help_rounded),
+              const Icon(Icons.menu_book_outlined),
+              const Icon(Icons.menu_book_rounded),
               'Help',
             ),
             _Page.about => (
-              const Icon(Icons.info_outline_rounded),
-              const Icon(Icons.info_rounded),
+              const Icon(Icons.shield_outlined),
+              const Icon(Icons.shield_rounded),
               l.navAbout,
             ),
           },
@@ -428,9 +428,9 @@ class _ShellState extends State<Shell> {
                               l.appTitle,
                               style: Theme.of(context).textTheme.titleMedium
                                   ?.copyWith(
-                                    fontFamily: 'Georgia',
+                                    fontFamily: 'Inter',
                                     fontWeight: FontWeight.w700,
-                                    letterSpacing: 1.8,
+                                    letterSpacing: 1.4,
                                   ),
                             ),
                           ],
@@ -472,7 +472,7 @@ class _ShellState extends State<Shell> {
   );
 }
 
-/// Compact Victorian Gothic top status bar for the Windows desktop shell.
+/// Compact BLACKFOX connection status bar for the Windows desktop shell.
 class _DesktopStatusBar extends StatelessWidget {
   const _DesktopStatusBar({
     required this.core,
@@ -520,7 +520,7 @@ class _DesktopStatusBar extends StatelessWidget {
               if (!compact) ...[
                 const SizedBox(width: 8),
                 Text(
-                  'VICTORIAN GOTHIC EDITION',
+                  'BLACKFOX',
                   style: theme.textTheme.labelSmall?.copyWith(
                     color: scheme.onSurfaceVariant,
                     letterSpacing: 1.2,
