@@ -506,8 +506,8 @@ jobs:
         with:
           path: release
           merge-multiple: true
-      # A copy of each file with the version after the program's name; and
-            - name: Versioned names
+      # A copy of each file with the version after the program's name.
+      - name: Versioned names
         working-directory: release
         run: |
           v="${GITHUB_REF_NAME#v}"
@@ -515,7 +515,7 @@ jobs:
             case "$f" in
               BLACKFOX-VPN-*)
                 rest="${f#BLACKFOX-VPN-}"
-                cp "$f" "BLACKFOX-VPN-$v-$rest"
+                cp "$f" "BLACKFOX-VPN-$v-$rest" ;;
               blackfox-vpn-core-*) cp "$f" "blackfox-vpn-core-$v-${f#blackfox-vpn-core-}" ;;
             esac
           done
