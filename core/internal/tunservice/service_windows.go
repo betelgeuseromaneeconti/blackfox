@@ -18,9 +18,9 @@ import (
 	"golang.org/x/sys/windows/svc"
 	"golang.org/x/sys/windows/svc/mgr"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/logx"
-	"github.com/armanlife/arman-vpn-client/core/internal/tunapi"
-	"github.com/armanlife/arman-vpn-client/core/internal/version"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunapi"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/version"
 )
 
 // The installed service lives in Program Files, where only administrators
@@ -28,11 +28,11 @@ import (
 // its file or put a library beside it. The app carries the same
 // executable in its core folder, and installs it from there.
 const (
-	installFolder = "Arman VPN"
-	displayName   = "Arman VPN TUN"
-	description   = "Runs the TUN mode of Arman VPN."
-	newExeName    = "arman-vpn-tun.new.exe"
-	oldExeName    = "arman-vpn-tun.old.exe"
+	installFolder = "BLACKFOX VPN"
+	displayName   = "BLACKFOX VPN TUN"
+	description   = "Runs the TUN mode of BLACKFOX VPN."
+	newExeName    = "blackfox-vpn-tun.new.exe"
+	oldExeName    = "blackfox-vpn-tun.old.exe"
 )
 
 // usersKey holds the SIDs of the users who installed the service, the
@@ -303,7 +303,7 @@ func Cleanup(pid int, dir string) error {
 }
 
 // removeFolder removes the service's folder, never another: only the
-// Arman VPN folder in Program Files.
+// BLACKFOX VPN folder in Program Files.
 func removeFolder(dir string) error {
 	want, err := InstallDir()
 	if err != nil {
@@ -410,7 +410,7 @@ func startDetached(exe, command string, copyFirst bool, args ...string) error {
 		if err != nil {
 			return err
 		}
-		tmp, err := os.CreateTemp(os.TempDir(), "arman-vpn-tun-cleanup-*.exe")
+		tmp, err := os.CreateTemp(os.TempDir(), "blackfox-vpn-tun-cleanup-*.exe")
 		if err != nil {
 			return err
 		}

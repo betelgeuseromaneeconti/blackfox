@@ -16,10 +16,10 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/logx"
-	"github.com/armanlife/arman-vpn-client/core/internal/tunapi"
-	"github.com/armanlife/arman-vpn-client/core/internal/tunstack"
-	"github.com/armanlife/arman-vpn-client/core/internal/version"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunapi"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunstack"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/version"
 )
 
 // The installed service lives in a folder only root may write to

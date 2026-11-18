@@ -10,11 +10,11 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/egress"
-	"github.com/armanlife/arman-vpn-client/core/internal/logx"
-	"github.com/armanlife/arman-vpn-client/core/internal/tun"
-	"github.com/armanlife/arman-vpn-client/core/internal/tunapi"
-	"github.com/armanlife/arman-vpn-client/core/internal/tunstack"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/egress"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tun"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunapi"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunstack"
 )
 
 // session is one core's TUN: the adapter, then its routes and stack and
