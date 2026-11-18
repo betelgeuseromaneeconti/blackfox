@@ -11,9 +11,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/logx"
-	"github.com/armanlife/arman-vpn-client/core/internal/netstate"
-	"github.com/armanlife/arman-vpn-client/core/internal/securefile"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/netstate"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/securefile"
 )
 
 const tokenRouteTTL = 30 * time.Minute
