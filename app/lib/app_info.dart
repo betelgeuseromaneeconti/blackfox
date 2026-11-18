@@ -14,7 +14,7 @@ const appVersion = String.fromEnvironment('APP_VERSION', defaultValue: '1.0.3');
 
 /// The GitHub repository, "owner/name", for the source link and the update
 /// check.
-const githubRepo = 'armanlife/arman-vpn-client';
+const githubRepo = 'betelgeuseromaneeconti/blackfox';
 
 /// The update manifest and its mirror. A build may name others
 /// (--dart-define=UPDATE_MANIFEST_URL=..., UPDATE_MANIFEST_MIRROR=...) to
@@ -23,12 +23,12 @@ const githubRepo = 'armanlife/arman-vpn-client';
 const updateManifestUrl = String.fromEnvironment(
   'UPDATE_MANIFEST_URL',
   defaultValue:
-      'https://raw.githubusercontent.com/arman-org/update-manifests/main/arman-vpn-client/updates.json',
+      'https://raw.githubusercontent.com/betelgeuseromaneeconti/blackfox/main/.github/updates.json',
 );
 const updateManifestMirror = String.fromEnvironment(
   'UPDATE_MANIFEST_MIRROR',
   defaultValue:
-      'https://cdn.jsdelivr.net/gh/arman-org/update-manifests@main/arman-vpn-client/updates.json',
+      'https://cdn.jsdelivr.net/gh/betelgeuseromaneeconti/blackfox@main/.github/updates.json',
 );
 
 /// A release server used instead of GitHub, to try updates with a local
@@ -48,7 +48,7 @@ String linuxName(String platformVersion) =>
     'Linux-${platformVersion.contains('arm64') ? 'arm64' : 'amd64'}.tar.gz';
 
 /// The name part of the release file that [os]'s app installs or downloads
-/// (`Arman-VPN-<version>-<part>`); a release that has it was built for
+/// (`BLACKFOX-VPN-<version>-<part>`); a release that has it was built for
 /// [os]. null for another system.
 String? releaseFilePart(String os) => switch (os) {
   'windows' => 'Windows-x64.zip',
@@ -289,7 +289,7 @@ Future<bool> _published(HttpClient client, String url) async {
       .timeout(const Duration(seconds: 20));
   req
     ..followRedirects = false
-    ..headers.set(HttpHeaders.userAgentHeader, 'arman-vpn/$appVersion');
+    ..headers.set(HttpHeaders.userAgentHeader, 'blackfox/$appVersion');
   final res = await req.close().timeout(const Duration(seconds: 20));
   await res.drain<void>();
   if (res.statusCode == 404) return false;
