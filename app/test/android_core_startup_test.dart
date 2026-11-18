@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:arman_vpn/core/android_core.dart';
-import 'package:arman_vpn/core/core_api.dart';
+import 'package:blackfox/core/android_core.dart';
+import 'package:blackfox/core/core_api.dart';
 
 class _LoopbackHttpOverrides extends HttpOverrides {}
 
