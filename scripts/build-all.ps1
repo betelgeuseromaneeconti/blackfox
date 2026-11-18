@@ -39,7 +39,7 @@ $thirdPartyNotice = @"
 BLACKFOX is an independent open-source client redistributed and modified under the terms of the GNU General Public License v3.0 (`LICENSE-GPL-3.0.txt`).
 BLACKFOX is **not** affiliated with, endorsed by, sponsored by, or owned by Mozilla Corporation or the Firefox project.
 
-The underlying Go VPN Core (`core/`) and multi-platform client architecture are derived from the original open-source Arman VPN Client project under GPL-3.0. Original copyright notices and license files are preserved in full.
+The Go VPN core and multi-platform client include GPL-3.0-licensed upstream source. Original copyright notices and license files are preserved in full.
 
 ## Third-Party Components & Assets
 1. **Go VPN Core Dependencies (`core/go.mod`)**:

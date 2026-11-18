@@ -86,7 +86,7 @@ RELEASE/
 │       ├── BLACKFOX-Setup.exe
 │       ├── BLACKFOX-VPN-Setup.exe
 │       └── Portable/
-│           ├── BLACKFOX.exe
+│           ├── blackfox-vpn.exe
 │           ├── blackfox.exe
 │           └── core/
 ├── ANDROID/                     (populated by scripts/build-android.ps1 when Flutter + Go + gomobile + NDK are installed)
