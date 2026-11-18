@@ -41,7 +41,7 @@ public=""
 if [ -n "${ARMAN_VPN_SIGNING_KEY:-}${ARMAN_VPN_SIGNING_KEY_FILE:-}" ]; then
   public="$(cd "$root/core" && go run ./tools/sign -public)"
 else
-  echo "warning: no signing key (ARMAN_VPN_SIGNING_KEY or ARMAN_VPN_SIGNING_KEY_FILE): this build installs no updates" >&2
+  echo "warning: no signing key (BLACKFOX_SIGNING_KEY or BLACKFOX_SIGNING_KEY_FILE): this build installs no updates" >&2
 fi
 goflags="-s -w -X $module/internal/version.Current=$version"
 [ -z "$public" ] || goflags="$goflags -X $module/internal/signing.Key=$public"
