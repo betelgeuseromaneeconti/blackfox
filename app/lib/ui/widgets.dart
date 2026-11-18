@@ -45,16 +45,10 @@ class AppLogo extends StatelessWidget {
   final double size;
 
   @override
-  Widget build(BuildContext context) => Image.asset(
-    'assets/logo.png',
-    width: size,
-    height: size,
-    filterQuality: FilterQuality.high,
-    excludeFromSemantics: true,
-    errorBuilder: (_, _, _) => CustomPaint(
-      size: Size.square(size),
-      painter: const _KitsuneLogoPainter(),
-    ),
+  Widget build(BuildContext context) => CustomPaint(
+    size: Size.square(size),
+    painter: const _KitsuneLogoPainter(),
+    isComplex: true,
   );
 }
 
