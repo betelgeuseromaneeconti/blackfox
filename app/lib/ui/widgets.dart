@@ -626,53 +626,6 @@ class GothicDivider extends StatelessWidget {
   );
 }
 
-class _GothicDividerPainter extends CustomPainter {
-  const _GothicDividerPainter({required this.color, required this.centered});
-
-  final Color color;
-  final bool centered;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final cy = size.height / 2;
-    final linePaint = Paint()
-      ..color = color
-      ..strokeWidth = 0.8;
-    final diamondPaint = Paint()
-      ..color = color.withValues(alpha: (color.a * 1.4).clamp(0.0, 1.0));
-
-    if (centered) {
-      final mid = size.width / 2;
-      if (mid > 8) {
-        canvas.drawLine(Offset(0, cy), Offset(mid - 6, cy), linePaint);
-        canvas.drawLine(Offset(mid + 6, cy), Offset(size.width, cy), linePaint);
-      }
-      final d = Path()
-        ..moveTo(mid, cy - 3)
-        ..lineTo(mid + 3.5, cy)
-        ..lineTo(mid, cy + 3)
-        ..lineTo(mid - 3.5, cy)
-        ..close();
-      canvas.drawPath(d, diamondPaint);
-    } else {
-      final d = Path()
-        ..moveTo(3.5, cy - 2.8)
-        ..lineTo(7, cy)
-        ..lineTo(3.5, cy + 2.8)
-        ..lineTo(0, cy)
-        ..close();
-      canvas.drawPath(d, diamondPaint);
-      if (size.width > 10) {
-        canvas.drawLine(Offset(10, cy), Offset(size.width, cy), linePaint);
-      }
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant _GothicDividerPainter old) =>
-      old.color != color || old.centered != centered;
-}
-
 /// A translucent monochrome glass surface.
 class Panel extends StatelessWidget {
   const Panel({
@@ -753,47 +706,6 @@ class Panel extends StatelessWidget {
       ),
     );
   }
-}
-
-class _GothicCornerPainter extends CustomPainter {
-  const _GothicCornerPainter({required this.color});
-
-  final Color color;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    if (size.width < 48 || size.height < 48) return;
-    final paint = Paint()
-      ..color = color
-      ..strokeWidth = 1.0
-      ..style = PaintingStyle.stroke;
-    const inset = 6.0;
-    const arm = 7.0;
-    // Subtle glass surface detail
-    canvas.drawLine(
-      const Offset(inset, inset + arm),
-      const Offset(inset, inset),
-      paint,
-    );
-    canvas.drawLine(
-      const Offset(inset, inset),
-      const Offset(inset + arm, inset),
-      paint,
-    );
-    canvas.drawLine(
-      Offset(size.width - inset, size.height - inset - arm),
-      Offset(size.width - inset, size.height - inset),
-      paint,
-    );
-    canvas.drawLine(
-      Offset(size.width - inset, size.height - inset),
-      Offset(size.width - inset - arm, size.height - inset),
-      paint,
-    );
-  }
-
-  @override
-  bool shouldRepaint(covariant _GothicCornerPainter old) => old.color != color;
 }
 
 /// Monochrome shading of a quota by the share used: bright white/platinum

@@ -317,31 +317,17 @@ class _DesktopHome extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          Positioned(
-            top: -140,
-            left: -120,
-            child: _Glow(
-              color: _accent(p),
-              size: 420,
-              alpha: p.dark ? 0.20 : 0.18,
-            ),
-          ),
-          Positioned(
-            top: 120,
-            right: -160,
-            child: _Glow(
-              color: p.second,
-              size: 360,
-              alpha: p.dark ? 0.12 : 0.15,
-            ),
-          ),
-          Positioned(
-            bottom: -120,
-            left: 40,
-            child: _Glow(
-              color: p.third,
-              size: 320,
-              alpha: p.dark ? 0.10 : 0.10,
+          Positioned.fill(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: p.dark
+                      ? const [Color(0xFF0B0F15), Color(0xFF080B10), Color(0xFF111722)]
+                      : const [Color(0xFFF2F4F7), Color(0xFFFFFFFF), Color(0xFFE8ECF2)],
+                ),
+              ),
             ),
           ),
           Positioned.fill(
@@ -1042,8 +1028,7 @@ class _HomePalette {
   );
 }
 
-/// The phone's home: the switch in the middle over soft lights and wavy
-/// contour lines in the state's color, the state under it, then where the
+/// The phone's home: a compact power tile, connection state, then where the
 /// traffic goes and the data used. Light or dark with the app's theme; the
 /// email is on the accounts page.
 class _PhoneHome extends StatelessWidget {
