@@ -354,7 +354,7 @@ jobs:
       - name: TUN service with systemd
         working-directory: core
         run: |
-          go build -tags with_gvisor -o "$RUNNER_TEMP/blackfox-vpn-tun" ./cmd/arman-vpn-tun
+          go build -tags with_gvisor -o "$RUNNER_TEMP/blackfox-vpn-tun" ./cmd/blackfox-tun
           sudo "$RUNNER_TEMP/blackfox-vpn-tun" install
           systemctl is-active blackfox-vpn-tun
           "$RUNNER_TEMP/blackfox-vpn-tun" uninstall
@@ -435,7 +435,7 @@ jobs:
         continue-on-error: true
         working-directory: core
         run: |
-          go build -tags with_gvisor -o "$RUNNER_TEMP/blackfox-vpn-tun" ./cmd/arman-vpn-tun
+          go build -tags with_gvisor -o "$RUNNER_TEMP/blackfox-vpn-tun" ./cmd/blackfox-tun
           sudo "$RUNNER_TEMP/blackfox-vpn-tun" install
           sudo launchctl print system/com.betelgeuseromaneeconti.blackfox.tun | head -20
           "$RUNNER_TEMP/blackfox-vpn-tun" uninstall
@@ -507,10 +507,7 @@ jobs:
           path: release
           merge-multiple: true
       # A copy of each file with the version after the program's name; and
-      # the app's files under their names before 1.0.9 (Firefox-VPN-*),
-      # which the update and the Android Download button of those versions
-      # look for.
-      - name: Versioned names
+            - name: Versioned names
         working-directory: release
         run: |
           v="${GITHUB_REF_NAME#v}"
