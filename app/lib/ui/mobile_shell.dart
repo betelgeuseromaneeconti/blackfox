@@ -175,10 +175,7 @@ class _MobileShellState extends State<MobileShell> {
         ),
         bottomNavigationBar: _themed(
           context,
-          home:
-              currentTab == 0 &&
-              widget.noCore == null &&
-              Theme.of(context).brightness == Brightness.dark,
+          home: Theme.of(context).brightness == Brightness.dark,
           child: NavigationBar(
             selectedIndex: currentTab,
             onDestinationSelected: (i) => setState(() => _tab = i),
