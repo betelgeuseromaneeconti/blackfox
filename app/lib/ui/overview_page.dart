@@ -967,10 +967,6 @@ class _HomePalette {
     required this.connected,
     required this.busy,
     required this.error,
-    required this.second,
-    required this.third,
-    required this.discOff,
-    required this.discOffEdge,
   });
 
   final bool dark;
@@ -985,11 +981,6 @@ class _HomePalette {
   final Color busy;
   final Color error;
 
-  /// Colors of the background's soft lights, with the state's.
-  final Color second;
-  final Color third;
-  final List<Color> discOff;
-  final Color discOffEdge;
 
   static const night = _HomePalette(
     dark: true,
@@ -1003,10 +994,6 @@ class _HomePalette {
     connected: Midnight.connected,
     busy: Midnight.busy,
     error: Midnight.error,
-    second: Color(0xFFDCDCE6),
-    third: Color(0xFF888896),
-    discOff: [Color(0xFF1F1F28), Color(0xFF0E0E14)],
-    discOffEdge: Color(0x2AFFFFFF),
   );
 
   static const day = _HomePalette(
@@ -1021,10 +1008,6 @@ class _HomePalette {
     connected: Color(0xFF14141A),
     busy: Color(0xFF42424E),
     error: Color(0xFF2C2C36),
-    second: Color(0xFF90909C),
-    third: Color(0xFFB4B4C0),
-    discOff: [Colors.white, Color(0xFFEAEAEF)],
-    discOffEdge: Color(0x2E000000),
   );
 }
 
