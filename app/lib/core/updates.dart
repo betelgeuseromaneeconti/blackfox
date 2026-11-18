@@ -163,6 +163,14 @@ abstract final class Updates {
   /// Starts looking. [args] are the app's own (`--autostart`, `--hidden`,
   /// `--data-dir=`), which a new version installed at the start keeps; an
   /// install from the Update button keeps `--data-dir=`.
+  static bool _isBlackfoxRelease(String value) {
+    final uri = Uri.tryParse(value);
+    return uri != null &&
+        uri.scheme == 'https' &&
+        uri.host == 'github.com' &&
+        uri.path.startsWith('/$githubRepo/releases/');
+  }
+
   static void start(
     CoreController core,
     AppSettings settings, {
@@ -181,7 +189,24 @@ abstract final class Updates {
           a,
     ];
     // A version found earlier, unless this app is already that one.
-    if (newerVersion(settings.updateVersion, appVersion)) {
+    final cachedUrl = settings.updateUrl.isNotEmpty
+        ? settings.updateUrl
+        : settings.updateDetails['release_url'] is String
+        ? settings.updateDetails['release_url']! as String
+        : '';
+    // Never surface a cached update from the upstream fork. This prevents
+    // an old Arman VPN cache from prompting immediately after BLACKFOX starts.
+    if (settings.updateVersion.isNotEmpty &&
+        cachedUrl.isNotEmpty &&
+        !_isBlackfoxRelease(cachedUrl)) {
+      settings.copyWith(
+        updateVersion: '',
+        updateUrl: '',
+        updateDetails: const {},
+      );
+    }
+    if (newerVersion(settings.updateVersion, appVersion) &&
+        _isBlackfoxRelease(cachedUrl)) {
       available.value = settings.updateDetails.isEmpty
           ? Release(settings.updateVersion, settings.updateUrl)
           : releaseFromJson(settings.updateDetails);
