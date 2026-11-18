@@ -10,11 +10,11 @@ import '../l10n/app_localizations.dart';
 import '../platform.dart';
 import 'widgets.dart';
 
-/// Redesigned BLACKFOX Victorian Gothic About page.
+/// Redesigned BLACKFOX minimal glass About page.
 /// Displays the BLACKFOX Kitsune crest, BLACKFOX, Version 1.0.3, live Core
 /// version, update-check action, source-code action, data folder / web
 /// dashboard access, and ends with the exact creator signature
-/// "Made by Jackdaw" with nothing appearing after it.
+/// "Made by @betelgeuseromaneeconti" with nothing appearing after it.
 class AboutPage extends StatefulWidget {
   const AboutPage({super.key, required this.core});
 
@@ -259,7 +259,7 @@ class _AboutPageState extends State<AboutPage> {
                   const GothicDivider(centered: true),
                   const SizedBox(height: 18),
                   Text(
-                    'Made by Jackdaw',
+                    'Made by @betelgeuseromaneeconti',
                     textAlign: TextAlign.center,
                     textDirection: TextDirection.ltr,
                     style: theme.textTheme.titleSmall?.copyWith(
