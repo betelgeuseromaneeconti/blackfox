@@ -9,7 +9,7 @@ import (
 	"runtime"
 	"syscall"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/service"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/service"
 )
 
 func enableTerminalColors() bool {
@@ -41,7 +41,7 @@ func notify(title, body string) {
 	if err != nil {
 		return
 	}
-	cmd := exec.Command(path, "--app-name=Arman VPN", "--", title, body)
+	cmd := exec.Command(path, "--app-name=BLACKFOX VPN", "--", title, body)
 	if err := cmd.Start(); err != nil {
 		return
 	}

@@ -4,15 +4,15 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/service"
-	"github.com/armanlife/arman-vpn-client/core/internal/tunapi"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/service"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunapi"
 )
 
 // ownPrograms are this app's own executables, which never skip the VPN by
 // choice.
 var ownPrograms = map[string]bool{
-	"arman-vpn.exe": true, "arman-vpn-core.exe": true, "arman-vpn-tun.exe": true,
-	"arman-vpn": true, "arman-vpn-core": true, "arman-vpn-tun": true,
+	"blackfox-vpn.exe": true, "blackfox-vpn-core.exe": true, "blackfox-vpn-tun.exe": true,
+	"blackfox-vpn": true, "blackfox-vpn-core": true, "blackfox-vpn-tun": true,
 }
 
 // runningPrograms are the programs running on this computer, for the TUN
