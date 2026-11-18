@@ -42,9 +42,8 @@ try {
 
 New-Item -ItemType Directory -Force $portableOut | Out-Null
 Copy-Item "$root\app\build\windows\x64\runner\Release\*" $portableOut -Recurse -Force
-if (Test-Path "$portableOut\arman-vpn.exe") {
-    Copy-Item "$portableOut\arman-vpn.exe" "$portableOut\BLACKFOX.exe" -Force
-    Remove-Item "$portableOut\arman-vpn.exe" -Force
+if (-not (Test-Path "$portableOut\BLACKFOX.exe")) {
+    throw "BLACKFOX.exe was not produced by the Flutter Windows build."
 }
 
 $public = & "$PSScriptRoot\signing-key.ps1"
