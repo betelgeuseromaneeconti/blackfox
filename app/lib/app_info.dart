@@ -137,7 +137,7 @@ Future<Release?> checkForUpdate({
         ? 'https://github.com/$repo/releases'
         : '$srv/releases';
     final part = releaseFilePart(system);
-    final file = part == null ? 'SHA256SUMS.txt' : 'Arman-VPN-$wanted-$part';
+    final file = part == null ? 'SHA256SUMS.txt' : 'BLACKFOX-VPN-$wanted-$part';
     if (!await _published(client, '$releases/download/v$wanted/$file')) {
       throw HttpException('version $wanted is not published yet');
     }
@@ -256,8 +256,8 @@ Future<Release?> _latestRelease(
     };
     final downloads = <String, Object?>{};
     for (final entry in parts.entries) {
-      final fixed = 'Arman-VPN-${entry.value}';
-      final versioned = 'Arman-VPN-$version-${entry.value}';
+      final fixed = 'BLACKFOX-VPN-${entry.value}';
+      final versioned = 'BLACKFOX-VPN-$version-${entry.value}';
       final file = assets.containsKey(fixed) ? fixed : versioned;
       if (assets.containsKey(file)) {
         downloads[entry.key] = {'file': file, 'url': assets[file]};
@@ -312,7 +312,7 @@ Future<(int, String)> _get(
       .timeout(const Duration(seconds: 20));
   req.headers
     ..set(HttpHeaders.acceptHeader, accept)
-    ..set(HttpHeaders.userAgentHeader, 'arman-vpn/$appVersion');
+    ..set(HttpHeaders.userAgentHeader, 'blackfox/$appVersion');
   final res = await req.close().timeout(const Duration(seconds: 20));
   final bytes = BytesBuilder(copy: false);
   await for (final chunk in res.timeout(const Duration(seconds: 20))) {
