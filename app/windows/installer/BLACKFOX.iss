@@ -211,8 +211,8 @@ const
   // Where an uninstall that kept the data notes the folder it is in; the
   // uninstall of a version before 1.0.9 noted it under the old name.
   KeptKey = 'Software\{#AppName}';
-  LegacyKeptKey = 'Software\Arman VPN';
-  LegacyKeptKey = 'Software\Firefox VPN';
+  ArmanKeptKey = 'Software\Arman VPN';
+  FirefoxKeptKey = 'Software\Firefox VPN';
   KeptValue = 'KeptDataIn';
 
 // The folder a first install offers: the one an uninstalled copy left its
@@ -223,7 +223,7 @@ begin
       DirExists(AddBackslash(Result) + 'user-data')) or
      (RegQueryStringValue(HKCU, ArmanKeptKey, KeptValue, Result) and
       DirExists(AddBackslash(Result) + 'user-data')) or
-     (RegQueryStringValue(HKCU, LegacyKeptKey, KeptValue, Result) and
+     (RegQueryStringValue(HKCU, FirefoxKeptKey, KeptValue, Result) and
       DirExists(AddBackslash(Result) + 'user-data')) then
     Exit;
   Result := ExpandConstant('{localappdata}\Programs\{#AppDir}');
