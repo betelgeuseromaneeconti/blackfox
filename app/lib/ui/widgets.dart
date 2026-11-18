@@ -262,7 +262,7 @@ ThemeData midnightTheme(ThemeData base) {
     scaffoldBackgroundColor: Midnight.bottom,
     fontFamily: base.textTheme.bodyMedium?.fontFamily,
     navigationBarTheme: base.navigationBarTheme.copyWith(
-      backgroundColor: Midnight.bottom,
+      backgroundColor: Colors.transparent,
       surfaceTintColor: Colors.transparent,
       indicatorColor: Colors.white.withValues(alpha: 0.12),
     ),
