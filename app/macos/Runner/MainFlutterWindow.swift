@@ -14,7 +14,7 @@ class MainFlutterWindow: NSWindow {
     project.dartEntrypointArguments = Array(CommandLine.arguments.dropFirst())
     let flutterViewController = FlutterViewController(project: project)
     self.contentViewController = flutterViewController
-    self.title = "Arman VPN"
+    self.title = "BLACKFOX"
     self.setContentSize(NSSize(width: 820, height: 680))
     // The smallest window the pages are laid out for.
     self.contentMinSize = NSSize(width: 400, height: 480)
@@ -42,7 +42,7 @@ class DesktopBridge: NSObject, NSWindowDelegate, UNUserNotificationCenterDelegat
   private var iconPath = ""
   private var allowClose = false
 
-  private static let label = "com.arman.firefoxvpn"
+  private static let label = "com.betelgeuseromaneeconti.blackfox"
 
   init(messenger: FlutterBinaryMessenger, window: NSWindow) {
     channel = FlutterMethodChannel(name: "app/desktop", binaryMessenger: messenger)
