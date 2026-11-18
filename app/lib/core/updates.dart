@@ -160,6 +160,20 @@ abstract final class Updates {
   /// failed one waits for the next start.
   static final _downloadsAsked = <String>{};
 
+  static String _cachedReleaseUrl(AppSettings settings) {
+    if (settings.updateUrl.isNotEmpty) return settings.updateUrl;
+    final value = settings.updateDetails['release_url'];
+    return value is String ? value : '';
+  }
+
+  static bool _isBlackfoxRelease(String value) {
+    final uri = Uri.tryParse(value);
+    return uri != null &&
+        uri.scheme == 'https' &&
+        uri.host == 'github.com' &&
+        uri.path.startsWith('/betelgeuseromaneeconti/blackfox/releases/');
+  }
+
   /// Starts looking. [args] are the app's own (`--autostart`, `--hidden`,
   /// `--data-dir=`), which a new version installed at the start keeps; an
   /// install from the Update button keeps `--data-dir=`.
@@ -180,10 +194,22 @@ abstract final class Updates {
             a.startsWith('--data-dir='))
           a,
     ];
-    // A version found earlier, unless this app is already that one.
-    if (newerVersion(settings.updateVersion, appVersion)) {
+    // Drop cached offers that do not belong to this repository. A copy
+    // installed from another upstream must never prompt for that project's
+    // release or pass its downloaded package to the core updater.
+    final cachedUrl = _cachedReleaseUrl(settings);
+    if (settings.updateVersion.isNotEmpty &&
+        !_isBlackfoxRelease(cachedUrl)) {
+      settings.update(
+        updateVersion: '',
+        updateUrl: '',
+        updateDetails: const {},
+      );
+    }
+    if (newerVersion(settings.updateVersion, appVersion) &&
+        _isBlackfoxRelease(cachedUrl)) {
       available.value = settings.updateDetails.isEmpty
-          ? Release(settings.updateVersion, settings.updateUrl)
+          ? Release(settings.updateVersion, cachedUrl)
           : releaseFromJson(settings.updateDetails);
     }
     core.addListener(_onStatus);
@@ -228,7 +254,13 @@ abstract final class Updates {
       // would only be replaced at once by a second update. The newer one
       // downloads instead, below, and installs at the next start.
       final superseded = newerVersion(settings.updateVersion, update.version);
+      // The Go core can retain a package downloaded by an older build. Only
+      // install it when BLACKFOX's own manifest still offers that version.
+      final trustedPendingUpdate =
+          settings.updateVersion == update.version &&
+          _isBlackfoxRelease(_cachedReleaseUrl(settings));
       if (update.ready &&
+          trustedPendingUpdate &&
           !justFailed &&
           !superseded &&
           newerVersion(update.version, appVersion)) {
