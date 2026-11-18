@@ -10,10 +10,10 @@ import (
 )
 
 // SocketPath is the service's socket, in a folder only root may write to.
-const SocketPath = "/var/run/arman-vpn-tun.sock"
+const SocketPath = "/var/run/blackfox-vpn-tun.sock"
 
 // LaunchdLabel is the service's launchd job.
-const LaunchdLabel = "com.arman.firefoxvpn.tun"
+const LaunchdLabel = "com.blackfox.firefoxvpn.tun"
 
 // ServiceFile is the service's launchd job file.
 const ServiceFile = "/Library/LaunchDaemons/" + LaunchdLabel + ".plist"
