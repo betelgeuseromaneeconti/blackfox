@@ -1,3 +1,5 @@
+import 'dart:ui' show ImageFilter;
+
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -648,60 +650,66 @@ class Panel extends StatelessWidget {
     final theme = Theme.of(context);
     final dark = theme.brightness == Brightness.dark;
     final scheme = theme.colorScheme;
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: dark
-              ? const [Color(0xD91B202A), Color(0xB20E121A)]
-              : const [Color(0xF7FFFFFF), Color(0xEAF0F2F6)],
-        ),
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(
-          color: dark
-              ? Colors.white.withValues(alpha: 0.13)
-              : Colors.black.withValues(alpha: 0.09),
-        ),
-        boxShadow: dark
-            ? [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.22),
-                  blurRadius: 22,
-                  offset: const Offset(0, 10),
-                ),
-              ]
-            : const [],
-      ),
-      child: Padding(
-        padding: padding,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (title != null) ...[
-              Row(
-                children: [
-                  if (icon != null) ...[
-                    Icon(icon, size: 18, color: scheme.onSurfaceVariant),
-                    const SizedBox(width: 9),
-                  ],
-                  Expanded(
-                    child: Text(
-                      title!,
-                      style: theme.textTheme.labelLarge?.copyWith(
-                        color: scheme.onSurfaceVariant,
-                        letterSpacing: 0.15,
-                        fontWeight: FontWeight.w700,
-                      ),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(18),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: dark
+                  ? const [Color(0xD91B202A), Color(0xB20E121A)]
+                  : const [Color(0xF7FFFFFF), Color(0xEAF0F2F6)],
+            ),
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(
+              color: dark
+                  ? Colors.white.withValues(alpha: 0.13)
+                  : Colors.black.withValues(alpha: 0.09),
+            ),
+            boxShadow: dark
+                ? [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.22),
+                      blurRadius: 22,
+                      offset: const Offset(0, 10),
                     ),
+                  ]
+                : const [],
+          ),
+          child: Padding(
+            padding: padding,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (title != null) ...[
+                  Row(
+                    children: [
+                      if (icon != null) ...[
+                        Icon(icon, size: 18, color: scheme.onSurfaceVariant),
+                        const SizedBox(width: 9),
+                      ],
+                      Expanded(
+                        child: Text(
+                          title!,
+                          style: theme.textTheme.labelLarge?.copyWith(
+                            color: scheme.onSurfaceVariant,
+                            letterSpacing: 0.15,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                      ?trailing,
+                    ],
                   ),
-                  ?trailing,
+                  const SizedBox(height: 14),
                 ],
-              ),
-              const SizedBox(height: 14),
-            ],
-            child,
-          ],
+                child,
+              ],
+            ),
+          ),
         ),
       ),
     );

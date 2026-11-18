@@ -2968,7 +2968,7 @@ class _LowQuotaNoticeState extends State<_LowQuotaNotice> {
   }
 }
 
-/// Compact Victorian Gothic telemetry and quick-action bar on the desktop
+/// Compact BLACKFOX telemetry and quick-action bar on the desktop
 /// Overview dashboard. Displays live download/upload rates, uptime, ready
 /// account count, ProxyPass renewal status, proxy restart, and a button to
 /// open the full stage-by-stage Connection Test & Telemetry dialog.
