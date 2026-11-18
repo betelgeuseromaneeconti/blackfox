@@ -11,10 +11,10 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/egress"
-	"github.com/armanlife/arman-vpn-client/core/internal/logx"
-	"github.com/armanlife/arman-vpn-client/core/internal/resolver"
-	"github.com/armanlife/arman-vpn-client/core/internal/routing"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/egress"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/resolver"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/routing"
 )
 
 // ErrBlockedByRule is a connection refused by a routing rule.

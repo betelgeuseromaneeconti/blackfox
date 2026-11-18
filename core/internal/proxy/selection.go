@@ -13,8 +13,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/logx"
-	"github.com/armanlife/arman-vpn-client/core/internal/serverlist"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/serverlist"
 )
 
 type Candidate struct {
