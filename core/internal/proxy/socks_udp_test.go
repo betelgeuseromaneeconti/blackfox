@@ -12,8 +12,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/routing"
-	"github.com/armanlife/arman-vpn-client/core/internal/tun"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/routing"
+	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tun"
 )
 
 // fakeUDPTunnel echoes its packets, with its target in front.
