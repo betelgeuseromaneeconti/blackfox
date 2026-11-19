@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:arman_vpn/app_info.dart';
-import 'package:arman_vpn/app_settings.dart';
-import 'package:arman_vpn/core/updates.dart';
-import 'package:arman_vpn/core/announcements.dart';
+import 'package:blackfox/app_info.dart';
+import 'package:blackfox/app_settings.dart';
+import 'package:blackfox/core/updates.dart';
+import 'package:blackfox/core/announcements.dart';
 
 Map<String, Object?> record(
   String base, {
@@ -55,22 +55,22 @@ Future<String> fixture(
 Map<String, Object?> compactManifest(String base) {
   const files = {
     'android': {
-      'universal': 'Arman-VPN-Android-universal.apk',
-      'arm64-v8a': 'Arman-VPN-Android-arm64-v8a.apk',
-      'armeabi-v7a': 'Arman-VPN-Android-armeabi-v7a.apk',
-      'x86_64': 'Arman-VPN-Android-x86_64.apk',
+      'universal': 'BLACKFOX-VPN-Android-universal.apk',
+      'arm64-v8a': 'BLACKFOX-VPN-Android-arm64-v8a.apk',
+      'armeabi-v7a': 'BLACKFOX-VPN-Android-armeabi-v7a.apk',
+      'x86_64': 'BLACKFOX-VPN-Android-x86_64.apk',
     },
     'windows': {
-      'installer-x64': 'Arman-VPN-Windows-Setup-x64.exe',
-      'archive-x64': 'Arman-VPN-Windows-x64.zip',
+      'installer-x64': 'BLACKFOX-VPN-Windows-Setup-x64.exe',
+      'archive-x64': 'BLACKFOX-VPN-Windows-x64.zip',
     },
     'linux': {
-      'amd64': 'Arman-VPN-Linux-amd64.tar.gz',
-      'arm64': 'Arman-VPN-Linux-arm64.tar.gz',
+      'amd64': 'BLACKFOX-VPN-Linux-amd64.tar.gz',
+      'arm64': 'BLACKFOX-VPN-Linux-arm64.tar.gz',
     },
     'macos': {
-      'installer': 'Arman-VPN-macOS.dmg',
-      'archive': 'Arman-VPN-macOS.tar.gz',
+      'installer': 'BLACKFOX-VPN-macOS.dmg',
+      'archive': 'BLACKFOX-VPN-macOS.tar.gz',
     },
   };
   Map<String, Object?> platform(String os, String version) => {
@@ -157,13 +157,13 @@ void main() {
     () async {
       final assets = await fixture({
         for (final file in [
-          'Arman-VPN-Windows-x64.zip',
-          'Arman-VPN-Linux-amd64.tar.gz',
-          'Arman-VPN-macOS.tar.gz',
-          'Arman-VPN-Android-universal.apk',
+          'BLACKFOX-VPN-Windows-x64.zip',
+          'BLACKFOX-VPN-Linux-amd64.tar.gz',
+          'BLACKFOX-VPN-macOS.tar.gz',
+          'BLACKFOX-VPN-Android-universal.apk',
         ])
           'HEAD /v1.0.15/$file': (200, ''),
-        'HEAD /v1.0.16/Arman-VPN-Android-universal.apk': (200, ''),
+        'HEAD /v1.0.16/BLACKFOX-VPN-Android-universal.apk': (200, ''),
       });
       final manifest = compactManifest(assets);
       final requests = <String>[];
@@ -189,7 +189,7 @@ void main() {
       ))!;
       expect(
         await downloadUrl(latest, os: 'android', abi: 'arm64-v8a'),
-        '$assets/v1.0.16/Arman-VPN-Android-arm64-v8a.apk',
+        '$assets/v1.0.16/BLACKFOX-VPN-Android-arm64-v8a.apk',
       );
       expect(requests, List.filled(5, 'GET /updates.json'));
     },
@@ -604,8 +604,8 @@ void main() {
             'html_url': 'https://github.com/example/app/releases/tag/v1.2.3',
             'assets': [
               for (final name in [
-                'Arman-VPN-Windows-x64.zip',
-                'Arman-VPN-Windows-Setup-x64.exe',
+                'BLACKFOX-VPN-Windows-x64.zip',
+                'BLACKFOX-VPN-Windows-Setup-x64.exe',
                 'SHA256SUMS.txt',
                 'SHA256SUMS.txt.sig',
               ])
@@ -624,7 +624,7 @@ void main() {
       ))!;
       expect(
         release.installSource(os: 'windows')!['url'],
-        'https://downloads.example/Arman-VPN-Windows-x64.zip',
+        'https://downloads.example/BLACKFOX-VPN-Windows-x64.zip',
       );
       expect(requests, ['GET /updates.json', 'GET /releases/latest']);
     },
@@ -641,7 +641,7 @@ void main() {
             'html_url': 'https://github.com/example/app/releases/tag/v1.2.3',
             'assets': [
               for (final name in [
-                'Arman-VPN-Android-universal.apk',
+                'BLACKFOX-VPN-Android-universal.apk',
                 'SHA256SUMS.txt',
                 'SHA256SUMS.txt.sig',
               ])

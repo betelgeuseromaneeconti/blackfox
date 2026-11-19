@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:arman_vpn/ui/format.dart';
+import 'package:blackfox/ui/format.dart';
 
 void main() {
   test('a search finds a name whatever keyboard wrote it', () {
@@ -22,6 +22,6 @@ void main() {
 
     // A zero-width non-joiner is a space, so a joined name is found by
     // typing it with a space.
-    expect(foldForSearch('برنامه‌ها'), 'برنامه ها');
+    expect(foldForSearch('برنامهها'), 'برنامه ها');
   });
 }
