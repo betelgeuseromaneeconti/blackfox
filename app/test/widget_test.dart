@@ -2578,7 +2578,11 @@ void main() {
     // Logs cleared stay cleared when the page opens again.
     await tester.tap(find.text('Settings'));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.text('Logs'));
+    await tester.scrollUntilVisible(
+      find.text('Logs'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.pumpAndSettle();
     await tester.tap(find.text('Logs'));
     await tester.pumpAndSettle();
@@ -3022,7 +3026,7 @@ void main() {
   }, variant: TargetPlatformVariant.only(TargetPlatform.windows));
 
   group('updates', () {
-    const page = 'https://github.com/o/r/releases/tag/v9.9.9';
+    const page = 'https://github.com/shakur4min/blackfox/releases/tag/v9.9.9';
 
     Future<(FakeApi, CoreController, AppSettings)> pumpUpdates(
       WidgetTester tester, {
@@ -3035,12 +3039,15 @@ void main() {
       tester.view.physicalSize = const Size(1200, 900);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.reset);
+      addTearDown(Updates.reset);
       final api = FakeApi()..update = update;
       final core = CoreController(
         () async => api,
         pollInterval: const Duration(hours: 1),
       );
-      final settings = AppSettings()..updateVersion = known;
+      final settings = AppSettings()
+        ..updateVersion = known
+        ..updateUrl = known.isEmpty ? '' : page;
       Updates.start(core, settings, args: args);
       Updates.available.value = found;
       await tester.pumpWidget(VpnApp(core: core, settings: settings));
@@ -3295,6 +3302,7 @@ void main() {
       final (api, core, _) = await pumpUpdates(
         tester,
         update: {'state': 'ready', 'version': '9.9.9'},
+        known: '9.9.9',
         args: ['--autostart', '--data-dir=elsewhere'],
       );
       // With the app's own arguments (its data folder too, so the new
