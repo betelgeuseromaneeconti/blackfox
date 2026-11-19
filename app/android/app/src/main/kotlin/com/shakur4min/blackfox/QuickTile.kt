@@ -1,4 +1,4 @@
-package com.betelgeuseromaneeconti.blackfox
+package com.shakur4min.blackfox
 
 import android.app.PendingIntent
 import android.content.ComponentName

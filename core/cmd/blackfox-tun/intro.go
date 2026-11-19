@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/version"
+	"github.com/shakur4min/blackfox/core/internal/version"
 )
 
 // projectURL is where people find the app this service belongs to.
-const projectURL = "https://github.com/betelgeuseromaneeconti/blackfox"
+const projectURL = "https://github.com/shakur4min/blackfox"
 
 // intro is what the service says when it is started with no command, as
 // someone does who opens it by hand: what it is.

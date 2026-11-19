@@ -11,7 +11,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
+	"github.com/shakur4min/blackfox/core/internal/logx"
 )
 
 // SOCKS5 UDP ASSOCIATE (RFC 1928 7): a client asks over its TCP connection,

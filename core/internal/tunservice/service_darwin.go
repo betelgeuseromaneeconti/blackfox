@@ -11,7 +11,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunapi"
+	"github.com/shakur4min/blackfox/core/internal/tunapi"
 )
 
 // InstallDir is the installed service's folder.

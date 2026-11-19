@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
+	"github.com/shakur4min/blackfox/core/internal/logx"
 )
 
 // exitWait bounds the wait for the app and the core to exit.

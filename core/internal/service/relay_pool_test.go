@@ -10,7 +10,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/evasion"
+	"github.com/shakur4min/blackfox/core/internal/evasion"
 )
 
 func TestParseRelayNodesKeepsOnlyUsableEntries(t *testing.T) {

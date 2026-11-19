@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/signing"
+	"github.com/shakur4min/blackfox/core/internal/signing"
 )
 
 // signedFile writes an executable and its signature by priv.

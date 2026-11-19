@@ -10,7 +10,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
+	"github.com/shakur4min/blackfox/core/internal/logx"
 )
 
 // watchedConn is the TCP connection under an upstream session's TLS. It

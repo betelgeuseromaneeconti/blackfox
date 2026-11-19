@@ -33,7 +33,7 @@ $thirdPartyNotice = @"
 ## Product & Redistribution Notice
 - **Product Name:** BLACKFOX
 - **Version:** 1.0.3
-- **UI & Product Redesign Signature:** Made by Jackdaw
+- **UI & Product Redesign Signature:** Made by shakur4min
 - **License:** GNU General Public License v3.0 (GPL-3.0)
 
 BLACKFOX is an independent open-source client redistributed and modified under the terms of the GNU General Public License v3.0 (`LICENSE-GPL-3.0.txt`).

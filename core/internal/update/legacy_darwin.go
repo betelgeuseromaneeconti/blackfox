@@ -4,7 +4,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
+	"github.com/shakur4min/blackfox/core/internal/logx"
 )
 
 // The macOS tar.gz's bundle holds links under the old names in

@@ -12,14 +12,14 @@ import (
 	"strings"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/accounts"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/config"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/netstate"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/proxy"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/serverlist"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/update"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/version"
+	"github.com/shakur4min/blackfox/core/internal/accounts"
+	"github.com/shakur4min/blackfox/core/internal/config"
+	"github.com/shakur4min/blackfox/core/internal/logx"
+	"github.com/shakur4min/blackfox/core/internal/netstate"
+	"github.com/shakur4min/blackfox/core/internal/proxy"
+	"github.com/shakur4min/blackfox/core/internal/serverlist"
+	"github.com/shakur4min/blackfox/core/internal/update"
+	"github.com/shakur4min/blackfox/core/internal/version"
 )
 
 type proxyView struct {

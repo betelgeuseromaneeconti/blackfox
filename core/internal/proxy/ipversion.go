@@ -8,8 +8,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/resolver"
+	"github.com/shakur4min/blackfox/core/internal/logx"
+	"github.com/shakur4min/blackfox/core/internal/resolver"
 )
 
 // proxy.ip_version, for the connections to Mozilla's servers alone (the

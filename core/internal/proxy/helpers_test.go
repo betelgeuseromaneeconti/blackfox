@@ -12,8 +12,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/controlplane"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/serverlist"
+	"github.com/shakur4min/blackfox/core/internal/controlplane"
+	"github.com/shakur4min/blackfox/core/internal/serverlist"
 )
 
 type delayedTunnelOpener struct {

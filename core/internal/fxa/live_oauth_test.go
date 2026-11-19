@@ -10,8 +10,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/guardian"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/securefile"
+	"github.com/shakur4min/blackfox/core/internal/guardian"
+	"github.com/shakur4min/blackfox/core/internal/securefile"
 )
 
 // Explicit opt-in only: refreshes the OAuth credentials of one stored

@@ -10,13 +10,13 @@ import (
 	"slices"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/config"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/egress"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/proxy"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/service"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunapi"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/version"
+	"github.com/shakur4min/blackfox/core/internal/config"
+	"github.com/shakur4min/blackfox/core/internal/egress"
+	"github.com/shakur4min/blackfox/core/internal/logx"
+	"github.com/shakur4min/blackfox/core/internal/proxy"
+	"github.com/shakur4min/blackfox/core/internal/service"
+	"github.com/shakur4min/blackfox/core/internal/tunapi"
+	"github.com/shakur4min/blackfox/core/internal/version"
 )
 
 // The TUN mode in the app's core process. While the daemon wants a TUN

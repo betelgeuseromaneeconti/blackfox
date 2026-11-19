@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/service"
+	"github.com/shakur4min/blackfox/core/internal/service"
 )
 
 // Code shared by the desktop processes that host the service in-process:

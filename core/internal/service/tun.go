@@ -11,8 +11,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/config"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
+	"github.com/shakur4min/blackfox/core/internal/config"
+	"github.com/shakur4min/blackfox/core/internal/logx"
 )
 
 // The desktop TUN mode (system_proxy.mode "tun"): the TUN service

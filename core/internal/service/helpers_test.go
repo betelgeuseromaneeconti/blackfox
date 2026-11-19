@@ -10,9 +10,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/controlplane"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/netcheck"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/proxy"
+	"github.com/shakur4min/blackfox/core/internal/controlplane"
+	"github.com/shakur4min/blackfox/core/internal/netcheck"
+	"github.com/shakur4min/blackfox/core/internal/proxy"
 )
 
 // All values in this file are local fixtures; the control plane transport

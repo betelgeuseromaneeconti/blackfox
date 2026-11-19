@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/controlplane"
+	"github.com/shakur4min/blackfox/core/internal/controlplane"
 )
 
 func TestChallengeCookiesReachAlternateOAuthWithoutOtherHosts(t *testing.T) {

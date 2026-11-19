@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/service"
+	"github.com/shakur4min/blackfox/core/internal/logx"
+	"github.com/shakur4min/blackfox/core/internal/service"
 )
 
 func TestConsoleMenuItems(t *testing.T) {

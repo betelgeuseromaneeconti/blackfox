@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/egress"
+	"github.com/shakur4min/blackfox/core/internal/egress"
 )
 
 // connected looks for a default route (IPv4 or IPv6) on an interface

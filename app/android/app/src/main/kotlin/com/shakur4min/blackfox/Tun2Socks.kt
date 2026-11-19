@@ -1,4 +1,4 @@
-package com.betelgeuseromaneeconti.blackfox
+package com.shakur4min.blackfox
 
 import android.os.ParcelFileDescriptor
 

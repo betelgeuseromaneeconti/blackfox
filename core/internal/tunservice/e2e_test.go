@@ -20,8 +20,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/egress"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunapi"
+	"github.com/shakur4min/blackfox/core/internal/egress"
+	"github.com/shakur4min/blackfox/core/internal/tunapi"
 )
 
 // TestEndToEnd runs a TUN for real, on a computer whose network it may

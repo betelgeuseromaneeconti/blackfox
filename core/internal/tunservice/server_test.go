@@ -15,9 +15,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tun"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunapi"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunstack"
+	"github.com/shakur4min/blackfox/core/internal/tun"
+	"github.com/shakur4min/blackfox/core/internal/tunapi"
+	"github.com/shakur4min/blackfox/core/internal/tunstack"
 )
 
 // fakeDevice stands for the adapter.

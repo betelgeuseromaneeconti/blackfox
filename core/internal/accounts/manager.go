@@ -9,7 +9,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/securefile"
+	"github.com/shakur4min/blackfox/core/internal/securefile"
 )
 
 const (

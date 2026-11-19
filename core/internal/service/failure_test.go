@@ -5,10 +5,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/config"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/netcheck"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/proxy"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/resolver"
+	"github.com/shakur4min/blackfox/core/internal/config"
+	"github.com/shakur4min/blackfox/core/internal/netcheck"
+	"github.com/shakur4min/blackfox/core/internal/proxy"
+	"github.com/shakur4min/blackfox/core/internal/resolver"
 )
 
 // A failure that may be the device's own is checked against the internet:

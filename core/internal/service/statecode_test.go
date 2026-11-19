@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/accounts"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/config"
+	"github.com/shakur4min/blackfox/core/internal/accounts"
+	"github.com/shakur4min/blackfox/core/internal/config"
 )
 
 // waitCode waits until /api/status reports the state code, and returns the

@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/proxy"
+	"github.com/shakur4min/blackfox/core/internal/proxy"
 )
 
 // Without a running proxy a measurement needs an account for its pass.

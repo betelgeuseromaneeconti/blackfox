@@ -9,7 +9,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/securefile"
+	"github.com/shakur4min/blackfox/core/internal/securefile"
 )
 
 // localTokenHeader carries the local API token. Local clients that can read

@@ -19,7 +19,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/egress"
+	"github.com/shakur4min/blackfox/core/internal/egress"
 )
 
 // Result is what a check found.

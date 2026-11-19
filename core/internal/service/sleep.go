@@ -8,9 +8,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/accounts"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/proxy"
+	"github.com/shakur4min/blackfox/core/internal/accounts"
+	"github.com/shakur4min/blackfox/core/internal/logx"
+	"github.com/shakur4min/blackfox/core/internal/proxy"
 )
 
 // Sleep: an engine without a controller listens on proxy.listen but holds

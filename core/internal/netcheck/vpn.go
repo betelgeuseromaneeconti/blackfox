@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/egress"
+	"github.com/shakur4min/blackfox/core/internal/egress"
 )
 
 // fastlyASN is Fastly's network, where Firefox VPN's exits are.

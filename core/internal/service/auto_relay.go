@@ -15,11 +15,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/config"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/controlplane"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/guardian"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/update"
+	"github.com/shakur4min/blackfox/core/internal/config"
+	"github.com/shakur4min/blackfox/core/internal/controlplane"
+	"github.com/shakur4min/blackfox/core/internal/guardian"
+	"github.com/shakur4min/blackfox/core/internal/logx"
+	"github.com/shakur4min/blackfox/core/internal/update"
 )
 
 const (

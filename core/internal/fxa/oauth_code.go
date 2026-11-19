@@ -12,8 +12,8 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/controlplane"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
+	"github.com/shakur4min/blackfox/core/internal/controlplane"
+	"github.com/shakur4min/blackfox/core/internal/logx"
 )
 
 // exchangeSessionWithOAuthCode uses FxA's session-authenticated code grant

@@ -11,7 +11,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/config"
+	"github.com/shakur4min/blackfox/core/internal/config"
 )
 
 // This opt-in smoke test sends only local worker health requests. It never

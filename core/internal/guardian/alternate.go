@@ -11,10 +11,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/controlplane"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/evasion"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/hellosplit"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
+	"github.com/shakur4min/blackfox/core/internal/controlplane"
+	"github.com/shakur4min/blackfox/core/internal/evasion"
+	"github.com/shakur4min/blackfox/core/internal/hellosplit"
+	"github.com/shakur4min/blackfox/core/internal/logx"
 )
 
 // TokenRequestTimeout leaves time for the local attempts and relay recovery.

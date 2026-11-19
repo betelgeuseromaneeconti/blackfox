@@ -20,7 +20,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/signing"
+	"github.com/shakur4min/blackfox/core/internal/signing"
 )
 
 // The tests make the Windows zip on every system; untar_test.go tries the

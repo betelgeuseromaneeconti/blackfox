@@ -7,7 +7,7 @@ import (
 	"sync/atomic"
 	"testing"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/accounts"
+	"github.com/shakur4min/blackfox/core/internal/accounts"
 )
 
 func TestGuardianRejectsRefreshedTokenWithoutSigningIn(t *testing.T) {

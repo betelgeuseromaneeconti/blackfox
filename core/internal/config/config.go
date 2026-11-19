@@ -19,11 +19,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/guardian"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/hellosplit"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/resolver"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/routing"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/securefile"
+	"github.com/shakur4min/blackfox/core/internal/guardian"
+	"github.com/shakur4min/blackfox/core/internal/hellosplit"
+	"github.com/shakur4min/blackfox/core/internal/resolver"
+	"github.com/shakur4min/blackfox/core/internal/routing"
+	"github.com/shakur4min/blackfox/core/internal/securefile"
 )
 
 // CurrentVersion is the config schema version written by this build.

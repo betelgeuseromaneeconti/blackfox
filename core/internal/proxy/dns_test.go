@@ -13,7 +13,7 @@ import (
 
 	"golang.org/x/net/dns/dnsmessage"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/routing"
+	"github.com/shakur4min/blackfox/core/internal/routing"
 )
 
 func dnsQuery(t *testing.T, id uint16, host string, qtype dnsmessage.Type) []byte {

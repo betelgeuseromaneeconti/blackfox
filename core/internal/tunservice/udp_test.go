@@ -10,9 +10,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/proxy"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tun"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunapi"
+	"github.com/shakur4min/blackfox/core/internal/proxy"
+	"github.com/shakur4min/blackfox/core/internal/tun"
+	"github.com/shakur4min/blackfox/core/internal/tunapi"
 )
 
 // testUDPPorts is the shape of the core's list, without QUIC.

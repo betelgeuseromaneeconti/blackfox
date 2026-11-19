@@ -10,8 +10,8 @@ import (
 
 	"golang.org/x/sys/windows/registry"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/config"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/service"
+	"github.com/shakur4min/blackfox/core/internal/config"
+	"github.com/shakur4min/blackfox/core/internal/service"
 )
 
 // useTestProxyKeys points the system proxy code at temporary keys under

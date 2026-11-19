@@ -10,10 +10,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/accounts"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/fxa"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/guardian"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/netstate"
+	"github.com/shakur4min/blackfox/core/internal/accounts"
+	"github.com/shakur4min/blackfox/core/internal/fxa"
+	"github.com/shakur4min/blackfox/core/internal/guardian"
+	"github.com/shakur4min/blackfox/core/internal/netstate"
 )
 
 func TestFailureCode(t *testing.T) {

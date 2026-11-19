@@ -12,7 +12,7 @@ import (
 
 	"golang.org/x/net/dns/dnsmessage"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/resolver"
+	"github.com/shakur4min/blackfox/core/internal/resolver"
 )
 
 // startTestDNS answers every A query with ip.

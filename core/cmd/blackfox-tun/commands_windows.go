@@ -4,7 +4,7 @@ import (
 	"errors"
 	"strconv"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunservice"
+	"github.com/shakur4min/blackfox/core/internal/tunservice"
 )
 
 // runPlatform runs the commands an update and an uninstall from inside the

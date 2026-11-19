@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/controlplane"
+	"github.com/shakur4min/blackfox/core/internal/controlplane"
 )
 
 type versionRoundTripper func(*http.Request) (*http.Response, error)

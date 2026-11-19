@@ -11,7 +11,7 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunapi"
+	"github.com/shakur4min/blackfox/core/internal/tunapi"
 )
 
 // ownerPath is the executable of the program whose socket has source as

@@ -43,10 +43,10 @@ AppId={{6F3A2C1E-9B4D-4E7A-8C21-5D0F7B9E4A63}
 AppName={#AppName}
 AppVersion={#AppVersion}
 AppVerName={#AppName} {#AppVersion}
-AppPublisher=betelgeuseromaneeconti
-AppPublisherURL=https://github.com/betelgeuseromaneeconti/blackfox
-AppSupportURL=https://github.com/betelgeuseromaneeconti/blackfox/issues
-AppUpdatesURL=https://github.com/betelgeuseromaneeconti/blackfox/releases
+AppPublisher=shakur4min
+AppPublisherURL=https://github.com/shakur4min/blackfox
+AppSupportURL=https://github.com/shakur4min/blackfox/issues
+AppUpdatesURL=https://github.com/shakur4min/blackfox/releases
 VersionInfoVersion={#AppVersion}
 DefaultDirName={code:DefaultDir}
 ; The folder is asked on the first install only; an update goes where the

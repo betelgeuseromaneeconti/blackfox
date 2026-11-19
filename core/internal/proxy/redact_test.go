@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
+	"github.com/shakur4min/blackfox/core/internal/logx"
 )
 
 func TestLogErrRedactsConnectHTTPBodyUnlessVerbose(t *testing.T) {

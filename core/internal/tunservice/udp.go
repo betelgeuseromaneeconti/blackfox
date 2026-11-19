@@ -7,11 +7,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/egress"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tun"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunapi"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunstack"
+	"github.com/shakur4min/blackfox/core/internal/egress"
+	"github.com/shakur4min/blackfox/core/internal/logx"
+	"github.com/shakur4min/blackfox/core/internal/tun"
+	"github.com/shakur4min/blackfox/core/internal/tunapi"
+	"github.com/shakur4min/blackfox/core/internal/tunstack"
 )
 
 // UDP in the TUN: a flow is one app port's packets. Its program may skip the

@@ -20,8 +20,8 @@ import (
 	"github.com/tc-hib/winres"
 	winversion "github.com/tc-hib/winres/version"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/desktop"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/version"
+	"github.com/shakur4min/blackfox/core/internal/desktop"
+	"github.com/shakur4min/blackfox/core/internal/version"
 )
 
 // program is what each executable's version information says.

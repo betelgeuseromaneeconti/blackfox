@@ -11,7 +11,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/serverlist"
+	"github.com/shakur4min/blackfox/core/internal/serverlist"
 )
 
 // FastestCountry is the proxy.country value that picks the location with

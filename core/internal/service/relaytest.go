@@ -19,8 +19,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/config"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/resolver"
+	"github.com/shakur4min/blackfox/core/internal/config"
+	"github.com/shakur4min/blackfox/core/internal/resolver"
 )
 
 const relayTestTimeout = 30 * time.Second

@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/config"
+	"github.com/shakur4min/blackfox/core/internal/config"
 )
 
 // fakeAutoConnect replaces auto-connect's test with pass (counting the

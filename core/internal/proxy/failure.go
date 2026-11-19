@@ -11,9 +11,9 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/accounts"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/fxa"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/guardian"
+	"github.com/shakur4min/blackfox/core/internal/accounts"
+	"github.com/shakur4min/blackfox/core/internal/fxa"
+	"github.com/shakur4min/blackfox/core/internal/guardian"
 )
 
 // Failure codes say why a connection through Mozilla failed, so the apps

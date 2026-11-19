@@ -24,7 +24,7 @@ import (
 
 	"golang.org/x/net/proxy"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/egress"
+	"github.com/shakur4min/blackfox/core/internal/egress"
 )
 
 const (

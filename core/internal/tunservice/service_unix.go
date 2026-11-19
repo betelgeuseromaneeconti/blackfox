@@ -16,10 +16,10 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunapi"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunstack"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/version"
+	"github.com/shakur4min/blackfox/core/internal/logx"
+	"github.com/shakur4min/blackfox/core/internal/tunapi"
+	"github.com/shakur4min/blackfox/core/internal/tunstack"
+	"github.com/shakur4min/blackfox/core/internal/version"
 )
 
 // The installed service lives in a folder only root may write to

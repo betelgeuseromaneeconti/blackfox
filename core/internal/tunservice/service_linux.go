@@ -6,7 +6,7 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunapi"
+	"github.com/shakur4min/blackfox/core/internal/tunapi"
 )
 
 // InstallDir is the installed service's folder.
@@ -19,7 +19,7 @@ const unitName = tunapi.ServiceName + ".service"
 // good (stopForGood).
 const unit = `[Unit]
 Description=BLACKFOX VPN TUN
-Documentation=https://github.com/betelgeuseromaneeconti/blackfox
+Documentation=https://github.com/shakur4min/blackfox
 After=network.target
 
 [Service]

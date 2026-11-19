@@ -2,9 +2,9 @@
 Type=Application
 Name=BLACKFOX
 GenericName=VPN Client
-Comment=BLACKFOX VPN Client — Minimal Victorian Gothic Edition (Made by Jackdaw)
+Comment=BLACKFOX VPN Client — Minimal Victorian Gothic Edition (Made by shakur4min)
 Exec=/usr/bin/blackfox %U
 Icon=blackfox
 Terminal=false
 Categories=Network;Security;VPN;
-StartupWMClass=com.arman.firefoxvpn
+StartupWMClass=com.shakur4min.blackfox

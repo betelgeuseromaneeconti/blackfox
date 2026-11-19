@@ -5,7 +5,7 @@ import (
 	"net"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/controlplane"
+	"github.com/shakur4min/blackfox/core/internal/controlplane"
 )
 
 func (c *Controller) withRenewalTunnel(ctx context.Context) (context.Context, func()) {

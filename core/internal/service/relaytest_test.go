@@ -16,8 +16,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/config"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/resolver"
+	"github.com/shakur4min/blackfox/core/internal/config"
+	"github.com/shakur4min/blackfox/core/internal/resolver"
 )
 
 func relayHealthFixture(t *testing.T, handler http.HandlerFunc) (*relayHealthTest, string) {

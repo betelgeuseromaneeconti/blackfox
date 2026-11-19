@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/accounts"
+	"github.com/shakur4min/blackfox/core/internal/accounts"
 )
 
 func TestAccountList(t *testing.T) {

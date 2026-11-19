@@ -12,10 +12,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/accounts"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/fxa"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/guardian"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/serverlist"
+	"github.com/shakur4min/blackfox/core/internal/accounts"
+	"github.com/shakur4min/blackfox/core/internal/fxa"
+	"github.com/shakur4min/blackfox/core/internal/guardian"
+	"github.com/shakur4min/blackfox/core/internal/serverlist"
 )
 
 // failoverCountries has Germany with two servers in Berlin and one in

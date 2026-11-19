@@ -12,8 +12,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/routing"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tun"
+	"github.com/shakur4min/blackfox/core/internal/routing"
+	"github.com/shakur4min/blackfox/core/internal/tun"
 )
 
 // fakeUDPTunnel echoes its packets, with its target in front.

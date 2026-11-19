@@ -12,10 +12,10 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/service"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/update"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/version"
+	"github.com/shakur4min/blackfox/core/internal/logx"
+	"github.com/shakur4min/blackfox/core/internal/service"
+	"github.com/shakur4min/blackfox/core/internal/update"
+	"github.com/shakur4min/blackfox/core/internal/version"
 )
 
 // The app mode (-app) is the core process of the desktop app: the app

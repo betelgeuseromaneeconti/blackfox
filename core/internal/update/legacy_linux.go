@@ -13,7 +13,7 @@ const (
 )
 
 // desktopFile is the applications menu's entry that install.sh writes
-// (com.betelgeuseromaneeconti.blackfox.desktop in the user's data folder); tests set it.
+// (com.shakur4min.blackfox.desktop in the user's data folder); tests set it.
 var desktopFile = func() string {
 	base := os.Getenv("XDG_DATA_HOME")
 	if base == "" {
@@ -23,7 +23,7 @@ var desktopFile = func() string {
 		}
 		base = filepath.Join(home, ".local", "share")
 	}
-	return filepath.Join(base, "applications", "com.betelgeuseromaneeconti.blackfox.desktop")
+	return filepath.Join(base, "applications", "com.shakur4min.blackfox.desktop")
 }
 
 // Migrate puts a copy of the app that a version before 1.0.9 installed in

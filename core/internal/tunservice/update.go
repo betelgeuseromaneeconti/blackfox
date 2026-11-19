@@ -7,7 +7,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/signing"
+	"github.com/shakur4min/blackfox/core/internal/signing"
 )
 
 // Updates of the service must be signed with the key built into it

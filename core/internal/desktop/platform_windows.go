@@ -10,7 +10,7 @@ import (
 	"strings"
 	"unsafe"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/service"
+	"github.com/shakur4min/blackfox/core/internal/service"
 
 	"golang.org/x/sys/windows"
 )

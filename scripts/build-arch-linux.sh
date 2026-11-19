@@ -21,9 +21,9 @@ cp -r build/linux/x64/release/bundle/* "$PORTABLE_DIR/"
 popd >/dev/null
 
 pushd "$ROOT/core" >/dev/null
-LDFLAGS="-s -w -X github.com/armanlife/arman-vpn-client/core/internal/version.Current=$VERSION"
-go build -trimpath -ldflags "$LDFLAGS" -o "$PORTABLE_DIR/core/arman-vpn-core" ./cmd/arman-vpn-core
-go build -trimpath -ldflags "$LDFLAGS" -o "$PORTABLE_DIR/core/arman-vpn-tun" ./cmd/arman-vpn-tun
+LDFLAGS="-s -w -X github.com/shakur4min/blackfox/core/internal/version.Current=$VERSION"
+go build -trimpath -ldflags "$LDFLAGS" -o "$PORTABLE_DIR/core/blackfox-vpn-core" ./cmd/blackfox-core
+go build -trimpath -ldflags "$LDFLAGS" -o "$PORTABLE_DIR/core/blackfox-vpn-tun" ./cmd/blackfox-tun
 popd >/dev/null
 
 if command -v makepkg >/dev/null 2>&1; then

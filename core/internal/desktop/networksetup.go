@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/securefile"
+	"github.com/shakur4min/blackfox/core/internal/securefile"
 )
 
 // The macOS proxy setting, per network service (Wi-Fi, Ethernet, ...), read

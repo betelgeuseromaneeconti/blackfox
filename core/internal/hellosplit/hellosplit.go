@@ -16,7 +16,7 @@ import (
 	"net"
 	"sync/atomic"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
+	"github.com/shakur4min/blackfox/core/internal/logx"
 )
 
 // The network.hello_split choices. SNI cuts the name after its first

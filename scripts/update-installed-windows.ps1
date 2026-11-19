@@ -1,6 +1,6 @@
 # Builds the Windows app and its core and puts them over the installed copy
 # (the Setup's per-user install, in the folder chosen at install time; by
-# default %LOCALAPPDATA%\Programs\Arman VPN), to try a change
+# default %LOCALAPPDATA%\Programs\BLACKFOX), to try a change
 # without making and running an installer:
 # - a running copy is closed first: the app by its process id, after which
 #   its core restores the system proxy and exits, as when the app quits;
@@ -27,12 +27,12 @@ $version = $match.Matches[0].Groups[1].Value
 if ($AppVersion) { $version = $AppVersion }
 
 # The install folder, from the Setup's uninstall entry (AppId in
-# app\windows\installer\arman-vpn.iss).
+# app\windows\installer\blackfox-vpn.iss).
 $uninstallKey = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\{6F3A2C1E-9B4D-4E7A-8C21-5D0F7B9E4A63}_is1'
 $dir = (Get-ItemProperty $uninstallKey -ErrorAction SilentlyContinue).InstallLocation
-if (-not $dir) { throw 'Arman VPN is not installed for this user; run the Setup once' }
+if (-not $dir) { throw 'BLACKFOX is not installed for this user; run the Setup once' }
 $dir = $dir.TrimEnd('\')
-$appExe = "$dir\arman-vpn.exe"
+$appExe = "$dir\blackfox-vpn.exe"
 $dataDir = "$dir\user-data"
 
 # The same build as scripts\build-windows.ps1, the core into app\build.
@@ -53,10 +53,10 @@ $public = & "$PSScriptRoot\signing-key.ps1"
 Push-Location "$root\core"
 try {
     $env:APP_VERSION = $version
-    go generate ./cmd/arman-vpn-core
+    go generate ./cmd/blackfox-core
     if ($LASTEXITCODE -ne 0) { throw 'go generate failed' }
-    $ldflags = "-s -w -X github.com/armanlife/arman-vpn-client/core/internal/version.Current=$version"
-    if ($public) { $ldflags += " -X github.com/armanlife/arman-vpn-client/core/internal/signing.Key=$public" }
+    $ldflags = "-s -w -X github.com/shakur4min/blackfox/core/internal/version.Current=$version"
+    if ($public) { $ldflags += " -X github.com/shakur4min/blackfox/core/internal/signing.Key=$public" }
     # Optional local build settings (scripts\build-local.ps1), the same seam
     # scripts\build-windows.ps1 uses, so the copy put over an installed one
     # is the same build as a release and not a plainer one. Without that file
@@ -68,9 +68,9 @@ try {
     }
     $ldflags += $local.Ldflags
     if ($local.Tags.Count -gt 0) {
-        go build -trimpath -tags ($local.Tags -join ',') -ldflags $ldflags -o "$coreOut\arman-vpn-core.exe" ./cmd/arman-vpn-core
+        go build -trimpath -tags ($local.Tags -join ',') -ldflags $ldflags -o "$coreOut\blackfox-vpn-core.exe" ./cmd/blackfox-core
     } else {
-        go build -trimpath -ldflags $ldflags -o "$coreOut\arman-vpn-core.exe" ./cmd/arman-vpn-core
+        go build -trimpath -ldflags $ldflags -o "$coreOut\blackfox-vpn-core.exe" ./cmd/blackfox-core
     }
     if ($LASTEXITCODE -ne 0) { throw 'go build failed' }
 } finally {
@@ -131,10 +131,10 @@ if ($LASTEXITCODE -ge 8) { throw "copying the app failed (robocopy $LASTEXITCODE
 # old icon, say) must not stay behind and be used.
 robocopy "$release\data" "$dir\data" /MIR /R:10 /W:1 /NFL /NDL /NJH /NJS /NP | Out-Null
 if ($LASTEXITCODE -ge 8) { throw "copying the app's assets failed (robocopy $LASTEXITCODE)" }
-robocopy $coreOut "$dir\core" arman-vpn-core.exe arman-vpn-tun.exe arman-vpn-tun.exe.sig /R:10 /W:1 /NFL /NDL /NJH /NJS /NP | Out-Null
+robocopy $coreOut "$dir\core" blackfox-vpn-core.exe blackfox-vpn-tun.exe blackfox-vpn-tun.exe.sig /R:10 /W:1 /NFL /NDL /NJH /NJS /NP | Out-Null
 if ($LASTEXITCODE -ge 8) { throw "copying the core failed (robocopy $LASTEXITCODE)" }
-if (-not (Test-Path "$coreOut\arman-vpn-tun.exe.sig")) {
-    Remove-Item "$dir\core\arman-vpn-tun.exe.sig" -ErrorAction SilentlyContinue
+if (-not (Test-Path "$coreOut\blackfox-vpn-tun.exe.sig")) {
+    Remove-Item "$dir\core\blackfox-vpn-tun.exe.sig" -ErrorAction SilentlyContinue
 }
 Set-ItemProperty $uninstallKey -Name DisplayVersion -Value $version
 Write-Host "Installed $version in $dir"
@@ -142,9 +142,9 @@ Write-Host "Installed $version in $dir"
 # The installed TUN service, if any, replaces itself with the new one: the
 # app's core asks only when the service is older, and a test build keeps
 # the version. It refuses a build its key did not sign (then install it
-# again: core\arman-vpn-tun.exe install, with the administrator prompt).
-if (Get-Service ArmanVPNTun -ErrorAction SilentlyContinue) {
-    $p = Start-Process -FilePath "$dir\core\arman-vpn-tun.exe" -ArgumentList update -Wait -PassThru -NoNewWindow -RedirectStandardError "$coreOut\tun-update.txt"
+# again: core\blackfox-vpn-tun.exe install, with the administrator prompt).
+if (Get-Service BLACKFOXTun -ErrorAction SilentlyContinue) {
+    $p = Start-Process -FilePath "$dir\core\blackfox-vpn-tun.exe" -ArgumentList update -Wait -PassThru -NoNewWindow -RedirectStandardError "$coreOut\tun-update.txt"
     $why = (Get-Content "$coreOut\tun-update.txt" -Raw -ErrorAction SilentlyContinue)
     if ($p.ExitCode -eq 0) { Write-Host 'The TUN service updated itself' }
     elseif ($why -match 'already this build') { Write-Host 'The TUN service is already this build' }

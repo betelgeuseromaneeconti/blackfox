@@ -14,7 +14,7 @@ import (
 
 	"golang.org/x/net/dns/dnsmessage"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/egress"
+	"github.com/shakur4min/blackfox/core/internal/egress"
 )
 
 const (

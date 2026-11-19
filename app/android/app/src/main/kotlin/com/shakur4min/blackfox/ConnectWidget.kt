@@ -1,4 +1,4 @@
-package com.betelgeuseromaneeconti.blackfox
+package com.shakur4min.blackfox
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
@@ -65,7 +65,7 @@ class ConnectWidget : AppWidgetProvider() {
 
     companion object {
         private const val TAG = "ConnectWidget"
-        private const val ACTION_TOGGLE = "com.betelgeuseromaneeconti.blackfox.WIDGET_TOGGLE"
+        private const val ACTION_TOGGLE = "com.shakur4min.blackfox.WIDGET_TOGGLE"
 
         private const val OFF = 0
         private const val CONNECTING = 1

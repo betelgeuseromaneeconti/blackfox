@@ -7,7 +7,7 @@ import (
 	"flag"
 	"os"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunservice"
+	"github.com/shakur4min/blackfox/core/internal/tunservice"
 )
 
 // run runs a command. The init system (the service manager, systemd,

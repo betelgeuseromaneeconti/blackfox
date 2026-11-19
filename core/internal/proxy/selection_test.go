@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/serverlist"
+	"github.com/shakur4min/blackfox/core/internal/serverlist"
 )
 
 func TestNormalizeProxyURLAddsHTTPS(t *testing.T) {

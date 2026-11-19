@@ -12,7 +12,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/serverlist"
+	"github.com/shakur4min/blackfox/core/internal/serverlist"
 )
 
 func pingTestCountries() []serverlist.Country {

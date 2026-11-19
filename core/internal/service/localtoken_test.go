@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/version"
+	"github.com/shakur4min/blackfox/core/internal/version"
 )
 
 func TestLocalTokenBypassesHostCheckAndLogin(t *testing.T) {

@@ -25,7 +25,7 @@ $ndk = (Select-String -Path "$root\app\android\app\build.gradle.kts" -Pattern 'n
 if (-not $env:ANDROID_NDK_HOME) { $env:ANDROID_NDK_HOME = "$env:ANDROID_HOME\ndk\$ndk" }
 if (-not $env:JAVA_HOME) { $env:JAVA_HOME = "$env:ProgramFiles\Android\Android Studio\jbr" }
 
-$ldflags = "-s -w -X github.com/betelgeuseromaneeconti/blackfox/core/internal/version.Current=$version"
+$ldflags = "-s -w -X github.com/shakur4min/blackfox/core/internal/version.Current=$version"
 
 Push-Location "$root\core"
 try {

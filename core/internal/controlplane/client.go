@@ -18,9 +18,9 @@ import (
 	utls "github.com/refraction-networking/utls"
 	"golang.org/x/net/http2"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/firefoxtls"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/hellosplit"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/resolver"
+	"github.com/shakur4min/blackfox/core/internal/firefoxtls"
+	"github.com/shakur4min/blackfox/core/internal/hellosplit"
+	"github.com/shakur4min/blackfox/core/internal/resolver"
 )
 
 const (
