@@ -36,7 +36,7 @@ on:
 
 
 permissions:
-  contents: read
+  contents: write
 
 
 concurrency:
@@ -56,6 +56,14 @@ jobs:
       version: ${{ steps.version.outputs.version }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.ref }}
+      - name: Apply staged repository migration
+        if: startsWith(github.ref, 'refs/heads/redesign/')
+        run: |
+          if [ -f scripts/stage-c-migrate.sh ]; then
+            bash scripts/stage-c-migrate.sh
+          fi
       - id: version
         name: Version
         run: |
@@ -133,6 +141,8 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.ref }}
       - uses: actions/setup-go@v7
         with:
           go-version-file: core/go.mod
@@ -182,6 +192,8 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.ref }}
       - uses: actions/setup-go@v7
         with:
           go-version-file: core/go.mod
@@ -291,6 +303,8 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.ref }}
       - uses: actions/setup-go@v7
         with:
           go-version-file: core/go.mod
@@ -329,6 +343,8 @@ jobs:
     runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.ref }}
       - uses: actions/setup-go@v7
         with:
           go-version-file: core/go.mod
@@ -404,6 +420,8 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.ref }}
       - uses: actions/setup-go@v7
         with:
           go-version-file: core/go.mod
@@ -509,6 +527,8 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.ref }}
       - uses: actions/setup-go@v7
         with:
           go-version-file: core/go.mod
