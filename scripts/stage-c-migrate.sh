@@ -530,7 +530,8 @@ if entrypoint_path.exists():
         write_if_changed(entrypoint_path, new, old, is_crlf)
 
 for gh_file in [
-    ".github/workflows/docker.yml",
+    # NOTE: .github/workflows/* cannot be pushed by GITHUB_TOKEN (no `workflows` permission);
+    # docker.yml is updated separately through the GitHub web UI.
     ".github/actions/build-profile/action.yml",
     ".github/ISSUE_TEMPLATE/bug_report.yml",
     ".github/ISSUE_TEMPLATE/feature_request.yml",
@@ -615,7 +616,7 @@ for p in sorted(ROOT.rglob("*")):
     if not p.is_file():
         continue
     rel = p.relative_to(ROOT).as_posix()
-    if rel.startswith(".git/") or rel.startswith("docs/") or "/build/" in rel or rel.endswith(".png") or rel.endswith(".ico"):
+    if rel.startswith(".git/") or rel.startswith(".github/workflows/") or rel.startswith("docs/") or "/build/" in rel or rel.endswith(".png") or rel.endswith(".ico"):
         continue
     if p.suffix.lower() not in TEXT_EXTS and p.name not in {"Dockerfile", "PKGBUILD", "CMakeLists.txt", "Makefile"}:
         continue
@@ -642,6 +643,8 @@ PYEOF
 
 if [[ -n "$(git status --porcelain)" ]]; then
   if [[ -n "${GITHUB_ACTIONS:-}" ]]; then
+    # GITHUB_TOKEN may not touch workflow files; keep them out of this commit.
+    git checkout -- .github/workflows 2>/dev/null || true
     git config user.name "shakur4min"
     git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
     git add -A
