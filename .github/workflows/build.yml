@@ -20,9 +20,10 @@
 #   PROFILE_RELAY_KEY          the key the profile is built with
 name: Build
 
+
 on:
   push:
-    branches: [main]
+    branches: [main, 'redesign/**']
     tags: ['v*']
     # A change to Markdown or documentation images alone
     # runs nothing; GitHub does not apply this filter to tags, so a release
@@ -33,16 +34,20 @@ on:
     paths-ignore: ['**.md', 'docs/images/**', 'docs/screenshots/**', 'docs/readme/**', 'LICENSE']
   workflow_dispatch:
 
+
 permissions:
   contents: read
+
 
 concurrency:
   group: build-${{ github.ref }}
   cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
 
+
 env:
   FLUTTER_VERSION: 3.50.0
   GOMOBILE_VERSION: v0.0.0-20260908204917-8b95e45f8d3e
+
 
 jobs:
   test:
@@ -119,11 +124,12 @@ jobs:
           flutter analyze
           flutter test
 
+
   windows:
     needs: test
     # Built unless the repository variable PLATFORMS (Settings, Secrets and
     # variables, Actions, Variables) is set and leaves it out, e.g. "linux".
-    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main') && (vars.PLATFORMS == '' || contains(vars.PLATFORMS, 'windows'))
+    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/redesign/')) && (vars.PLATFORMS == '' || contains(vars.PLATFORMS, 'windows'))
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v7
@@ -169,9 +175,10 @@ jobs:
           path: out/*
           if-no-files-found: error
 
+
   android:
     needs: test
-    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main') && (vars.PLATFORMS == '' || contains(vars.PLATFORMS, 'android'))
+    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/redesign/')) && (vars.PLATFORMS == '' || contains(vars.PLATFORMS, 'android'))
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
@@ -224,7 +231,7 @@ jobs:
         run: |
           v='${{ needs.test.outputs.version }}'
           mkdir -p app/android/app/libs
-          flags="-s -w -X github.com/betelgeuseromaneeconti/blackfox/core/internal/version.Current=$v"
+          flags="-s -w -X github.com/shakur4min/blackfox/core/internal/version.Current=$v"
           # The build scripts' optional local settings (scripts/build-local.sh,
           # which the step above puts there when there is a profile). Without
           # it the ordinary library is built, which is what this repository's
@@ -277,9 +284,10 @@ jobs:
           path: out/*
           if-no-files-found: error
 
+
   linux:
     needs: test
-    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main') && (vars.PLATFORMS == '' || contains(vars.PLATFORMS, 'linux'))
+    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/redesign/')) && (vars.PLATFORMS == '' || contains(vars.PLATFORMS, 'linux'))
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
@@ -306,9 +314,10 @@ jobs:
           path: dist/blackfox-vpn-core-linux-*.tar.gz
           if-no-files-found: error
 
+
   linux-desktop:
     needs: test
-    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main') && (vars.PLATFORMS == '' || contains(vars.PLATFORMS, 'linux'))
+    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/redesign/')) && (vars.PLATFORMS == '' || contains(vars.PLATFORMS, 'linux'))
     strategy:
       matrix:
         include:
@@ -388,9 +397,10 @@ jobs:
           path: out/*
           if-no-files-found: error
 
+
   macos:
     needs: test
-    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main') && (vars.PLATFORMS == '' || contains(vars.PLATFORMS, 'macos'))
+    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/redesign/')) && (vars.PLATFORMS == '' || contains(vars.PLATFORMS, 'macos'))
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v7
@@ -437,11 +447,11 @@ jobs:
         run: |
           go build -tags with_gvisor -o "$RUNNER_TEMP/blackfox-vpn-tun" ./cmd/blackfox-tun
           sudo "$RUNNER_TEMP/blackfox-vpn-tun" install
-          sudo launchctl print system/com.betelgeuseromaneeconti.blackfox.tun | head -20
+          sudo launchctl print system/com.shakur4min.blackfox.tun | head -20
           "$RUNNER_TEMP/blackfox-vpn-tun" uninstall
-          for i in $(seq 20); do sudo launchctl print system/com.betelgeuseromaneeconti.blackfox.tun >/dev/null 2>&1 || break; sleep 0.5; done
-          if sudo launchctl print system/com.betelgeuseromaneeconti.blackfox.tun >/dev/null 2>&1; then echo "the job is still loaded"; exit 1; fi
-          test ! -e /Library/LaunchDaemons/com.betelgeuseromaneeconti.blackfox.tun.plist
+          for i in $(seq 20); do sudo launchctl print system/com.shakur4min.blackfox.tun >/dev/null 2>&1 || break; sleep 0.5; done
+          if sudo launchctl print system/com.shakur4min.blackfox.tun >/dev/null 2>&1; then echo "the job is still loaded"; exit 1; fi
+          test ! -e /Library/LaunchDaemons/com.shakur4min.blackfox.tun.plist
           test ! -e "/Library/Application Support/BLACKFOX VPN TUN"
       # The optional build profile, when this repository has the secrets for
       # one; without them this does nothing and the ordinary client is built.
@@ -487,6 +497,7 @@ jobs:
           name: macos
           path: out/*
           if-no-files-found: error
+
 
   release:
     needs: [test, windows, android, linux, linux-desktop, macos]
