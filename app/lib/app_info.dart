@@ -14,7 +14,7 @@ const appVersion = String.fromEnvironment('APP_VERSION', defaultValue: '2.0.69')
 
 /// The GitHub repository, "owner/name", for the source link and the update
 /// check.
-const githubRepo = 'betelgeuseromaneeconti/blackfox';
+const githubRepo = 'shakur4min/blackfox';
 
 /// The update manifest and its mirror. A build may name others
 /// (--dart-define=UPDATE_MANIFEST_URL=..., UPDATE_MANIFEST_MIRROR=...) to
@@ -23,12 +23,12 @@ const githubRepo = 'betelgeuseromaneeconti/blackfox';
 const updateManifestUrl = String.fromEnvironment(
   'UPDATE_MANIFEST_URL',
   defaultValue:
-      'https://raw.githubusercontent.com/betelgeuseromaneeconti/blackfox/main/.github/updates.json',
+      'https://raw.githubusercontent.com/shakur4min/blackfox/main/.github/updates.json',
 );
 const updateManifestMirror = String.fromEnvironment(
   'UPDATE_MANIFEST_MIRROR',
   defaultValue:
-      'https://cdn.jsdelivr.net/gh/betelgeuseromaneeconti/blackfox@main/.github/updates.json',
+      'https://cdn.jsdelivr.net/gh/shakur4min/blackfox@main/.github/updates.json',
 );
 
 /// A release server used instead of GitHub, to try updates with a local
@@ -43,7 +43,7 @@ String get updateServer =>
     );
 
 /// The Linux archive's name part for the processor in Dart's
-/// [platformVersion] ("... on "linux_arm64"").
+/// [platformVersion] ("... on \"linux_arm64\"").
 String linuxName(String platformVersion) =>
     'Linux-${platformVersion.contains('arm64') ? 'arm64' : 'amd64'}.tar.gz';
 
