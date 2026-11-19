@@ -22,6 +22,6 @@ void main() {
 
     // A zero-width non-joiner is a space, so a joined name is found by
     // typing it with a space.
-    expect(foldForSearch('برنامهها'), 'برنامه ها');
+    expect(foldForSearch('برنامه\u200cها'), 'برنامه ها');
   });
 }

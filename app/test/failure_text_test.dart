@@ -93,7 +93,7 @@ void main() {
     // Mozilla answers and refuses the country (HTTP 451): not a block.
     expect(
       failureCodeText(fa, Failure.region),
-      'سرویس Mozilla در کشور شما ارائه نمیشود.',
+      'سرویس Mozilla در کشور شما ارائه نمی\u200cشود.',
     );
     expect(fa.noNetwork, isNot(contains('داده')));
   });
@@ -217,7 +217,7 @@ void main() {
         'code': StateCode.noUsableAccount,
       }),
     );
-    expect(look.hint, 'هیچ حسابی آماده نیست. صفحه حسابها را باز کنید.');
+    expect(look.hint, 'هیچ حسابی آماده نیست. صفحه حساب\u200cها را باز کنید.');
     expect(
       PhaseLook.of(
         fa,
