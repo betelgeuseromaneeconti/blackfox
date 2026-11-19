@@ -15,12 +15,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/config"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/controlplane"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/proxy"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/routing"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tun"
+	"github.com/shakur4min/blackfox/core/internal/config"
+	"github.com/shakur4min/blackfox/core/internal/controlplane"
+	"github.com/shakur4min/blackfox/core/internal/logx"
+	"github.com/shakur4min/blackfox/core/internal/proxy"
+	"github.com/shakur4min/blackfox/core/internal/routing"
+	"github.com/shakur4min/blackfox/core/internal/tun"
 )
 
 // listDownloadTimeout bounds downloading both routing lists.

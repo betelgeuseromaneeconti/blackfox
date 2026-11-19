@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/controlplane"
+	"github.com/shakur4min/blackfox/core/internal/controlplane"
 )
 
 var (

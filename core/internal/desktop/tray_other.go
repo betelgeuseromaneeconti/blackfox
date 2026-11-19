@@ -5,7 +5,7 @@ package desktop
 import (
 	"errors"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/service"
+	"github.com/shakur4min/blackfox/core/internal/service"
 )
 
 func RunTray(service.DataPaths, bool) error {

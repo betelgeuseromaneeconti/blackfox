@@ -4,8 +4,8 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/service"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunapi"
+	"github.com/shakur4min/blackfox/core/internal/service"
+	"github.com/shakur4min/blackfox/core/internal/tunapi"
 )
 
 // ownPrograms are this app's own executables, which never skip the VPN by

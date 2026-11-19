@@ -3,8 +3,8 @@ package service
 import (
 	"testing"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/proxy"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/serverlist"
+	"github.com/shakur4min/blackfox/core/internal/proxy"
+	"github.com/shakur4min/blackfox/core/internal/serverlist"
 )
 
 func oneServerCountry(code, host string) serverlist.Country {

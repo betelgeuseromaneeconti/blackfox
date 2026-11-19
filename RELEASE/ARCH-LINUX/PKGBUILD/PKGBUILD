@@ -1,10 +1,10 @@
-# Maintainer: Jackdaw <https://github.com/armanlife/arman-vpn-client>
+# Maintainer: shakur4min <https://github.com/shakur4min/blackfox>
 pkgname=blackfox
-pkgver=1.0.3
+pkgver=2.0.69
 pkgrel=1
 pkgdesc="BLACKFOX VPN Client (Minimal Victorian Gothic Edition) for Firefox Account edge tunnels"
 arch=('x86_64' 'aarch64')
-url="https://github.com/armanlife/arman-vpn-client"
+url="https://github.com/shakur4min/blackfox"
 license=('GPL-3.0-or-later')
 depends=('gtk3' 'glib2' 'libayatana-appindicator')
 makedepends=('go' 'flutter' 'cmake' 'ninja' 'pkgconf' 'clang')
@@ -20,9 +20,9 @@ build() {
   flutter build linux --release --no-pub --dart-define=APP_VERSION="$pkgver"
 
   cd "$root_dir/core"
-  local ldflags="-s -w -X github.com/armanlife/arman-vpn-client/core/internal/version.Current=$pkgver"
-  go build -trimpath -ldflags "$ldflags" -o "$srcdir/arman-vpn-core" ./cmd/arman-vpn-core
-  go build -trimpath -ldflags "$ldflags" -o "$srcdir/arman-vpn-tun" ./cmd/arman-vpn-tun
+  local ldflags="-s -w -X github.com/shakur4min/blackfox/core/internal/version.Current=$pkgver"
+  go build -trimpath -ldflags "$ldflags" -o "$srcdir/blackfox-vpn-core" ./cmd/blackfox-core
+  go build -trimpath -ldflags "$ldflags" -o "$srcdir/blackfox-vpn-tun" ./cmd/blackfox-tun
 }
 
 package() {
@@ -31,11 +31,11 @@ package() {
 
   install -dm755 "$pkgdir/opt/blackfox/core"
   cp -a "$root_dir/app/build/linux/x64/release/bundle/." "$pkgdir/opt/blackfox/"
-  install -Dm755 "$srcdir/arman-vpn-core" "$pkgdir/opt/blackfox/core/arman-vpn-core"
-  install -Dm755 "$srcdir/arman-vpn-tun" "$pkgdir/opt/blackfox/core/arman-vpn-tun"
+  install -Dm755 "$srcdir/blackfox-vpn-core" "$pkgdir/opt/blackfox/core/blackfox-vpn-core"
+  install -Dm755 "$srcdir/blackfox-vpn-tun" "$pkgdir/opt/blackfox/core/blackfox-vpn-tun"
 
   install -dm755 "$pkgdir/usr/bin"
-  ln -s /opt/blackfox/arman-vpn "$pkgdir/usr/bin/blackfox"
+  ln -s /opt/blackfox/blackfox "$pkgdir/usr/bin/blackfox"
 
   install -Dm644 "$root_dir/app/linux/runner/resources/app_icon.png" "$pkgdir/usr/share/pixmaps/blackfox.png"
   install -Dm644 "$startdir/blackfox.desktop" "$pkgdir/usr/share/applications/blackfox.desktop"

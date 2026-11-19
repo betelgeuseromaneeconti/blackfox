@@ -11,7 +11,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/fxa"
+	"github.com/shakur4min/blackfox/core/internal/fxa"
 )
 
 // A browser sign-in is refused before anything runs when the email or the

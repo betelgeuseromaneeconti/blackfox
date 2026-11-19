@@ -13,7 +13,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/evasion"
+	"github.com/shakur4min/blackfox/core/internal/evasion"
 )
 
 // Relay kinds. A kind says how to talk to an endpoint, not who runs it.

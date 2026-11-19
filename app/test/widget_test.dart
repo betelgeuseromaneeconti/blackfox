@@ -4,24 +4,24 @@ import 'dart:convert';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:arman_vpn/app_info.dart';
-import 'package:arman_vpn/app_settings.dart';
-import 'package:arman_vpn/core/core_api.dart';
-import 'package:arman_vpn/core/core_controller.dart';
-import 'package:arman_vpn/ui/overview_page.dart' show debugContourPaints;
-import 'package:arman_vpn/core/models.dart';
-import 'package:arman_vpn/core/relay_test.dart';
-import 'package:arman_vpn/core/tun_service.dart';
-import 'package:arman_vpn/core/updates.dart';
-import 'package:arman_vpn/core/announcements.dart';
-import 'package:arman_vpn/core/android_core.dart';
-import 'package:arman_vpn/desktop/close_dialog.dart';
-import 'package:arman_vpn/l10n/app_localizations.dart';
-import 'package:arman_vpn/ui/app.dart';
-import 'package:arman_vpn/ui/settings_page.dart'
+import 'package:blackfox/app_info.dart';
+import 'package:blackfox/app_settings.dart';
+import 'package:blackfox/core/core_api.dart';
+import 'package:blackfox/core/core_controller.dart';
+import 'package:blackfox/ui/overview_page.dart' show debugContourPaints;
+import 'package:blackfox/core/models.dart';
+import 'package:blackfox/core/relay_test.dart';
+import 'package:blackfox/core/tun_service.dart';
+import 'package:blackfox/core/updates.dart';
+import 'package:blackfox/core/announcements.dart';
+import 'package:blackfox/core/android_core.dart';
+import 'package:blackfox/desktop/close_dialog.dart';
+import 'package:blackfox/l10n/app_localizations.dart';
+import 'package:blackfox/ui/app.dart';
+import 'package:blackfox/ui/settings_page.dart'
     show SettingsGroup, pickProgramFile;
-import 'package:arman_vpn/ui/signin_dialog.dart';
-import 'package:arman_vpn/ui/widgets.dart';
+import 'package:blackfox/ui/signin_dialog.dart';
+import 'package:blackfox/ui/widgets.dart';
 
 Map<String, Object?> _account(
   String id,
@@ -473,7 +473,7 @@ void main() {
     final core = CoreController(
       () async => throw const CoreUnavailable(
         CoreProblem.noCore,
-        'C:/x/arman-vpn-core.exe',
+        'C:/x/blackfox-vpn-core.exe',
       ),
       pollInterval: const Duration(hours: 1),
     );
@@ -484,7 +484,7 @@ void main() {
     expect(find.text("Can't reach the core"), findsOneWidget);
     expect(
       find.text(
-        'The core program was not found next to the app (C:/x/arman-vpn-core.exe).',
+        'The core program was not found next to the app (C:/x/blackfox-vpn-core.exe).',
       ),
       findsOneWidget,
     );
@@ -696,7 +696,7 @@ void main() {
     addTearDown(core.dispose);
     const rawError =
         "Mozilla's security check refused this sign-in from here. "
-        'Sign in with the browser in the Arman VPN app instead.';
+        'Sign in with the browser in the BLACKFOX app instead.';
     final state = SignInState.fromJson({
       'email': 'me@example.com',
       'step': SignInStep.failed,
@@ -2578,7 +2578,11 @@ void main() {
     // Logs cleared stay cleared when the page opens again.
     await tester.tap(find.text('Settings'));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.text('Logs'));
+    await tester.scrollUntilVisible(
+      find.text('Logs'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.pumpAndSettle();
     await tester.tap(find.text('Logs'));
     await tester.pumpAndSettle();
@@ -3022,7 +3026,7 @@ void main() {
   }, variant: TargetPlatformVariant.only(TargetPlatform.windows));
 
   group('updates', () {
-    const page = 'https://github.com/o/r/releases/tag/v9.9.9';
+    const page = 'https://github.com/shakur4min/blackfox/releases/tag/v9.9.9';
 
     Future<(FakeApi, CoreController, AppSettings)> pumpUpdates(
       WidgetTester tester, {
@@ -3035,12 +3039,15 @@ void main() {
       tester.view.physicalSize = const Size(1200, 900);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.reset);
+      addTearDown(Updates.reset);
       final api = FakeApi()..update = update;
       final core = CoreController(
         () async => api,
         pollInterval: const Duration(hours: 1),
       );
-      final settings = AppSettings()..updateVersion = known;
+      final settings = AppSettings()
+        ..updateVersion = known
+        ..updateUrl = known.isEmpty ? '' : page;
       Updates.start(core, settings, args: args);
       Updates.available.value = found;
       await tester.pumpWidget(VpnApp(core: core, settings: settings));
@@ -3219,19 +3226,19 @@ void main() {
           signatureUrl: 'https://cdn.example/signature',
           downloads: {
             'archive-x64': ReleaseDownload(
-              'Arman-VPN-Windows-x64.zip',
+              'BLACKFOX-VPN-Windows-x64.zip',
               'https://cdn.example/package',
             ),
             'archive': ReleaseDownload(
-              'Arman-VPN-Windows-x64.zip',
+              'BLACKFOX-VPN-Windows-x64.zip',
               'https://cdn.example/package',
             ),
             'amd64': ReleaseDownload(
-              'Arman-VPN-Windows-x64.zip',
+              'BLACKFOX-VPN-Windows-x64.zip',
               'https://cdn.example/package',
             ),
             'arm64': ReleaseDownload(
-              'Arman-VPN-Windows-x64.zip',
+              'BLACKFOX-VPN-Windows-x64.zip',
               'https://cdn.example/package',
             ),
           },
@@ -3239,7 +3246,7 @@ void main() {
       );
       await tester.pump();
       expect(api.downloadSources.single, {
-        'file': 'Arman-VPN-Windows-x64.zip',
+        'file': 'BLACKFOX-VPN-Windows-x64.zip',
         'url': 'https://cdn.example/package',
         'checksums_url': 'https://cdn.example/sums',
         'signature_url': 'https://cdn.example/signature',
@@ -3295,6 +3302,7 @@ void main() {
       final (api, core, _) = await pumpUpdates(
         tester,
         update: {'state': 'ready', 'version': '9.9.9'},
+        known: '9.9.9',
         args: ['--autostart', '--data-dir=elsewhere'],
       );
       // With the app's own arguments (its data folder too, so the new
@@ -3877,7 +3885,7 @@ class FakeTunService implements TunService {
   String? prompt;
 
   @override
-  String get executable => 'arman-vpn-tun.exe';
+  String get executable => 'blackfox-vpn-tun.exe';
 
   @override
   Future<TunServiceResult> install({String? prompt}) async {

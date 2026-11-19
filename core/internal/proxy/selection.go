@@ -13,8 +13,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/serverlist"
+	"github.com/shakur4min/blackfox/core/internal/logx"
+	"github.com/shakur4min/blackfox/core/internal/serverlist"
 )
 
 type Candidate struct {

@@ -4,7 +4,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/config"
+	"github.com/shakur4min/blackfox/core/internal/config"
 )
 
 // The phone's proxy never sleeps: the setting is turned off on start,

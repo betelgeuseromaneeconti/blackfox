@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/config"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/routing"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/securefile"
+	"github.com/shakur4min/blackfox/core/internal/config"
+	"github.com/shakur4min/blackfox/core/internal/routing"
+	"github.com/shakur4min/blackfox/core/internal/securefile"
 )
 
 // writeTestGeoSite writes a geosite.dat holding only the given tags (the

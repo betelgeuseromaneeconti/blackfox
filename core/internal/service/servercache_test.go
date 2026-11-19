@@ -10,7 +10,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/serverlist"
+	"github.com/shakur4min/blackfox/core/internal/serverlist"
 )
 
 // The server list is saved when it is fetched, shown at once on the next

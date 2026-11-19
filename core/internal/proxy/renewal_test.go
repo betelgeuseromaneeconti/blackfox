@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/fxa"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/guardian"
+	"github.com/shakur4min/blackfox/core/internal/fxa"
+	"github.com/shakur4min/blackfox/core/internal/guardian"
 )
 
 func TestRenewalTunnelRefusalDoesNotRebuildItsOwnSession(t *testing.T) {

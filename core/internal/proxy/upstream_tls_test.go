@@ -18,7 +18,7 @@ import (
 
 	utls "github.com/refraction-networking/utls"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/hellosplit"
+	"github.com/shakur4min/blackfox/core/internal/hellosplit"
 )
 
 // parsedHello is what a ClientHello record says, as hex lists.

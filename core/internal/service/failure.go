@@ -5,10 +5,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/netcheck"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/netstate"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/proxy"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/resolver"
+	"github.com/shakur4min/blackfox/core/internal/netcheck"
+	"github.com/shakur4min/blackfox/core/internal/netstate"
+	"github.com/shakur4min/blackfox/core/internal/proxy"
+	"github.com/shakur4min/blackfox/core/internal/resolver"
 )
 
 // failureCode is proxy.FailureCode for err, made sure for failures that may

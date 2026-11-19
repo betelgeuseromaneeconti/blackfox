@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/fxa"
+	"github.com/shakur4min/blackfox/core/internal/fxa"
 )
 
 const gib = int64(1) << 30

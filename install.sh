@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Installs or updates BLACKFOX from the newest release on GitHub:
 #
-#   curl -fsSL https://raw.githubusercontent.com/betelgeuseromaneeconti/blackfox/main/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/shakur4min/blackfox/main/install.sh | bash
 #
 # Without an argument it decides by itself:
 #   - macOS, or Linux with a graphical session: the app, for the current
@@ -24,7 +24,7 @@
 #   core/scripts/install-systemd.sh
 set -euo pipefail
 
-REPO="betelgeuseromaneeconti/blackfox"
+REPO="shakur4min/blackfox"
 RAW="https://raw.githubusercontent.com/$REPO/main/install.sh"
 VERSION="${VERSION:-latest}"
 if [ "$VERSION" = "latest" ]; then
@@ -61,13 +61,13 @@ SERVICE_ENV=()
 # The Linux app's places, for the current user.
 DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 APP_DIR="$HOME/.local/opt/blackfox"
-DESKTOP_FILE="$DATA_HOME/applications/com.betelgeuseromaneeconti.blackfox.desktop"
+DESKTOP_FILE="$DATA_HOME/applications/com.shakur4min.blackfox.desktop"
 AUTOSTART_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/autostart/blackfox.desktop"
 APP_DATA="$DATA_HOME/blackfox"
 
 # The macOS app's.
 MAC_APP="BLACKFOX.app"
-MAC_AGENT="$HOME/Library/LaunchAgents/com.betelgeuseromaneeconti.blackfox.plist"
+MAC_AGENT="$HOME/Library/LaunchAgents/com.shakur4min.blackfox.plist"
 MAC_DATA="$HOME/Library/Application Support/BLACKFOX"
 
 # The TUN mode's service, which the app installs for the whole computer the
@@ -535,7 +535,7 @@ Exec="$APP_DIR/blackfox"
 Icon=$APP_DIR/data/app_icon.png
 Terminal=false
 Categories=Network;
-StartupWMClass=com.betelgeuseromaneeconti.blackfox
+StartupWMClass=com.shakur4min.blackfox
 EOF
   if command -v update-desktop-database >/dev/null 2>&1; then
     update-desktop-database -q "$(dirname "$DESKTOP_FILE")" || true

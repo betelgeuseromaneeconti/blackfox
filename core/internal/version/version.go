@@ -9,7 +9,7 @@ import (
 // dashboard, the status screen, the tray tooltip, and -version. The build
 // sets it from app/pubspec.yaml (scripts/build-*.ps1):
 //
-//	-ldflags "-X github.com/betelgeuseromaneeconti/blackfox/core/internal/version.Current=1.1.0"
+//	-ldflags "-X github.com/shakur4min/blackfox/core/internal/version.Current=1.1.0"
 //
 // "0.0.0" is a development build.
 var Current = "0.0.0"

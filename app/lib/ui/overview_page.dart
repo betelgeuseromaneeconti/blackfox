@@ -21,6 +21,10 @@ import 'format.dart';
 import 'port_dialog.dart';
 import 'widgets.dart';
 
+/// Number of times a contour background repainted (`widget_test.dart`).
+@visibleForTesting
+int debugContourPaints = 0;
+
 /// The home page: the switch, the state, where the traffic goes, and the
 /// data used; the phone's (_PhoneHome) and the computer's (_DesktopHome)
 /// share the look, not the logic. Developer mode adds the details.

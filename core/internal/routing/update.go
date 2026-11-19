@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/securefile"
+	"github.com/shakur4min/blackfox/core/internal/securefile"
 )
 
 // Default list sources, both from Chocolate4U/Iran-v2ray-rules; together

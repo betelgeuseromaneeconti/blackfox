@@ -42,7 +42,7 @@ class DesktopBridge: NSObject, NSWindowDelegate, UNUserNotificationCenterDelegat
   private var iconPath = ""
   private var allowClose = false
 
-  private static let label = "com.betelgeuseromaneeconti.blackfox"
+  private static let label = "com.shakur4min.blackfox"
 
   init(messenger: FlutterBinaryMessenger, window: NSWindow) {
     channel = FlutterMethodChannel(name: "app/desktop", binaryMessenger: messenger)

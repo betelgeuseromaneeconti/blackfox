@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/controlplane"
+	"github.com/shakur4min/blackfox/core/internal/controlplane"
 )
 
 // DeviceName is how this program appears in the account's connected

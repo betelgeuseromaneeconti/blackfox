@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/fxa"
+	"github.com/shakur4min/blackfox/core/internal/fxa"
 )
 
 // A folder under accounts/ that holds no readable account (a copy made by

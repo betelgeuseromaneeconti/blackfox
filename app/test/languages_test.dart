@@ -1,10 +1,10 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:arman_vpn/app_settings.dart';
-import 'package:arman_vpn/core/models.dart';
-import 'package:arman_vpn/l10n/app_localizations.dart';
-import 'package:arman_vpn/ui/accounts_page.dart';
-import 'package:arman_vpn/ui/format.dart';
+import 'package:blackfox/app_settings.dart';
+import 'package:blackfox/core/models.dart';
+import 'package:blackfox/l10n/app_localizations.dart';
+import 'package:blackfox/ui/accounts_page.dart';
+import 'package:blackfox/ui/format.dart';
 
 void main() {
   test('the system locale picks the app language', () {

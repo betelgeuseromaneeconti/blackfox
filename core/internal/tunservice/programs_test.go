@@ -14,8 +14,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tun"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunapi"
+	"github.com/shakur4min/blackfox/core/internal/tun"
+	"github.com/shakur4min/blackfox/core/internal/tunapi"
 )
 
 // appSource is an app's connection on the adapter, as the stack sees it.

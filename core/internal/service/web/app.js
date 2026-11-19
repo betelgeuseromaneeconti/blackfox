@@ -1296,7 +1296,7 @@ function renderSignIn(view) {
           el("a", {
             class: "btn primary",
             style: "margin-top:10px; width:fit-content",
-            href: "https://github.com/armanlife/arman-vpn-client/blob/main/docs/BROWSER-SIGNIN.md",
+            href: "https://github.com/shakur4min/blackfox/blob/main/docs/BROWSER-SIGNIN.md",
             target: "_blank",
             rel: "noreferrer",
             text: "How to do it",
@@ -1354,7 +1354,7 @@ async function saveBackup() {
       try { data = await response.json(); } catch { /* empty body */ }
       throw new ApiError(response.status, (data && data.error) || response.statusText);
     }
-    const name = /filename="([^"]+)"/.exec(response.headers.get("Content-Disposition") || "")?.[1] || "Arman-VPN-backup.zip";
+    const name = /filename="([^"]+)"/.exec(response.headers.get("Content-Disposition") || "")?.[1] || "BLACKFOX-backup.zip";
     const url = URL.createObjectURL(await response.blob());
     const link = el("a", { href: url, download: name });
     document.body.append(link);

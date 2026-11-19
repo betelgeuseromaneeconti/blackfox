@@ -1,4 +1,4 @@
-module github.com/betelgeuseromaneeconti/blackfox/core
+module github.com/shakur4min/blackfox/core
 
 go 1.27.2
 

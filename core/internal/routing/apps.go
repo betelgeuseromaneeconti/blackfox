@@ -12,7 +12,7 @@ import (
 	"regexp"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/securefile"
+	"github.com/shakur4min/blackfox/core/internal/securefile"
 )
 
 // AppListURL is where a region's phone apps that should connect directly

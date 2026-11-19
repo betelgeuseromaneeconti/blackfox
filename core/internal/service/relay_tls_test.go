@@ -17,7 +17,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/config"
+	"github.com/shakur4min/blackfox/core/internal/config"
 )
 
 type relayTLSRoundTripFunc func(*http.Request) (*http.Response, error)

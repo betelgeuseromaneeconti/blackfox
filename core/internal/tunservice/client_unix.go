@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunapi"
+	"github.com/shakur4min/blackfox/core/internal/tunapi"
 )
 
 // InstallForUser installs the service for the user running this process

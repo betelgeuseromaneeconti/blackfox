@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/controlplane"
+	"github.com/shakur4min/blackfox/core/internal/controlplane"
 )
 
 // ErrnoRequestBlocked is FxA's "request blocked" errno: the sign-in looks

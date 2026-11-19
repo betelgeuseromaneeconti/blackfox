@@ -18,8 +18,8 @@ import (
 
 	xproxy "golang.org/x/net/proxy"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/controlplane"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/proxy"
+	"github.com/shakur4min/blackfox/core/internal/controlplane"
+	"github.com/shakur4min/blackfox/core/internal/proxy"
 )
 
 // Local fixtures for the lazy start: a stand-in for Mozilla's CONNECT proxy

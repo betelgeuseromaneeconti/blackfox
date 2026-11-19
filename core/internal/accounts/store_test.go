@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/fxa"
+	"github.com/shakur4min/blackfox/core/internal/fxa"
 )
 
 // The manager's saves keep the device record that another writer stored

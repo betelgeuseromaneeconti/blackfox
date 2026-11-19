@@ -11,9 +11,9 @@ import (
 
 	utls "github.com/refraction-networking/utls"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/firefoxtls"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/hellosplit"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
+	"github.com/shakur4min/blackfox/core/internal/firefoxtls"
+	"github.com/shakur4min/blackfox/core/internal/hellosplit"
+	"github.com/shakur4min/blackfox/core/internal/logx"
 )
 
 var (

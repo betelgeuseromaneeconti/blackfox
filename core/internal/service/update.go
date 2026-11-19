@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/controlplane"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/update"
+	"github.com/shakur4min/blackfox/core/internal/controlplane"
+	"github.com/shakur4min/blackfox/core/internal/update"
 )
 
 // The desktop app's updates (internal/update): the app finds a newer

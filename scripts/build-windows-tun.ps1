@@ -24,8 +24,8 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'go generate failed (blackfox-vpn-tun)' }
 
     # windowsgui: no console window when the app or Setup starts it.
-    $ldflags = "-s -w -H windowsgui -X github.com/betelgeuseromaneeconti/blackfox/core/internal/version.Current=$Version"
-    if ($public) { $ldflags += " -X github.com/betelgeuseromaneeconti/blackfox/core/internal/signing.Key=$public" }
+    $ldflags = "-s -w -H windowsgui -X github.com/shakur4min/blackfox/core/internal/version.Current=$Version"
+    if ($public) { $ldflags += " -X github.com/shakur4min/blackfox/core/internal/signing.Key=$public" }
     $exe = Join-Path $Out 'blackfox-vpn-tun.exe'
     go build -tags with_gvisor -trimpath -ldflags $ldflags -o $exe ./cmd/blackfox-tun
     if ($LASTEXITCODE -ne 0) { throw 'go build failed (blackfox-vpn-tun)' }

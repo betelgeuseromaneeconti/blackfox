@@ -52,8 +52,8 @@ try {
     $env:APP_VERSION = $version
     go generate ./cmd/blackfox-core
     if ($LASTEXITCODE -ne 0) { throw 'go generate failed' }
-    $ldflags = "-s -w -X github.com/betelgeuseromaneeconti/blackfox/core/internal/version.Current=$version"
-    if ($public) { $ldflags += " -X github.com/betelgeuseromaneeconti/blackfox/core/internal/signing.Key=$public" }
+    $ldflags = "-s -w -X github.com/shakur4min/blackfox/core/internal/version.Current=$version"
+    if ($public) { $ldflags += " -X github.com/shakur4min/blackfox/core/internal/signing.Key=$public" }
     New-Item -ItemType Directory -Force "$portableOut\core" | Out-Null
     go build -trimpath -ldflags $ldflags -o "$portableOut\core\blackfox-vpn-core.exe" ./cmd/blackfox-core
     if ($LASTEXITCODE -ne 0) { throw 'go build failed' }

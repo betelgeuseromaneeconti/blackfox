@@ -11,10 +11,10 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/egress"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/resolver"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/routing"
+	"github.com/shakur4min/blackfox/core/internal/egress"
+	"github.com/shakur4min/blackfox/core/internal/logx"
+	"github.com/shakur4min/blackfox/core/internal/resolver"
+	"github.com/shakur4min/blackfox/core/internal/routing"
 )
 
 // ErrBlockedByRule is a connection refused by a routing rule.

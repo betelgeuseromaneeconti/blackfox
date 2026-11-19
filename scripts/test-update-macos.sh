@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Tries the macOS app's own update end to end, on CI's Mac (GitHub
 # Actions), as a user's copy goes through it, from a version before the
-# rename to Arman VPN (1.0.9) on: the released app of version <old>
+# rename to BLACKFOX (1.0.9) on: the released app of version <old>
 # (Firefox VPN.app) goes to /Applications and updates itself with its own
 # code to <v>, the app that scripts/build-macos.sh built (its tar.gz in
 # dist/), which then updates itself to <v+1>, both from a test release on
@@ -23,15 +23,15 @@ set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 version="$(sed -n 's/^version:[[:space:]]*\([0-9]*\.[0-9]*\.[0-9]*\).*/\1/p' "$root/app/pubspec.yaml")"
 next="${version%.*}.$((${version##*.} + 1))"
-module=github.com/armanlife/arman-vpn-client/core
+module=github.com/shakur4min/blackfox/core
 # The last version under the old name, and its names.
 old_version=1.0.8
 old_module=github.com/armanlife/firefox-vpn-client/core
 old_app="/Applications/Firefox VPN.app"
 old_data="$HOME/Library/Application Support/Firefox VPN Client"
 out="${1:-$root/dist/update-test}"
-app="/Applications/Arman VPN.app"
-data="$HOME/Library/Application Support/Arman VPN"
+app="/Applications/BLACKFOX.app"
+data="$HOME/Library/Application Support/BLACKFOX"
 server="http://127.0.0.1:18080"
 work="$(mktemp -d)"
 mkdir -p "$out"
@@ -86,14 +86,14 @@ git -C "$root" worktree add --quiet "$work/src-old" "v$old_version"
 for v in "$version" "$next"; do
   (cd "$root/core" && CGO_ENABLED=0 GOOS=darwin GOARCH="$arch" go build -trimpath \
     -ldflags "-s -w -X $module/internal/version.Current=$v -X $module/internal/signing.Key=$public" \
-    -o "$work/core-$v" ./cmd/arman-vpn-core)
+    -o "$work/core-$v" ./cmd/blackfox-core)
 done
 
 # The old app as its release has it, with its core trusting the test key,
 # sealed again as the build seals it.
 mkdir -p "$work/old"
 curl -fsSL --retry 3 -o "$work/old.tar.gz" \
-  "https://github.com/armanlife/arman-vpn-client/releases/download/v$old_version/Firefox-VPN-$old_version-macOS.tar.gz"
+  "https://github.com/shakur4min/blackfox/releases/download/v$old_version/Firefox-VPN-$old_version-macOS.tar.gz"
 tar -xzf "$work/old.tar.gz" -C "$work/old"
 cp "$work/core-$old_version" "$work/old/Firefox VPN.app/Contents/MacOS/firefox-vpn-core"
 codesign --force --sign - "$work/old/Firefox VPN.app/Contents/MacOS/firefox-vpn-core"
@@ -105,10 +105,10 @@ mv "$work/old/Firefox VPN.app" "$old_app"
 bundle() {
   mkdir -p "$1"
   tar -xzf "$root/dist/Arman-VPN-$version-macOS.tar.gz" -C "$1"
-  cp "$work/core-$2" "$1/Arman VPN.app/Contents/MacOS/arman-vpn-core"
-  codesign --force --sign - "$1/Arman VPN.app/Contents/MacOS/arman-vpn-core"
-  codesign --force --sign - "$1/Arman VPN.app"
-  codesign --verify --deep --strict "$1/Arman VPN.app"
+  cp "$work/core-$2" "$1/BLACKFOX.app/Contents/MacOS/blackfox-vpn-core"
+  codesign --force --sign - "$1/BLACKFOX.app/Contents/MacOS/blackfox-vpn-core"
+  codesign --force --sign - "$1/BLACKFOX.app"
+  codesign --verify --deep --strict "$1/BLACKFOX.app"
 }
 bundle "$work/new" "$version"
 bundle "$work/next" "$next"
@@ -121,7 +121,7 @@ bundle "$work/next" "$next"
 release() {
   local dir="$work/www/releases/download/v$1"
   mkdir -p "$dir"
-  COPYFILE_DISABLE=1 tar --no-mac-metadata -czf "$dir/$2" -C "$3" "Arman VPN.app"
+  COPYFILE_DISABLE=1 tar --no-mac-metadata -czf "$dir/$2" -C "$3" "BLACKFOX.app"
   (cd "$dir" && shasum -a 256 "$2" >SHA256SUMS.txt)
   (cd "$root/core" && go run ./tools/sign -key "$work/test.signing-key" "$dir/SHA256SUMS.txt")
 }
@@ -190,10 +190,10 @@ hop() {
 # From the old name: the old app's update puts the new one in its bundle,
 # which keeps its name; the new app moves the data folder.
 hop "$old_version" "$version" "$old_app/Contents/MacOS/Firefox VPN"
-wait_for "the new version's start" 60 pgrep -f "^$old_app/Contents/MacOS/Arman VPN --autostart"
+wait_for "the new version's start" 60 pgrep -f "^$old_app/Contents/MacOS/BLACKFOX --autostart"
 wait_for "the data folder's new name" 60 test -d "$data"
 [ ! -e "$old_data" ] || { echo "the old data folder is still there" >&2; exit 1; }
-got="$("$old_app/Contents/MacOS/arman-vpn-core" -version)"
+got="$("$old_app/Contents/MacOS/blackfox-vpn-core" -version)"
 [ "$got" = "$version" ] || { echo "the app's core is $got, not $version" >&2; exit 1; }
 codesign --verify --deep --strict "$old_app"
 
@@ -201,12 +201,12 @@ codesign --verify --deep --strict "$old_app"
 pkill -f "^$old_app/Contents/MacOS/" || true
 wait_for "the app to quit" 60 stopped
 offer "$next"
-hop "$version" "$next" "$old_app/Contents/MacOS/Arman VPN"
+hop "$version" "$next" "$old_app/Contents/MacOS/BLACKFOX"
 wait_for "the bundle's new name" 60 test -d "$app"
 [ ! -e "$old_app" ] || { echo "$old_app is still there" >&2; exit 1; }
-got="$("$app/Contents/MacOS/arman-vpn-core" -version)"
+got="$("$app/Contents/MacOS/blackfox-vpn-core" -version)"
 [ "$got" = "$next" ] || { echo "the app's core is $got, not $next" >&2; exit 1; }
 # Started again as it was: in the menu bar.
-wait_for "the newest version's start" 60 pgrep -fl "^$app/Contents/MacOS/Arman VPN --autostart"
+wait_for "the newest version's start" 60 pgrep -fl "^$app/Contents/MacOS/BLACKFOX --autostart"
 codesign --verify --deep --strict "$app"
 echo "== updated from $old_version through $version to $next"

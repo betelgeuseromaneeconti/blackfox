@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:arman_vpn/app_settings.dart';
-import 'package:arman_vpn/core/core_process.dart';
+import 'package:blackfox/app_settings.dart';
+import 'package:blackfox/core/core_process.dart';
 
 void main() {
   late Directory dir;
@@ -39,7 +39,7 @@ void main() {
     final s = await AppSettings.load(dir.path);
     expect(s.language, '');
     expect(s.locale, isNull);
-    expect(s.themeMode, ThemeMode.system);
+    expect(s.themeMode, ThemeMode.dark);
     expect(s.closeAction, CloseAction.ask);
     expect(s.signInMethod, SignInMethod.api);
     expect(s.firstRun, isTrue);
@@ -101,7 +101,7 @@ void main() {
         .writeAsStringSync('{"language": "xx", "theme": "neon", "close": 7}');
     final s = await AppSettings.load(dir.path);
     expect(s.language, '');
-    expect(s.themeMode, ThemeMode.system);
+    expect(s.themeMode, ThemeMode.dark);
     expect(s.closeAction, CloseAction.ask);
     expect(s.signInMethod, SignInMethod.api);
   });
@@ -114,7 +114,9 @@ void main() {
     expect(
       CoreProcess.executableFrom(const []),
       endsWith(
-        Platform.isWindows ? r'core\arman-vpn-core.exe' : 'core/arman-vpn-core',
+        Platform.isWindows
+            ? r'core\blackfox-vpn-core.exe'
+            : 'core/blackfox-vpn-core',
       ),
     );
   });

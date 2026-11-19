@@ -1,4 +1,4 @@
-package com.betelgeuseromaneeconti.blackfox
+package com.shakur4min.blackfox
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -442,8 +442,8 @@ class CoreService : VpnService() {
     }
 
     companion object {
-        const val ACTION_STOP = "com.betelgeuseromaneeconti.blackfox.STOP"
-        private const val ACTION_RECONNECT = "com.betelgeuseromaneeconti.blackfox.RECONNECT"
+        const val ACTION_STOP = "com.shakur4min.blackfox.STOP"
+        private const val ACTION_RECONNECT = "com.shakur4min.blackfox.RECONNECT"
         private const val PREFS = "vpn"
         private const val MODE = "app_mode"
         const val MODE_EXCLUDE = "exclude"

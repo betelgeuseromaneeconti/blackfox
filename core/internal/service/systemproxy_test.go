@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/config"
+	"github.com/shakur4min/blackfox/core/internal/config"
 )
 
 func waitPhase(t *testing.T, d *Daemon, want string) {

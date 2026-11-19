@@ -13,11 +13,11 @@ import (
 
 	"golang.org/x/term"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/desktop"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/service"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/update"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/version"
+	"github.com/shakur4min/blackfox/core/internal/desktop"
+	"github.com/shakur4min/blackfox/core/internal/logx"
+	"github.com/shakur4min/blackfox/core/internal/service"
+	"github.com/shakur4min/blackfox/core/internal/update"
+	"github.com/shakur4min/blackfox/core/internal/version"
 )
 
 func main() {

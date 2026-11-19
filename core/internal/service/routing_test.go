@@ -8,8 +8,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/routing"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/securefile"
+	"github.com/shakur4min/blackfox/core/internal/routing"
+	"github.com/shakur4min/blackfox/core/internal/securefile"
 )
 
 // writeTestGeoIP writes a geoip.dat with the given tags and networks into

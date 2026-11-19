@@ -18,7 +18,7 @@ import (
 
 	"golang.org/x/net/http2"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
+	"github.com/shakur4min/blackfox/core/internal/logx"
 )
 
 // cuttableConn carries its connection until cut, then carries nothing,

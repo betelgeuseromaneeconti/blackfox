@@ -14,10 +14,10 @@ import (
 	"net/netip"
 	"sync"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tun"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunapi"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/tunstack"
+	"github.com/shakur4min/blackfox/core/internal/logx"
+	"github.com/shakur4min/blackfox/core/internal/tun"
+	"github.com/shakur4min/blackfox/core/internal/tunapi"
+	"github.com/shakur4min/blackfox/core/internal/tunstack"
 )
 
 // adapterMTU is the TUN adapter's MTU; AdapterName (adapter_*.go) its name.

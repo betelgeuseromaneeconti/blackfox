@@ -1,12 +1,16 @@
 #!/bin/sh
-# Starts the core. The data folder is the volume /var/lib/arman-vpn.
+if [ ! -f /var/lib/blackfox/config.json ] && [ -f /var/lib/arman-vpn/config.json ]; then
+  mkdir -p /var/lib/blackfox
+  cp -a /var/lib/arman-vpn/. /var/lib/blackfox/
+fi
+# Starts the core. The data folder is the volume /var/lib/blackfox.
 # The first start opens the panel and the proxy to the network
-# (arman-vpn-core -setup-server) and prints the logins.
+# (blackfox-vpn-core -setup-server) and prints the logins.
 set -eu
 
-data=/var/lib/arman-vpn
+data=/var/lib/blackfox
 mkdir -p "$data"
 if [ ! -f "$data/config.json" ]; then
-  arman-vpn-core -data-dir "$data" -setup-server=-
+  blackfox-vpn-core -data-dir "$data" -setup-server=-
 fi
-exec arman-vpn-core -plain -data-dir "$data"
+exec blackfox-vpn-core -plain -data-dir "$data"

@@ -89,12 +89,12 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "betelgeuseromaneeconti" "\0"
+            VALUE "CompanyName", "shakur4min" "\0"
             VALUE "FileDescription", "BLACKFOX" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "BLACKFOX" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2026 Jackdaw (GPL-3.0)" "\0"
-            VALUE "OriginalFilename", "BLACKFOX.exe" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2026 shakur4min (GPL-3.0)" "\0"
+            VALUE "OriginalFilename", "blackfox-vpn.exe" "\0"
             VALUE "ProductName", "BLACKFOX" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END

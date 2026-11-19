@@ -27,7 +27,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/version"
+	"github.com/shakur4min/blackfox/core/internal/version"
 )
 
 // Exit statuses.

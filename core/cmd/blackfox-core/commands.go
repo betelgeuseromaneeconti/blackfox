@@ -12,13 +12,13 @@ import (
 
 	"golang.org/x/term"
 
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/accounts"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/config"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/fxa"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/guardian"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/logx"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/proxy"
-	"github.com/betelgeuseromaneeconti/blackfox/core/internal/service"
+	"github.com/shakur4min/blackfox/core/internal/accounts"
+	"github.com/shakur4min/blackfox/core/internal/config"
+	"github.com/shakur4min/blackfox/core/internal/fxa"
+	"github.com/shakur4min/blackfox/core/internal/guardian"
+	"github.com/shakur4min/blackfox/core/internal/logx"
+	"github.com/shakur4min/blackfox/core/internal/proxy"
+	"github.com/shakur4min/blackfox/core/internal/service"
 )
 
 // runAddAccount signs in interactively and stores the account at the end
@@ -311,7 +311,7 @@ func interactiveSignIn() (*fxa.TokenResponse, string, string) {
 
 // accountTransferGuide explains signing in with the app's browser page
 // and moving the account to a device without one.
-const accountTransferGuide = "https://github.com/betelgeuseromaneeconti/blackfox/blob/main/docs/BROWSER-SIGNIN.md"
+const accountTransferGuide = "https://github.com/shakur4min/blackfox/blob/main/docs/BROWSER-SIGNIN.md"
 
 // printBlockedHint suggests the app's browser sign-in when Fastly's bot
 // check keeps refusing the terminal one.
