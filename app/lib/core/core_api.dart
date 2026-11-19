@@ -69,7 +69,7 @@ abstract final class CoreLocator {
   static const _defaultPort = 10820;
 
   /// The folder name under the per-user data location (macOS).
-  static const appFolder = 'Arman VPN';
+  static const appFolder = 'BLACKFOX';
 
   /// The file next to the app that makes it portable: its data stays in
   /// `user-data` beside it instead of the per-user location.
@@ -95,35 +95,39 @@ abstract final class CoreLocator {
     return dir;
   }
 
-  /// The per-user data folders of the versions before 1.0.9, when the
-  /// program was called Firefox VPN, by the new folder's name: beside it.
+  /// Previous per-user data folders before independent BLACKFOX naming
+  /// (Arman VPN and earlier Firefox VPN versions), by the new folder's name.
   static const legacyFolders = {
-    appFolder: 'Firefox VPN Client',
-    linuxFolder: 'firefox-vpn-client',
+    appFolder: ['Arman VPN', 'Firefox VPN Client'],
+    linuxFolder: ['arman-vpn', 'firefox-vpn-client'],
   };
 
   /// The folder name under the per-user data location (Linux).
-  static const linuxFolder = 'arman-vpn';
+  static const linuxFolder = 'blackfox';
 
-  /// Moves the data folder of a version before 1.0.9 to [dir] when only the
-  /// old one exists (the core does the same: MoveLegacyDataDir in
-  /// core/internal/config).
+  /// Moves a legacy data folder (`Arman VPN`, `Firefox VPN Client`, etc.) to
+  /// [dir] when [dir] does not exist yet (the core does the same:
+  /// MoveLegacyDataDir in core/internal/config).
   static void moveLegacyDataDir(String dir) {
     final sep = Platform.pathSeparator;
     final cut = dir.lastIndexOf(sep);
     if (cut < 0) return;
-    final old = legacyFolders[dir.substring(cut + 1)];
-    if (old == null) return;
-    final legacy = Directory('${dir.substring(0, cut)}$sep$old');
-    try {
-      if (FileSystemEntity.typeSync(dir, followLinks: false) !=
-              FileSystemEntityType.notFound ||
-          !legacy.existsSync()) {
+    final oldNames = legacyFolders[dir.substring(cut + 1)];
+    if (oldNames == null) return;
+    final parent = dir.substring(0, cut);
+    for (final old in oldNames) {
+      final legacy = Directory('$parent$sep$old');
+      try {
+        if (FileSystemEntity.typeSync(dir, followLinks: false) !=
+                FileSystemEntityType.notFound ||
+            !legacy.existsSync()) {
+          continue;
+        }
+        legacy.renameSync(dir);
         return;
+      } on FileSystemException {
+        // The old folder stays; try the next or start with a new one.
       }
-      legacy.renameSync(dir);
-    } on FileSystemException {
-      // The old folder stays; the app starts with a new one.
     }
   }
 
@@ -558,7 +562,7 @@ class CoreApi {
       final disposition = res.headers.value('content-disposition') ?? '';
       final name =
           RegExp(r'filename="([^"]+)"').firstMatch(disposition)?.group(1) ??
-          'Arman-VPN-backup.zip';
+          'BLACKFOX-backup.zip';
       return (name: name, bytes: bytes);
     } on SocketException catch (e) {
       throw CoreUnavailable(

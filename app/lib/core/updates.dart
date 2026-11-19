@@ -171,7 +171,7 @@ abstract final class Updates {
     return uri != null &&
         uri.scheme == 'https' &&
         uri.host == 'github.com' &&
-        uri.path.startsWith('/betelgeuseromaneeconti/blackfox/releases/');
+        uri.path.startsWith('/$githubRepo/releases/');
   }
 
   /// Starts looking. [args] are the app's own (`--autostart`, `--hidden`,
