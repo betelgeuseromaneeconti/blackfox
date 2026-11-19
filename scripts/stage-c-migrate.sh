@@ -275,14 +275,37 @@ apply_to_file(
     [
         ("https://github.com/betelgeuseromaneeconti/blackfox", "https://github.com/shakur4min/blackfox"),
         ("https://github.com/armanlife/arman-vpn-client", "https://github.com/shakur4min/blackfox"),
+        ("github.com/armanlife/arman-vpn-client", "github.com/shakur4min/blackfox"),
+        ("github.com/armanlife/firefox-vpn-client", "github.com/shakur4min/blackfox"),
+        ("github.com/shakur4min/arman-vpn-client", "github.com/shakur4min/blackfox"),
         ("betelgeuseromaneeconti", "shakur4min"),
         ("armanlife", "shakur4min"),
+        ("Jackdaw", "shakur4min"),
         ("./cmd/arman-vpn-core", "./cmd/blackfox-core"),
         ("./cmd/arman-vpn-tun", "./cmd/blackfox-tun"),
         ("arman-vpn-core", "blackfox-vpn-core"),
         ("arman-vpn-tun", "blackfox-vpn-tun"),
     ],
 )
+
+# Point PKGBUILD at the real Linux Flutter binary name from app/linux/CMakeLists.txt
+linux_cmake = ROOT / "app/linux/CMakeLists.txt"
+linux_binary = None
+if linux_cmake.exists():
+    mm = re.search(r'set\(BINARY_NAME\s+"([^"]+)"\)', linux_cmake.read_text(encoding="utf-8", errors="replace"))
+    if mm:
+        linux_binary = mm.group(1)
+print(f"Linux BINARY_NAME = {linux_binary}")
+if linux_binary:
+    apply_to_file(
+        "RELEASE/ARCH-LINUX/PKGBUILD/PKGBUILD",
+        [
+            ("/opt/blackfox/arman-vpn\"", f"/opt/blackfox/{linux_binary}\""),
+            ("/opt/blackfox/arman-vpn ", f"/opt/blackfox/{linux_binary} "),
+            ("/opt/blackfox/arman-vpn\n", f"/opt/blackfox/{linux_binary}\n"),
+            ("/opt/blackfox/arman-vpn'", f"/opt/blackfox/{linux_binary}'"),
+        ],
+    )
 
 # Normalize pkgver in PKGBUILD to 2.0.69 if outdated
 pkgbuild_path = ROOT / "RELEASE/ARCH-LINUX/PKGBUILD/PKGBUILD"
@@ -291,12 +314,29 @@ if pkgbuild_path.exists():
     if old is not None:
         new = re.sub(r"^pkgver=.*$", "pkgver=2.0.69", old, flags=re.MULTILINE)
         write_if_changed(pkgbuild_path, new, old, is_crlf)
+    print("--- PKGBUILD after migration ---")
+    print(pkgbuild_path.read_text(encoding="utf-8", errors="replace"))
 
 apply_to_file(
     "RELEASE/ARCH-LINUX/PKGBUILD/blackfox.desktop",
     [
         ("StartupWMClass=com.betelgeuseromaneeconti.blackfox", "StartupWMClass=com.shakur4min.blackfox"),
+        ("StartupWMClass=com.arman.firefoxvpn", "StartupWMClass=com.shakur4min.blackfox"),
         ("com.betelgeuseromaneeconti.blackfox", "com.shakur4min.blackfox"),
+        ("Jackdaw", "shakur4min"),
+    ],
+)
+
+# .gitignore: ignore the current build outputs instead of the old Arman ones
+apply_to_file(
+    ".gitignore",
+    [
+        ("/core/cmd/arman-vpn-core/", "/core/cmd/blackfox-core/"),
+        ("/core/cmd/arman-vpn-tun/", "/core/cmd/blackfox-tun/"),
+        ("/core/arman-vpn-core", "/core/blackfox-vpn-core"),
+        ("/core/arman-vpn-tun", "/core/blackfox-vpn-tun"),
+        ("arman-vpn-core", "blackfox-vpn-core"),
+        ("arman-vpn-tun", "blackfox-vpn-tun"),
     ],
 )
 
@@ -586,7 +626,11 @@ for p in sorted(ROOT.rglob("*")):
     for lineno, line in enumerate(content.splitlines(), 1):
         if PAT.search(line):
             print(f"AUDIT {rel}:{lineno}: {line.strip()[:160]}")
-            if HARD_FAIL_PAT.search(line):
+            # Explicit legacy-upgrade fixtures (testing updates FROM old installs) are allowed.
+            legacy_fixture = rel == "scripts/test-update-macos.sh" and (
+                line.strip().startswith("old_module=") or line.strip().startswith("label=com.arman.firefoxvpn")
+            )
+            if HARD_FAIL_PAT.search(line) and not legacy_fixture:
                 hard_failures.append(f"{rel}:{lineno}: {line.strip()[:160]}")
 
 if hard_failures:
